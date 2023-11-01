@@ -8,6 +8,9 @@ import android.view.ViewGroup
 import com.donovanSergeAimenHatim.uniroute.R
 import com.google.android.material.textfield.TextInputEditText
 import android.app.DatePickerDialog
+import android.view.animation.AnimationUtils
+import android.widget.LinearLayout
+import com.google.android.material.button.MaterialButtonToggleGroup
 import com.google.android.material.datepicker.MaterialDatePicker
 import java.util.*
 
@@ -61,7 +64,41 @@ class AccueilFragment : Fragment() {
                 val selectedDate = datePicker.headerText
                 datePickerEditText.setText(selectedDate)
             }
+
         }
+
+        val fadeIn = AnimationUtils.loadAnimation(context, R.anim.fade_in)
+        val fadeOut = AnimationUtils.loadAnimation(context, R.anim.fade_out)
+
+        val toggleGroup = view.findViewById<MaterialButtonToggleGroup>(R.id.toggleButton)
+        val trouverSection = view.findViewById<LinearLayout>(R.id.trouverSection)
+        val proposeSection = view.findViewById<LinearLayout>(R.id.proposeSection)
+
+        toggleGroup.addOnButtonCheckedListener { group, checkedId, isChecked ->
+            when (checkedId) {
+                R.id.chercheCoVoiturage -> {
+                    if (isChecked) {
+                        proposeSection.startAnimation(fadeOut)
+                        proposeSection.visibility = View.GONE
+
+                        trouverSection.startAnimation(fadeIn)
+                        trouverSection.visibility = View.VISIBLE
+                    }
+                }
+                R.id.proposeCoVoiturage -> {
+                    if (isChecked) {
+                        trouverSection.startAnimation(fadeOut)
+                        trouverSection.visibility = View.GONE
+
+                        proposeSection.startAnimation(fadeIn)
+                        proposeSection.visibility = View.VISIBLE
+                    }
+                }
+            }
+        }
+
+
+
     }
 
 
