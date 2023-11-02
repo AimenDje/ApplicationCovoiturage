@@ -51,29 +51,20 @@ class AccueilFragment : Fragment() {
 
         val datePickerEditText = view.findViewById<TextInputEditText>(R.id.datePickerEditText)
         datePickerEditText.setOnClickListener {
-            // Création du MaterialDatePicker
             val datePicker = MaterialDatePicker.Builder.datePicker()
                 .setTitleText("Date")
                 .build()
-
-            // Affichage du MaterialDatePicker
             datePicker.show(childFragmentManager, datePicker.toString())
-
-            // Configuration du listener pour mettre à jour le TextInputEditText avec la date sélectionnée
             datePicker.addOnPositiveButtonClickListener { selection ->
                 val selectedDate = datePicker.headerText
                 datePickerEditText.setText(selectedDate)
             }
-
         }
-
         val fadeIn = AnimationUtils.loadAnimation(context, R.anim.fade_in)
         val fadeOut = AnimationUtils.loadAnimation(context, R.anim.fade_out)
-
         val toggleGroup = view.findViewById<MaterialButtonToggleGroup>(R.id.toggleButton)
         val trouverSection = view.findViewById<LinearLayout>(R.id.trouverSection)
         val proposeSection = view.findViewById<LinearLayout>(R.id.proposeSection)
-
         toggleGroup.addOnButtonCheckedListener { group, checkedId, isChecked ->
             when (checkedId) {
                 R.id.chercheCoVoiturage -> {
@@ -96,9 +87,6 @@ class AccueilFragment : Fragment() {
                 }
             }
         }
-
-
-
     }
 
 
