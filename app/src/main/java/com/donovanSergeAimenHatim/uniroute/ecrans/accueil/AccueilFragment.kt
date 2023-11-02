@@ -12,6 +12,8 @@ import android.view.animation.AnimationUtils
 import android.widget.LinearLayout
 import com.google.android.material.button.MaterialButtonToggleGroup
 import com.google.android.material.datepicker.MaterialDatePicker
+import com.google.android.material.timepicker.MaterialTimePicker
+import com.google.android.material.timepicker.TimeFormat
 import java.util.*
 
 
@@ -60,6 +62,18 @@ class AccueilFragment : Fragment() {
                 datePickerEditText.setText(selectedDate)
             }
         }
+
+        val datePickerEditTextProposer = view.findViewById<TextInputEditText>(R.id.datePickerEditTextProposer)
+        datePickerEditTextProposer.setOnClickListener {
+            val datePicker = MaterialDatePicker.Builder.datePicker()
+                .setTitleText("Date")
+                .build()
+            datePicker.show(childFragmentManager, datePicker.toString())
+            datePicker.addOnPositiveButtonClickListener { selection ->
+                val selectedDate = datePicker.headerText
+                datePickerEditTextProposer.setText(selectedDate)
+            }
+        }
         val fadeIn = AnimationUtils.loadAnimation(context, R.anim.fade_in)
         val fadeOut = AnimationUtils.loadAnimation(context, R.anim.fade_out)
         val toggleGroup = view.findViewById<MaterialButtonToggleGroup>(R.id.toggleButton)
@@ -87,6 +101,29 @@ class AccueilFragment : Fragment() {
                 }
             }
         }
+
+        val timePickerEditText = view.findViewById<TextInputEditText>(R.id.timePickerEditText)
+        timePickerEditText.setOnClickListener {
+            val timePicker = MaterialTimePicker.Builder()
+                .setTimeFormat(TimeFormat.CLOCK_12H)
+                .setHour(12)
+                .setMinute(10)
+                .setTitleText("Select Appointment Time")
+                .build()
+
+            timePicker.show(childFragmentManager, timePicker.toString())
+            timePicker.addOnPositiveButtonClickListener {
+                // Format the picked time to your desired format, e.g., "hh:mm a"
+                val selectedTime = String.format("%02d:%02d %s",
+                    timePicker.hour,
+                    timePicker.minute,
+                    if (timePicker.hour < 12) "AM" else "PM")
+
+                // Set the formatted time to the EditText
+                timePickerEditText.setText(selectedTime)
+            }
+        }
+
     }
 
 
