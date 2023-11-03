@@ -12,7 +12,6 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-
         val bottomNavigationView = findViewById<BottomNavigationView>(R.id.bottonnav)
         bottomNavigationView.setOnItemSelectedListener { item ->
             when(item.itemId) {
@@ -40,8 +39,6 @@ class MainActivity : AppCompatActivity() {
                 else -> false
             }
         }
-
-        // Charger le premier fragment par défaut
         if (savedInstanceState == null) {
             val fragment = AccueilFragment()
             supportFragmentManager.beginTransaction()

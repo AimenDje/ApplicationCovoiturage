@@ -5,7 +5,9 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import com.donovanSergeAimenHatim.uniroute.R
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.textfield.MaterialAutoCompleteTextView
 
 
@@ -42,7 +44,18 @@ class HistoriqueFragment : Fragment() {
         return inflater.inflate(R.layout.fragment_historique, container, false)
     }
 
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
 
+        val btnHistoriqueToronto: FloatingActionButton = view.findViewById(R.id.trajet1)
+        btnHistoriqueToronto.setOnClickListener {
+            activity?.supportFragmentManager?.beginTransaction()?.apply {
+                replace(R.id.fragment_container, MontrealTorontoFragment())
+                addToBackStack(null)
+                commit()
+            }
+        }
+    }
     companion object {
         /**
          * Use this factory method to create a new instance of
