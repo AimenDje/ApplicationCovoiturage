@@ -2,7 +2,10 @@ package com.donovanSergeAimenHatim.uniroute
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import com.donovanSergeAimenHatim.uniroute.ecrans.accueil.AccueilFragment
+import com.donovanSergeAimenHatim.uniroute.ecrans.logo.LogoFragment
 import com.donovanSergeAimenHatim.uniroute.ecrans.messagerie.MessagerieFragment
 import com.donovanSergeAimenHatim.uniroute.ecrans.profile.ProfileFragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
@@ -12,6 +15,7 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
         val bottomNavigationView = findViewById<BottomNavigationView>(R.id.bottonnav)
         bottomNavigationView.setOnItemSelectedListener { item ->
             when(item.itemId) {
