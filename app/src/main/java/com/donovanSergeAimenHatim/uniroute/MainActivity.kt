@@ -1,13 +1,11 @@
 package com.donovanSergeAimenHatim.uniroute
 
+import Vue
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.os.Handler
-import android.os.Looper
 import com.donovanSergeAimenHatim.uniroute.ecrans.accueil.AccueilFragment
-import com.donovanSergeAimenHatim.uniroute.ecrans.logo.LogoFragment
 import com.donovanSergeAimenHatim.uniroute.ecrans.messagerie.MessagerieFragment
-import com.donovanSergeAimenHatim.uniroute.ecrans.profile.ProfileFragment
+import com.donovanSergeAimenHatim.uniroute.ecrans.profil.ProfilFragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
 class MainActivity : AppCompatActivity() {
@@ -34,7 +32,7 @@ class MainActivity : AppCompatActivity() {
                     true
                 }
                 R.id.profile -> {
-                    val fragment = ProfileFragment()
+                    val fragment = ProfilFragment()
                     supportFragmentManager.beginTransaction()
                         .replace(R.id.fragment_container, fragment)
                         .commit()
@@ -44,7 +42,7 @@ class MainActivity : AppCompatActivity() {
             }
         }
         if (savedInstanceState == null) {
-            val fragment = AccueilFragment()
+            val fragment = Vue()
             supportFragmentManager.beginTransaction()
                 .replace(R.id.fragment_container, fragment)
                 .commit()

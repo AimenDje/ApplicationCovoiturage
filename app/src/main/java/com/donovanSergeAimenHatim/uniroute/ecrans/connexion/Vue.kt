@@ -53,7 +53,7 @@ class Vue : Fragment(), Model.View {
         progressBar.visibility = View.GONE
     }
 
-    override fun afficherConnexionRéussie(username: String) {
+    override fun affichageConnexionRéussie(username: String) {
         // Affichez le message de réussite ou naviguez vers la page suivante
         Toast.makeText(requireContext(), username, Toast.LENGTH_SHORT).show()
         val fragmentManager = requireActivity().supportFragmentManager
@@ -70,7 +70,7 @@ class Vue : Fragment(), Model.View {
         fragmentTransaction.commit()
     }
 
-    override fun afficherConnexionÉchouée(error: String) {
+    override fun affichageConnexionÉchouée(error: String) {
         // Affichez le message d'erreur à l'utilisateur
         Toast.makeText(requireContext(), error, Toast.LENGTH_SHORT).show()
 

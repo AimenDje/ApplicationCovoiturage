@@ -11,13 +11,13 @@ class Présentateur(private val view: Model.View) : Model.Presenter {
             // Simulation d'une connexion réussie après une courte attente (2 secondes)
             android.os.Handler().postDelayed({
                 view.cacherChargement()
-                view.afficherConnexionRéussie("Bienvenue "+username +"!")
+                view.affichageConnexionRéussie("Bienvenue "+username +"!")
             }, 2000)
         } else {
             // Simulation d'une erreur de connexion après une courte attente (2 secondes)
             android.os.Handler().postDelayed({
                 view.cacherChargement()
-                view.afficherConnexionÉchouée("Nom d'utilisateur ou mot de passe incorrect")
+                view.affichageConnexionÉchouée("Nom d'utilisateur ou mot de passe incorrect")
             }, 2000)
         }
     }
