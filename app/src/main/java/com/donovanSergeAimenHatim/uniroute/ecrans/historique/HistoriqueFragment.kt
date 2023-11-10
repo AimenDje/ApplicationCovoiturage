@@ -1,4 +1,4 @@
-package com.donovanSergeAimenHatim.uniroute.ecrans.messagerie
+package com.donovanSergeAimenHatim.uniroute.ecrans.historique
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -7,7 +7,11 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import com.donovanSergeAimenHatim.uniroute.R
-import com.donovanSergeAimenHatim.uniroute.ecrans.historique.HistoriqueFragment
+import com.google.android.material.floatingactionbutton.FloatingActionButton
+import com.google.android.material.textfield.MaterialAutoCompleteTextView
+
+
+
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -16,10 +20,10 @@ private const val ARG_PARAM2 = "param2"
 
 /**
  * A simple [Fragment] subclass.
- * Use the [MessagerieFragment.newInstance] factory method to
+ * Use the [HistoriqueFragment.newInstance] factory method to
  * create an instance of this fragment.
  */
-class MessagerieFragment : Fragment() {
+class HistoriqueFragment : Fragment() {
     // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
@@ -37,21 +41,21 @@ class MessagerieFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_messagerie, container, false)
+        return inflater.inflate(R.layout.fragment_historique, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val btnHistorique: Button = view.findViewById(R.id.btnHistorique)
-        btnHistorique.setOnClickListener {
+
+        val btnHistoriqueToronto: FloatingActionButton = view.findViewById(R.id.trajet1)
+        btnHistoriqueToronto.setOnClickListener {
             activity?.supportFragmentManager?.beginTransaction()?.apply {
-                replace(R.id.fragment_container, HistoriqueFragment())
+                replace(R.id.fragment_container, MontrealTorontoFragment())
                 addToBackStack(null)
                 commit()
             }
         }
     }
-
     companion object {
         /**
          * Use this factory method to create a new instance of
@@ -59,12 +63,12 @@ class MessagerieFragment : Fragment() {
          *
          * @param param1 Parameter 1.
          * @param param2 Parameter 2.
-         * @return A new instance of fragment MessagerieFragment.
+         * @return A new instance of fragment HistoriqueFragment.
          */
         // TODO: Rename and change types and number of parameters
         @JvmStatic
         fun newInstance(param1: String, param2: String) =
-            MessagerieFragment().apply {
+            HistoriqueFragment().apply {
                 arguments = Bundle().apply {
                     putString(ARG_PARAM1, param1)
                     putString(ARG_PARAM2, param2)
