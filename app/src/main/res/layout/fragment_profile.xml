@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ecrans.profile.ProfileFragment">
+    android:layout_gravity="center"
+    tools:context=".ecrans.profil.ProfileFragment">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -23,15 +24,13 @@
 
             <!-- drawable/ellipse_52.xml -->
             <!--suppress AndroidUnresolvableTag -->
-            <View
+            <ImageView
                 android:id="@+id/photo"
-                android:layout_width="150dp"
-                android:layout_height="100dp"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentTop="true"
+                android:layout_width="120dp"
+                android:layout_height="78dp"
                 android:layout_marginLeft="130dp"
                 android:layout_marginTop="79dp"
-                android:background="@drawable/arnold" />
+                android:background="@drawable/gradient_background" />
         </LinearLayout>
 
         <LinearLayout
@@ -40,7 +39,7 @@
             android:orientation="horizontal">
 
             <TextView
-                android:id="@+id/textNomPrenom"
+                android:id="@+id/nomPrenomText"
                 android:layout_width="match_parent"
                 android:layout_height="30dp"
                 android:layout_weight="1"
@@ -57,7 +56,7 @@
             android:orientation="horizontal">
 
             <TextView
-                android:id="@+id/textEmail"
+                android:id="@+id/emailText"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
@@ -76,7 +75,7 @@
             <TextView
                 android:id="@+id/textTéléphone"
                 android:layout_width="wrap_content"
-                android:layout_height="75sp"
+                android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:gravity="center_horizontal"
                 android:text="(514) 541-1452"
@@ -97,7 +96,7 @@
                 android:layout_weight="2"
                 android:gravity="center"
                 android:text="Nombre de covoiturage : 213"
-                android:textSize="18sp" />
+                android:textSize="14sp" />
         </LinearLayout>
 
         <LinearLayout
@@ -123,14 +122,14 @@
                 android:textSize="16sp" />
 
             <ImageView
-                android:id="@+id/imageView3"
+                android:id="@+id/imageLangue"
                 android:layout_width="24dp"
                 android:layout_height="20dp"
                 android:layout_weight="1"
                 app:srcCompat="@drawable/esp" />
 
             <ImageView
-                android:id="@+id/imageView4"
+                android:id="@+id/imageLangue1"
                 android:layout_width="20dp"
                 android:layout_height="20dp"
                 android:layout_weight="1"
@@ -139,15 +138,16 @@
         </LinearLayout>
 
         <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:layout_height="142dp"
             android:layout_weight="1"
+            android:gravity="center"
             android:orientation="horizontal">
 
             <TextView
                 android:id="@+id/textVoiture"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_width="422dp"
+                android:layout_height="107dp"
                 android:layout_weight="1"
                 android:gravity="center_horizontal"
                 android:text="Type de voiture:  Audi RS3 "
@@ -166,23 +166,38 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:gravity="center_horizontal"
-                android:text="Adresse:" />
+                android:text="Adresse:"
+                android:textSize="16sp" />
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="66dp"
             android:orientation="horizontal">
 
             <com.google.android.gms.maps.MapView
-                android:id="@+id/mapView2"
-                android:layout_width="300dp"
-                android:layout_height="285dp"
+                android:id="@+id/adresseView"
+                android:layout_width="200dp"
+                android:layout_height="166dp"
                 android:layout_gravity="center_vertical"
                 android:layout_weight="1"
                 android:accessibilityHeading="false"
-                android:foreground="@drawable/adresse"
                 tools:ignore="SpeakableTextPresentCheck" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="200dp"
+            android:layout_height="74dp"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <Button
+                android:layout_width="179dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center_horizontal|center_vertical"
+                android:text="Préférences" />
         </LinearLayout>
 
 

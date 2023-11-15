@@ -36,6 +36,7 @@ class Vue : Fragment(), Model.View {
         loginButton = view.findViewById(R.id.loginButton)
         progressBar = view.findViewById(R.id.progressBar)
 
+
         presenter = Présentateur(this)
 
         loginButton.setOnClickListener {
