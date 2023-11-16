@@ -9,4 +9,7 @@ class MessageModel {
     fun ajouterMessage(message:Message){
        listeDesMessages.add(message)
     }
+    fun supprimerUnMessage(message: Message){
+        listeDesMessages.remove(message)
+    }
 }
