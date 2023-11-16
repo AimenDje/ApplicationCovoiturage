@@ -12,7 +12,7 @@ import com.donovanSergeAimenHatim.uniroute.ecrans.accueil.AccueilFragment
 import com.donovanSergeAimenHatim.uniroute.ecrans.connexion.Model
 
 
-class Vue : Fragment(), Model.View {
+class ConnexionFragment : Fragment(), Model.View {
 
     private lateinit var usernameEditText: EditText
     private lateinit var passwordEditText: EditText
