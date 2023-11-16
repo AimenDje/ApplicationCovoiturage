@@ -1,13 +1,21 @@
 package com.donovanSergeAimenHatim.uniroute.ecrans.messagerie
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.TextView
+import androidx.lifecycle.lifecycleScope
 import com.donovanSergeAimenHatim.uniroute.R
+import com.donovanSergeAimenHatim.uniroute.UniRouteApp
 import com.donovanSergeAimenHatim.uniroute.ecrans.historique.HistoriqueFragment
+import com.donovanSergeAimenHatim.uniroute.sourceDeDonnées.SourceKelconke
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -50,6 +58,8 @@ class MessagerieFragment : Fragment() {
                 commit()
             }
         }
+
+
     }
 
     companion object {

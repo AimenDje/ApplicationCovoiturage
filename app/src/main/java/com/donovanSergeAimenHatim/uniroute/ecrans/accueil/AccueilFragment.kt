@@ -7,14 +7,24 @@ import android.view.View
 import android.view.ViewGroup
 import com.donovanSergeAimenHatim.uniroute.R
 import com.google.android.material.textfield.TextInputEditText
-import android.app.DatePickerDialog
 import android.view.animation.AnimationUtils
+import android.widget.Button
 import android.widget.LinearLayout
+import android.widget.Toast
+import androidx.lifecycle.lifecycleScope
+import com.donovanSergeAimenHatim.uniroute.ecrans.listTrajets.Trajets
+import com.donovanSergeAimenHatim.uniroute.ecrans.listTrajets.listTrajets
+import com.donovanSergeAimenHatim.uniroute.sourceDeDonnées.SourceKelconke
 import com.google.android.material.button.MaterialButtonToggleGroup
 import com.google.android.material.datepicker.MaterialDatePicker
+import com.google.android.material.slider.Slider
 import com.google.android.material.timepicker.MaterialTimePicker
 import com.google.android.material.timepicker.TimeFormat
-import java.util.*
+import kotlinx.coroutines.launch
+import com.google.gson.Gson
+import java.text.ParseException
+import java.text.SimpleDateFormat
+import java.util.Locale
 
 
 // TODO: Rename parameter arguments, choose names that match
@@ -101,6 +111,39 @@ class AccueilFragment : Fragment() {
                 }
             }
         }
+        val btnChercherCoVoiturage: Button = view.findViewById(R.id.BtnTrouverCoVoiturage)
+        btnChercherCoVoiturage.setOnClickListener {
+            val destinationInput = view?.findViewById<com.google.android.material.textfield.TextInputEditText>(R.id.destinationTrouver)?.text?.toString()
+            val dateInput = view?.findViewById<com.google.android.material.textfield.TextInputEditText>(R.id.datePickerEditText)?.text?.toString()
+            val nbPassagers = view?.findViewById<com.google.android.material.slider.Slider>(R.id.nbPassagerSlider)?.value?.toInt()
+            val dateFormat = SimpleDateFormat("MMM d, yyyy", Locale.ENGLISH)
+            val outputFormat = SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH)
+            val date = if (!dateInput.isNullOrEmpty()) {
+                try {
+                    dateFormat.parse(dateInput)?.let { outputFormat.format(it) }
+                } catch (e: ParseException) {
+                    null
+                }
+            } else {
+                null
+            }
+
+            val bundle = Bundle().apply {
+                putString("DESTINATION", if (destinationInput.isNullOrEmpty()) null else destinationInput)
+                putString("DATE", date)
+                putInt("NB_PASSAGERS", nbPassagers ?: 1)
+            }
+
+            val listTrajetsFragment = listTrajets().apply {
+                arguments = bundle
+            }
+
+            activity?.supportFragmentManager?.beginTransaction()?.apply {
+                replace(R.id.fragment_container, listTrajetsFragment)
+                addToBackStack(null)
+                commit()
+            }
+        }
 
         val timePickerEditText = view.findViewById<TextInputEditText>(R.id.timePickerEditText)
         timePickerEditText.setOnClickListener {
@@ -113,17 +156,34 @@ class AccueilFragment : Fragment() {
 
             timePicker.show(childFragmentManager, timePicker.toString())
             timePicker.addOnPositiveButtonClickListener {
-                // Format the picked time to your desired format, e.g., "hh:mm a"
                 val selectedTime = String.format("%02d:%02d %s",
                     timePicker.hour,
                     timePicker.minute,
                     if (timePicker.hour < 12) "AM" else "PM")
-
-                // Set the formatted time to the EditText
                 timePickerEditText.setText(selectedTime)
             }
         }
+        viewLifecycleOwner.lifecycleScope.launch {
+            val source = SourceKelconke()
+            val nomTable = "trajets"
+            val colonne = "villeDestination"
+            val condition = "villeDepart = 'Paris'"
+            val villeDestination = source.obtenirDonnées(
+                nomTable,
+                colonne,
+                condition
+            ) { jsonResponse ->
+                Gson().fromJson(jsonResponse, Trajets::class.java)
+            }
+            if (villeDestination != null) {
+                val text = "Hello toast!"
+                val duration = Toast.LENGTH_SHORT
 
+                val toast = Toast.makeText(context, text, duration)
+                toast.show()
+            } else {
+            }
+        }
     }
 
 

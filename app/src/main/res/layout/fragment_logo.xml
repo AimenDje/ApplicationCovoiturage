@@ -23,7 +23,7 @@
             android:textSize="28sp" />
 
         <ImageView
-            android:id="@+id/imageView2"
+            android:id="@+id/imageView_logo"
             android:layout_width="match_parent"
             android:layout_height="916dp"
             android:layout_weight="1"
@@ -32,11 +32,12 @@
 
         <ProgressBar
             android:id="@+id/progressBar"
-            style="?android:attr/progressBarStyle"
+            style="@style/Widget.AppCompat.ProgressBar"
             android:layout_width="match_parent"
-            android:layout_height="506dp"
+            android:layout_height="500dp"
             android:layout_weight="1"
-            android:background="@color/white" />
+            android:background="@color/white"
+            android:progressTint="@color/BlancRose" />
 
     </LinearLayout>
 </FrameLayout>
