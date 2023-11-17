@@ -86,11 +86,8 @@ class PreferenceFragment : Fragment() {
             } else {
                 présentateur.mettreAJourPréférence(nom, prénom, email, voiture, adresse, km, clair  )
 
-
             }
             }
-
-
     }
 
 
