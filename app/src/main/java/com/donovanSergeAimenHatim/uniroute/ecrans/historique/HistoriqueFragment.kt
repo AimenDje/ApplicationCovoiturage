@@ -6,35 +6,27 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.TextView
 import com.donovanSergeAimenHatim.uniroute.R
+import com.donovanSergeAimenHatim.uniroute.ecrans.listTrajets.listTrajets
 import com.google.android.material.floatingactionbutton.FloatingActionButton
-import com.google.android.material.textfield.MaterialAutoCompleteTextView
-
-
-
-
-// TODO: Rename parameter arguments, choose names that match
+/*// TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
 private const val ARG_PARAM1 = "param1"
 private const val ARG_PARAM2 = "param2"
 
 /**
  * A simple [Fragment] subclass.
- * Use the [HistoriqueFragment.newInstance] factory method to
+ * Use the [listTrajets.newInstance] factory method to
  * create an instance of this fragment.
- */
-class HistoriqueFragment : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
+ */*/
 
-    override fun onCreate(savedInstanceState: Bundle?) {
+class HistoriqueFragment : Fragment() {
+
+    override fun onCreate(savedInstanceState: Bundle?){
         super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
+
         }
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -44,35 +36,58 @@ class HistoriqueFragment : Fragment() {
         return inflater.inflate(R.layout.fragment_historique, container, false)
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+    override fun onViewCreated(view : View, savedInstanceState: Bundle?){
         super.onViewCreated(view, savedInstanceState)
+        var titre_vue1 : TextView = view.findViewById(R.id.titreHistoriqueTrajet)
+        var premier_trajet : TextView = view.findViewById(R.id.trajetMontrealToronto)
+        var deuxieme_trajet : TextView = view.findViewById(R.id.trajetCalgaryVancouver)
+        var troisieme_trajet : TextView = view.findViewById(R.id.trajetMississaugeHamilton)
+        var quatrieme_trajet : TextView = view.findViewById(R.id.trajetEdmontonWinnipeg)
+        var bouton_Trajet1 : FloatingActionButton = view.findViewById(R.id.btn_Trajet1)
+        var bouton_Trajet2 : FloatingActionButton = view.findViewById(R.id.btn_trajet2)
+        var bouton_Trajet3 : FloatingActionButton = view.findViewById(R.id.btn_trajet3)
+        var bouton_Trajet4 : FloatingActionButton = view.findViewById(R.id.btn_trajet4)
 
-        val btnHistoriqueToronto: FloatingActionButton = view.findViewById(R.id.trajet1)
-        btnHistoriqueToronto.setOnClickListener {
+
+        // Stockage et affichage dynamique des données sur le fragment de la liste des trajets
+        var présentateur_historique = PrésentateurHistorique(this);
+        titre_vue1.text = présentateur_historique.trajets.titre
+        premier_trajet.text = présentateur_historique.trajets.trajetMontrealToronto
+        deuxieme_trajet.text = présentateur_historique.trajets.trajetCalgaryVancouver
+        troisieme_trajet.text = présentateur_historique.trajets.trajetMississaugaHamilton
+        quatrieme_trajet.text = présentateur_historique.trajets.trajetEdmontonWinnipeg
+
+        // Les bouttons de redirection vers le fragment des details d'un trajet
+        bouton_Trajet1.setOnClickListener {
             activity?.supportFragmentManager?.beginTransaction()?.apply {
-                replace(R.id.fragment_container, MontrealTorontoFragment())
+                replace(R.id.fragment_container, DétailsHistoriqueFragment())
                 addToBackStack(null)
                 commit()
             }
         }
-    }
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment HistoriqueFragment.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            HistoriqueFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
-                }
+
+        bouton_Trajet2.setOnClickListener {
+            activity?.supportFragmentManager?.beginTransaction()?.apply {
+                replace(R.id.fragment_container, DétailsHistoriqueFragment())
+                addToBackStack(null)
+                commit()
             }
+        }
+
+        bouton_Trajet3.setOnClickListener {
+            activity?.supportFragmentManager?.beginTransaction()?.apply {
+                replace(R.id.fragment_container, DétailsHistoriqueFragment())
+                addToBackStack(null)
+                commit()
+            }
+        }
+
+        bouton_Trajet4.setOnClickListener {
+            activity?.supportFragmentManager?.beginTransaction()?.apply {
+                replace(R.id.fragment_container, DétailsHistoriqueFragment())
+                addToBackStack(null)
+                commit()
+            }
+        }
     }
 }
