@@ -12,7 +12,11 @@ import androidx.fragment.app.FragmentManager
 import com.donovanSergeAimenHatim.uniroute.R
 import com.donovanSergeAimenHatim.uniroute.ecrans.historique.HistoriqueFragment
 import com.donovanSergeAimenHatim.uniroute.péférences.PreferenceFragment
+import com.donovanSergeAimenHatim.uniroute.utilisateur.UtilisateurDataManager
 import com.google.android.gms.maps.MapView
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 
 
 class ProfileFragment : Fragment() {
@@ -52,70 +56,79 @@ class ProfileFragment : Fragment() {
         lagueParlée2 = view.findViewById(R.id.imageLangue1)
         typeVoiture= view.findViewById(R.id.textVoiture)
         adresse = view.findViewById(R.id.adresseView)
-
+        var id_utilisateur = 3 // ID utilisateur
         //on récupère les données a afficher à partir du présentateur
-        var présentateur = PrésentateurProfil(this)
-        val nomPhotoProfil: String = présentateur.profil.photo
+        var présentateur = PrésentateurProfil(this,)
+        var profil: ModèleProfile
+        GlobalScope.launch(Dispatchers.Main) {
+            profil = présentateur.chargerProfile(id_utilisateur)!!
+            if (profil != null) {
+                val nomPhotoProfil: String = profil.photo
 
-         // Obtenez l'ID de ressource correspondant au nom de l'image
-        val resId: Int = resources.getIdentifier(nomPhotoProfil, "drawable", requireContext().packageName)
-        // Vérifiez si l'ID de ressource est valide
-        if (resId != 0) {
-            // Chargez la photo de profil à partir des ressources et définissez-la dans l'ImageView
-            photoProfil.setImageResource(resId)
+                // Obtenez l'ID de ressource correspondant au nom de l'image
+                val resId: Int = resources.getIdentifier(nomPhotoProfil, "drawable", requireContext().packageName)
+                // Vérifiez si l'ID de ressource est valide
+                if (resId != 0) {
+                    // Chargez la photo de profil à partir des ressources et définissez-la dans l'ImageView
+                    photoProfil.setImageResource(resId)
 
-        } else {
-            // Si l'ID de ressource n'est pas valide, utilisez une image par défaut ou affichez un message d'erreur
-            photoProfil.setImageResource(R.drawable.adresse)
+                } else {
+                    // Si l'ID de ressource n'est pas valide, utilisez une image par défaut ou affichez un message d'erreur
+                    photoProfil.setImageResource(R.drawable.adresse)
+                }
+                // on modifie le nom et prénom
+                nomPrénom.setText(profil.prénom+ " "+ profil.nom)
+                // on modifie l'émail
+                email.setText(profil.email)
+                // on modifie le téléphone
+                téléphone.setText(profil.téléphone)
+                textCovoiturage.setText("Nombre de covoiturage: "+profil.nombre_covoiturage)
+                notes.setText("Notes en moyenne: " + profil.notes)
+
+                //Langues Parléés
+                var languesParlees: List<String> = profil.languesParlées
+                val premiereLangueImage: String? = languesParlees.get(0)
+
+                // Première Langue
+                val langue1: Int = resources.getIdentifier(premiereLangueImage, "drawable", requireContext().packageName)
+                // Vérifiez si l'ID de ressource est valide
+                if (resId != 0) {
+                    // Chargez la photo de profil à partir des ressources et définissez-la dans l'ImageView
+                    lagueParlée1.setImageResource(langue1)
+
+                }
+
+                // Deuxième langue
+                val deuxièmeLangueImage: String? = languesParlees.get(1)
+
+                // Obtenez l'ID de ressource correspondant au nom de l'image
+                val langue2: Int = resources.getIdentifier(deuxièmeLangueImage, "drawable", requireContext().packageName)
+                // Vérifiez si l'ID de ressource est valide
+                if (resId != 0) {
+                    // Chargez la photo de profil à partir des ressources et définissez-la dans l'ImageView
+                    lagueParlée2.setImageResource(langue2)
+
+                }
+
+                //On change le type de voiture
+                typeVoiture.setText("Type de voiture: " + profil.typeVoiture)
+                //On change l'adresse
+                val adresseImage: String? = profil.adresse
+
+                // Obtenez l'ID de ressource correspondant au nom de l'image
+                val adresseId: Int = resources.getIdentifier(adresseImage, "drawable", requireContext().packageName)
+                // Vérifiez si l'ID de ressource est valide
+                if (resId != 0) {
+                    // Chargez la photo de profil à partir des ressources et définissez-la dans l'ImageView
+                    adresse.setBackgroundResource(adresseId)
+
+
+                }
+            } else {
+                null
+            }
         }
-        // on modifie le nom et prénom
-        nomPrénom.setText(présentateur.profil.prénom+ " "+présentateur.profil.nom)
-        // on modifie l'émail
-        email.setText(présentateur.profil.email)
-        // on modifie le téléphone
-        téléphone.setText(présentateur.profil.téléphone)
-        textCovoiturage.setText("Nombre de covoiturage: "+présentateur.profil.nombre_covoiturage)
-        notes.setText("Notes en moyenne: " + présentateur.profil.notes)
 
-        //Langues Parléés
-        var languesParlees: List<String> = présentateur.profil.languesParlées
-        val premiereLangueImage: String? = languesParlees.get(0)
-
-        // Première Langue
-        val langue1: Int = resources.getIdentifier(premiereLangueImage, "drawable", requireContext().packageName)
-        // Vérifiez si l'ID de ressource est valide
-        if (resId != 0) {
-            // Chargez la photo de profil à partir des ressources et définissez-la dans l'ImageView
-            lagueParlée1.setImageResource(langue1)
-
-        }
-
-        // Deuxième langue
-        val deuxièmeLangueImage: String? = languesParlees.get(1)
-
-        // Obtenez l'ID de ressource correspondant au nom de l'image
-        val langue2: Int = resources.getIdentifier(deuxièmeLangueImage, "drawable", requireContext().packageName)
-        // Vérifiez si l'ID de ressource est valide
-        if (resId != 0) {
-            // Chargez la photo de profil à partir des ressources et définissez-la dans l'ImageView
-            lagueParlée2.setImageResource(langue2)
-
-        }
-
-        //On change le type de voiture
-        typeVoiture.setText("Type de voiture: " + présentateur.profil.typeVoiture)
-        //On change l'adresse
-        val adresseImage: String? = présentateur.profil.adresse
-
-        // Obtenez l'ID de ressource correspondant au nom de l'image
-        val adresseId: Int = resources.getIdentifier(adresseImage, "drawable", requireContext().packageName)
-        // Vérifiez si l'ID de ressource est valide
-        if (resId != 0) {
-            // Chargez la photo de profil à partir des ressources et définissez-la dans l'ImageView
-            adresse.setBackgroundResource(adresseId)
-
-
-        }
 
         val btnPréférences: Button = view.findViewById(R.id.btnPréférences)
         btnPréférences.setOnClickListener {

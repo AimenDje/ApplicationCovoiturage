@@ -34,7 +34,7 @@ class SourceKelconke() : SourceDeDonnées {
     ): T? {
         return withContext(Dispatchers.IO) {
             try {
-                val url = "https://donovanbeulze.com/unirouteAPI/" // Remplacez avec l'URL de votre API
+                val url = "https://donovanbeulze.com/unirouteAPI/"
                 val response: HttpResponse = client.request(url) {
                     method = HttpMethod.Get
                     parameter("table", nomTable)
