@@ -196,7 +196,6 @@
                     app:boxBackgroundMode="none">
 
                     <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/textFieldDepartProposer"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:background="@drawable/rounded_input_background"
@@ -234,7 +233,6 @@
                     app:boxBackgroundMode="none">
 
                     <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/textFIeldDestinationProposer"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:background="@drawable/rounded_input_background"
@@ -282,7 +280,6 @@
 
                     <!-- Slider -->
                     <com.google.android.material.slider.Slider
-                        android:id="@+id/nbPassagerProposer"
                         android:layout_width="179dp"
                         android:layout_height="80dp"
                         android:orientation="vertical"
@@ -308,7 +305,6 @@
                     android:hint="Auto">
 
                     <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/textFieldAutoProposer"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content" />
 

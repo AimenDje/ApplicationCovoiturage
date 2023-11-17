@@ -17,14 +17,9 @@ import com.donovanSergeAimenHatim.uniroute.ecrans.listTrajets.listTrajets
 import com.donovanSergeAimenHatim.uniroute.sourceDeDonnées.SourceKelconke
 import com.google.android.material.button.MaterialButtonToggleGroup
 import com.google.android.material.datepicker.MaterialDatePicker
-import com.google.android.material.slider.Slider
 import com.google.android.material.timepicker.MaterialTimePicker
 import com.google.android.material.timepicker.TimeFormat
-import kotlinx.coroutines.launch
-import com.google.gson.Gson
-import java.text.ParseException
-import java.text.SimpleDateFormat
-import java.util.Locale
+import java.util.*
 
 
 // TODO: Rename parameter arguments, choose names that match
@@ -147,15 +142,27 @@ class AccueilFragment : Fragment(), AjoutTrajetContract.View {
                 null
             }
 
-            val bundle = Bundle().apply {
-                putString("DESTINATION", if (destinationInput.isNullOrEmpty()) null else destinationInput)
-                putString("DATE", date)
-                putInt("NB_PASSAGERS", nbPassagers ?: 1)
-            }
+        val timePickerEditText = view.findViewById<TextInputEditText>(R.id.timePickerEditText)
+        timePickerEditText.setOnClickListener {
+            val timePicker = MaterialTimePicker.Builder()
+                .setTimeFormat(TimeFormat.CLOCK_12H)
+                .setHour(12)
+                .setMinute(10)
+                .setTitleText("Select Appointment Time")
+                .build()
 
-            val listTrajetsFragment = listTrajets().apply {
-                arguments = bundle
+            timePicker.show(childFragmentManager, timePicker.toString())
+            timePicker.addOnPositiveButtonClickListener {
+                // Format the picked time to your desired format, e.g., "hh:mm a"
+                val selectedTime = String.format("%02d:%02d %s",
+                    timePicker.hour,
+                    timePicker.minute,
+                    if (timePicker.hour < 12) "AM" else "PM")
+
+                // Set the formatted time to the EditText
+                timePickerEditText.setText(selectedTime)
             }
+        }
 
             activity?.supportFragmentManager?.beginTransaction()?.apply {
                 replace(R.id.fragment_container, listTrajetsFragment)

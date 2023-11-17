@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ecrans.profile.ProfileFragment">
+    android:layout_gravity="center"
+    tools:context=".ecrans.profil.ProfileFragment">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -68,17 +69,88 @@
             android:id="@+id/textCovoiturage"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal|center_vertical"
-            android:layout_weight="2"
-            android:gravity="center"
-            android:text="Nombre de covoiturage : 213"
-            android:textSize="18sp" />
+            android:orientation="horizontal">
+
+            <!-- drawable/ellipse_52.xml -->
+            <!--suppress AndroidUnresolvableTag -->
+            <ImageView
+                android:id="@+id/photo"
+                android:layout_width="120dp"
+                android:layout_height="78dp"
+                android:layout_marginLeft="130dp"
+                android:layout_marginTop="79dp"
+                android:background="@drawable/gradient_background" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/nomPrenomText"
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="Arnold Gauthier"
+                android:textColor="#3F51B5"
+                android:textSize="24sp"
+                android:textStyle="bold|italic" />
+        </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/emailText"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center_horizontal"
+                android:text="argauthier@gmail.com "
+                android:textColor="#3F51B5"
+                android:textSize="16sp"
+                android:textStyle="italic" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/textTéléphone"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center_horizontal"
+                android:text="(514) 541-1452"
+                android:textColor="#3F51B5"
+                android:textSize="16sp"
+                android:textStyle="italic" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="52dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/textCovoiturage"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="2"
+                android:gravity="center"
+                android:text="Nombre de covoiturage : 213"
+                android:textSize="14sp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="35dp"
             android:orientation="horizontal">
 
             <TextView
@@ -99,14 +171,14 @@
                 android:textSize="16sp" />
 
             <ImageView
-                android:id="@+id/imageView3"
+                android:id="@+id/imageLangue"
                 android:layout_width="24dp"
                 android:layout_height="20dp"
                 android:layout_weight="1"
                 app:srcCompat="@drawable/esp" />
 
             <ImageView
-                android:id="@+id/imageView4"
+                android:id="@+id/imageLangue1"
                 android:layout_width="20dp"
                 android:layout_height="20dp"
                 android:layout_weight="1"
@@ -114,14 +186,23 @@
 
         </LinearLayout>
 
-        <TextView
-            android:id="@+id/textVoiture"
-            android:layout_width="match_parent"
-            android:layout_height="200dp"
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="142dp"
             android:layout_weight="1"
-            android:gravity="center_horizontal"
-            android:text="Type de voiture:  Audi RS3 "
-            android:textSize="16sp" />
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/textVoiture"
+                android:layout_width="422dp"
+                android:layout_height="107dp"
+                android:layout_weight="1"
+                android:gravity="center_horizontal"
+                android:text="Type de voiture:  Audi RS3 "
+                android:textSize="16sp" />
+
+        </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -134,18 +215,39 @@
                 android:layout_height="79dp"
                 android:layout_weight="1"
                 android:gravity="center_horizontal"
-                android:text="Adresse:" />
+                android:text="Adresse:"
+                android:textSize="16sp" />
+        </LinearLayout>
 
-            <ImageView
-                android:id="@+id/imageView"
-                android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="66dp"
+            android:orientation="horizontal">
+
+            <com.google.android.gms.maps.MapView
+                android:id="@+id/adresseView"
+                android:layout_width="200dp"
+                android:layout_height="166dp"
+                android:layout_gravity="center_vertical"
+                android:layout_weight="1"
+                android:accessibilityHeading="false"
+                tools:ignore="SpeakableTextPresentCheck" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="200dp"
+            android:layout_height="74dp"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/btnPréférences"
+                android:layout_width="179dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:rotationX="0"
-                android:scaleType="centerCrop"
-                android:scaleX="1"
-                android:scaleY="1"
-                android:src="@drawable/adresse" />
+                android:gravity="center_horizontal|center_vertical"
+                android:text="Préférences" />
         </LinearLayout>
 
 
