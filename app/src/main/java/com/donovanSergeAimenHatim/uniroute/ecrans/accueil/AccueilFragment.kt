@@ -19,6 +19,10 @@ import com.google.android.material.button.MaterialButtonToggleGroup
 import com.google.android.material.datepicker.MaterialDatePicker
 import com.google.android.material.timepicker.MaterialTimePicker
 import com.google.android.material.timepicker.TimeFormat
+import com.google.gson.Gson
+import kotlinx.coroutines.launch
+import java.text.ParseException
+import java.text.SimpleDateFormat
 import java.util.*
 
 
@@ -165,7 +169,7 @@ class AccueilFragment : Fragment(), AjoutTrajetContract.View {
         }
 
             activity?.supportFragmentManager?.beginTransaction()?.apply {
-                replace(R.id.fragment_container, listTrajetsFragment)
+                replace(R.id.fragment_container, listTrajets())
                 addToBackStack(null)
                 commit()
             }

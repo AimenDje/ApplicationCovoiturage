@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.TextView
 import com.donovanSergeAimenHatim.uniroute.R
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.textfield.MaterialAutoCompleteTextView
@@ -46,11 +47,50 @@ class HistoriqueFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-        val btnHistoriqueToronto: FloatingActionButton = view.findViewById(R.id.trajet1)
-        btnHistoriqueToronto.setOnClickListener {
+        var titre_vue1 : TextView = view.findViewById(R.id.titreHistoriqueTrajet)
+        var premier_trajet : TextView = view.findViewById(R.id.trajetMontrealToronto)
+        var deuxieme_trajet : TextView = view.findViewById(R.id.trajetCalgaryVancouver)
+        var troisieme_trajet : TextView = view.findViewById(R.id.trajetMississaugeHamilton)
+        var quatrieme_trajet : TextView = view.findViewById(R.id.trajetEdmontonWinnipeg)
+        var bouton_Trajet1 : FloatingActionButton = view.findViewById(R.id.btn_Trajet1)
+        var bouton_Trajet2 : FloatingActionButton = view.findViewById(R.id.btn_trajet2)
+        var bouton_Trajet3 : FloatingActionButton = view.findViewById(R.id.btn_trajet3)
+        var bouton_Trajet4 : FloatingActionButton = view.findViewById(R.id.btn_trajet4)
+        // Stockage et affichage dynamique des données sur le fragment de la liste des trajets
+        var présentateur_historique = PrésentateurHistorique(this);
+        titre_vue1.text = présentateur_historique.trajets.titre
+        premier_trajet.text = présentateur_historique.trajets.trajetMontrealToronto
+        deuxieme_trajet.text = présentateur_historique.trajets.trajetCalgaryVancouver
+        troisieme_trajet.text = présentateur_historique.trajets.trajetMississaugaHamilton
+        quatrieme_trajet.text = présentateur_historique.trajets.trajetEdmontonWinnipeg
+            bouton_Trajet1.setOnClickListener {
             activity?.supportFragmentManager?.beginTransaction()?.apply {
                 replace(R.id.fragment_container, MontrealTorontoFragment())
+                addToBackStack(null)
+                commit()
+            }
+        }
+
+
+        bouton_Trajet2.setOnClickListener {
+            activity?.supportFragmentManager?.beginTransaction()?.apply {
+                replace(R.id.fragment_container, DétailsHistoriqueFragment())
+                addToBackStack(null)
+                commit()
+            }
+        }
+
+        bouton_Trajet3.setOnClickListener {
+            activity?.supportFragmentManager?.beginTransaction()?.apply {
+                replace(R.id.fragment_container, DétailsHistoriqueFragment())
+                addToBackStack(null)
+                commit()
+            }
+        }
+
+        bouton_Trajet4.setOnClickListener {
+            activity?.supportFragmentManager?.beginTransaction()?.apply {
+                replace(R.id.fragment_container, DétailsHistoriqueFragment())
                 addToBackStack(null)
                 commit()
             }

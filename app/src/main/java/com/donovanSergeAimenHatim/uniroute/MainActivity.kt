@@ -1,6 +1,5 @@
 package com.donovanSergeAimenHatim.uniroute
 
-import Vue
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import com.donovanSergeAimenHatim.uniroute.ecrans.accueil.AccueilFragment
@@ -41,7 +40,7 @@ class MainActivity : AppCompatActivity() {
             }
         }
         if (savedInstanceState == null) {
-            val fragment = Vue()
+            val fragment = AccueilFragment()
             supportFragmentManager.beginTransaction()
                 .replace(R.id.fragment_container, fragment)
                 .commit()
