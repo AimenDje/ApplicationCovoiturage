@@ -27,6 +27,7 @@ class ProfileFragment : Fragment() {
     private lateinit var lagueParlée2: ImageView
     private lateinit var typeVoiture: TextView
     private lateinit var adresse: MapView
+    private lateinit var buttonHistorique: Button
 
 
     override fun onCreateView(
@@ -117,6 +118,7 @@ class ProfileFragment : Fragment() {
 
         }
 
+        //charger la page préférences
         val btnPréférences: Button = view.findViewById(R.id.btnPréférences)
         btnPréférences.setOnClickListener {
             activity?.supportFragmentManager?.beginTransaction()?.apply {
@@ -125,10 +127,17 @@ class ProfileFragment : Fragment() {
                 commit()
             }
         }
+        //charger la page historique
+        val btnHistorique: Button = view.findViewById(R.id.btnHistorique1)
+        btnHistorique.setOnClickListener {
+            activity?.supportFragmentManager?.beginTransaction()?.apply {
+                replace(R.id.fragment_container, HistoriqueFragment())
+                addToBackStack(null)
+                commit()
+            }
+        }
 
     }
-
-
 
 
     /* companion object {
