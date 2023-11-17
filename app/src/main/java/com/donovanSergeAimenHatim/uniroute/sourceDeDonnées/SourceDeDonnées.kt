@@ -9,5 +9,10 @@ interface SourceDeDonnées {
         condition: String,
         transform: (String) -> T
     ): T?
+
+    suspend fun ajouterDonnee(
+        nomTable: String,
+        donnees: Map<String, Any>
+    ): Boolean
 }
 

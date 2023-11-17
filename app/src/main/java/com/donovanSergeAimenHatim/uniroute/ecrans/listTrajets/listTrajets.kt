@@ -118,7 +118,6 @@ class listTrajets : Fragment(), TrajetsContract.View{
             val autoView = trajetView.findViewById<TextView>(R.id.textView_trajetSelectionnerAuto)
             val priseCharge = trajetView.findViewById<TextView>(R.id.textView_trajetSelectionnerDetail)
             val contactBouton = trajetView.findViewById<Button>(R.id.contactBtn)
-            var utilisateurTrajet : Utilisateur? = null
             GlobalScope.launch(Dispatchers.Main) {
                 val utilisateur = presenter.chargerUtilisateur(trajet.utilisateurId)
                 if (utilisateur != null) {

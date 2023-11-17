@@ -1,4 +1,4 @@
-package com.donovanSergeAimenHatim.uniroute.model
+package com.donovanSergeAimenHatim.uniroute.ecrans.messagerie
 data class Message(val émmeteur: String, val contenu_du_message: String)
 
 class MessageModel {
@@ -6,7 +6,7 @@ class MessageModel {
     fun reccupererMessages():List<Message>{
         return listeDesMessages
     }
-    fun ajouterMessage(message:Message){
+    fun ajouterMessage(message: Message){
        listeDesMessages.add(message)
     }
     fun supprimerUnMessage(message: Message){
