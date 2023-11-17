@@ -5,7 +5,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import com.donovanSergeAimenHatim.uniroute.ecrans.accueil.AccueilFragment
 import com.donovanSergeAimenHatim.uniroute.ecrans.messagerie.MessagerieFragment
-import com.donovanSergeAimenHatim.uniroute.ecrans.profil.ProfilFragment
+import com.donovanSergeAimenHatim.uniroute.ecrans.profil.ProfileFragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
 class MainActivity : AppCompatActivity() {
@@ -13,7 +13,6 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-
         val bottomNavigationView = findViewById<BottomNavigationView>(R.id.bottonnav)
         bottomNavigationView.setOnItemSelectedListener { item ->
             when(item.itemId) {
@@ -32,7 +31,7 @@ class MainActivity : AppCompatActivity() {
                     true
                 }
                 R.id.profile -> {
-                    val fragment = ProfilFragment()
+                    val fragment = ProfileFragment()
                     supportFragmentManager.beginTransaction()
                         .replace(R.id.fragment_container, fragment)
                         .commit()
@@ -48,4 +47,6 @@ class MainActivity : AppCompatActivity() {
                 .commit()
         }
     }
+
+
 }

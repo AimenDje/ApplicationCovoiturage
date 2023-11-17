@@ -4,8 +4,8 @@ interface Model {
     interface View {
         fun afficherChargement()
         fun cacherChargement()
-        fun affichageConnexionRéussie(username: String)
-        fun affichageConnexionÉchouée(error: String)
+        fun afficherConnexionRéussie(username: String)
+        fun afficherConnexionÉchouée(error: String)
     }
 
     interface Presenter {
