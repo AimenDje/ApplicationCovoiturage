@@ -1,15 +1,25 @@
 package com.donovanSergeAimenHatim.uniroute
 
 import android.app.Application
-import android.widget.Toast
-import com.donovanSergeAimenHatim.uniroute.sourceDeDonnées.SourceKelconke
-import java.sql.Connection
-import java.sql.DriverManager
-import java.sql.Statement
 
+// Déclaration de la classe UniRouteApp qui hérite de Application
+class UniRouteApp : Application() {
+    // Variable privée pour stocker l'identifiant de l'utilisateur
+    private var utilisateurId: Int = 99 // ID par défaut est 99, pour Patrick Lafrance
 
-class UniRouteApp : Application(){
+    // Surcharge de la méthode onCreate, appelée lors de la création de l'application
     override fun onCreate() {
         super.onCreate()
+        // Ici, vous pourriez initialiser des ressources globales si nécessaire
+    }
+
+    // Méthode publique pour obtenir l'ID de l'utilisateur actuellement stocké
+    fun getUtilisateurID(): Int {
+        return utilisateurId
+    }
+
+    // Méthode publique pour définir un nouvel ID utilisateur
+    fun setUtilisateurID(nouvelleID: Int) {
+        utilisateurId = nouvelleID
     }
 }
