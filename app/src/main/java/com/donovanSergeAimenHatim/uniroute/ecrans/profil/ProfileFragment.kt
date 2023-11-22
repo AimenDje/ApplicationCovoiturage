@@ -40,6 +40,7 @@ class ProfileFragment : Fragment() {
     }
 
 
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -56,7 +57,7 @@ class ProfileFragment : Fragment() {
 
         //on récupère les données a afficher à partir du présentateur
         var présentateur = PrésentateurProfil(this)
-        val nomPhotoProfil: String = présentateur.profil.photo
+        val nomPhotoProfil: String? = présentateur.obrenirUnProfilUtilisateur("Gauthier")?.photo
 
          // Obtenez l'ID de ressource correspondant au nom de l'image
         val resId: Int = resources.getIdentifier(nomPhotoProfil, "drawable", requireContext().packageName)
@@ -70,17 +71,20 @@ class ProfileFragment : Fragment() {
             photoProfil.setImageResource(R.drawable.adresse)
         }
         // on modifie le nom et prénom
-        nomPrénom.setText(présentateur.profil.prénom+ " "+présentateur.profil.nom)
+        val leNom: String? = présentateur.obrenirUnProfilUtilisateur("Gauthier")?.nom
+        val lePrénom: String? = présentateur.obrenirUnProfilUtilisateur("Gauthier")?.prénom
+        nomPrénom.setText(lePrénom+ " "+leNom)
+
         // on modifie l'émail
-        email.setText(présentateur.profil.email)
+        email.setText(présentateur.obrenirUnProfilUtilisateur("Gauthier")!!.email)
         // on modifie le téléphone
-        téléphone.setText(présentateur.profil.téléphone)
-        textCovoiturage.setText("Nombre de covoiturage: "+présentateur.profil.nombre_covoiturage)
-        notes.setText("Notes en moyenne: " + présentateur.profil.notes)
+        téléphone.setText(présentateur.obrenirUnProfilUtilisateur("Gauthier")!!.téléphone)
+        textCovoiturage.setText("Nombre de covoiturage: "+présentateur.obrenirUnProfilUtilisateur("Gauthier")!!.nombre_covoiturage)
+        notes.setText("Notes en moyenne: " + présentateur.obrenirUnProfilUtilisateur("Gauthier")!!.notes)
 
         //Langues Parléés
-        var languesParlees: List<String> = présentateur.profil.languesParlées
-        val premiereLangueImage: String? = languesParlees.get(0)
+        var languesParlees: List<String>? = présentateur.obrenirUnProfilUtilisateur("Gauthier")!!.languesParlées
+        val premiereLangueImage: String? = languesParlees?.get(0)
 
         // Première Langue
         val langue1: Int = resources.getIdentifier(premiereLangueImage, "drawable", requireContext().packageName)
@@ -92,7 +96,7 @@ class ProfileFragment : Fragment() {
         }
 
         // Deuxième langue
-        val deuxièmeLangueImage: String? = languesParlees.get(1)
+        val deuxièmeLangueImage: String? = languesParlees?.get(1)
 
         // Obtenez l'ID de ressource correspondant au nom de l'image
         val langue2: Int = resources.getIdentifier(deuxièmeLangueImage, "drawable", requireContext().packageName)
@@ -104,9 +108,9 @@ class ProfileFragment : Fragment() {
         }
 
         //On change le type de voiture
-        typeVoiture.setText("Type de voiture: " + présentateur.profil.typeVoiture)
+        typeVoiture.setText("Type de voiture: " + présentateur.obrenirUnProfilUtilisateur("Gauthier")!!.typeVoiture)
         //On change l'adresse
-        val adresseImage: String? = présentateur.profil.adresse
+        val adresseImage: String? = présentateur.obrenirUnProfilUtilisateur("Gauthier")!!.adresse
 
         // Obtenez l'ID de ressource correspondant au nom de l'image
         val adresseId: Int = resources.getIdentifier(adresseImage, "drawable", requireContext().packageName)
@@ -138,6 +142,10 @@ class ProfileFragment : Fragment() {
         }
 
     }
+
+
+
+
 
 
     /* companion object {

@@ -44,7 +44,7 @@
                 android:layout_height="30dp"
                 android:layout_weight="1"
                 android:gravity="center"
-                android:text="Arnold Gauthier"
+                android:text="Arnold Gauth"
                 android:textColor="#3F51B5"
                 android:textSize="24sp"
                 android:textStyle="bold|italic" />
@@ -78,7 +78,7 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:gravity="center_horizontal"
-                android:text="(514) 541-1452"
+                android:text="(514) 541-14"
                 android:textColor="#3F51B5"
                 android:textSize="16sp"
                 android:textStyle="italic" />
