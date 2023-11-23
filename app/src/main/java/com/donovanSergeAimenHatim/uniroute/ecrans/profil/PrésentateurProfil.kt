@@ -30,6 +30,7 @@ class PrésentateurProfil (val vue : ProfileFragment) {
         }
         return utilisateurRecherché
     }
+    
 
 
 

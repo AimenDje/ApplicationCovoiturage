@@ -12,6 +12,8 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 
 import com.donovanSergeAimenHatim.uniroute.R
+import com.donovanSergeAimenHatim.uniroute.ecrans.profil.ProfileFragment
+import com.donovanSergeAimenHatim.uniroute.ecrans.profil.PrésentateurProfil
 
 class PreferenceFragment : Fragment() {
 
@@ -26,6 +28,9 @@ class PreferenceFragment : Fragment() {
     private lateinit var themeSombre: RadioButton
     private lateinit var buttonEnregistrer: Button
     private lateinit var présentateur: PrésentateurPréférences
+    private lateinit var présentateurProfil : PrésentateurProfil
+
+
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -47,6 +52,13 @@ class PreferenceFragment : Fragment() {
         themeSombre = view.findViewById(R.id.radioButtonThemeSombre)
         buttonEnregistrer = view.findViewById(R.id.buttonEnregistrer)
         présentateur = PrésentateurPréférences(this)
+        présentateurProfil = PrésentateurProfil(ProfileFragment())
+
+        nouveauNom.setText(présentateurProfil.obrenirUnProfilUtilisateur("Gauthier")?.nom)
+        nouveauPrénom.setText(présentateurProfil.obrenirUnProfilUtilisateur("Gauthier")?.prénom)
+        nouvelEmail.setText(présentateurProfil.obrenirUnProfilUtilisateur("Gauthier")?.email)
+        nouvelleVoiture.setText(présentateurProfil.obrenirUnProfilUtilisateur("Gauthier")?.typeVoiture)
+        nouvelleAdresse.setText(présentateurProfil.obrenirUnProfilUtilisateur("Gauthier")?.adresse)
 
         affichagekm.isChecked = true
         themeClair.isChecked = true
@@ -75,15 +87,16 @@ class PreferenceFragment : Fragment() {
 
         buttonEnregistrer.setOnClickListener {
             // Vérifier si les champs sont vides
-            if (nouveauNom.text.toString().isEmpty() || nouveauNom.text.toString().equals("Nouveau Nom")||
-                nouveauPrénom.text.toString().isEmpty() || nouveauPrénom.text.toString().equals("Nouveau Prénom")                                           ||
-                nouvelEmail.text.toString().isEmpty() || nouvelEmail.text.toString().equals("Nouvel email")||
-                nouvelleVoiture.text.toString().isEmpty() || nouvelleVoiture.text.toString().equals("Nouvelle voiture")||
-                nouvelleAdresse.text.toString().isEmpty() ||  nouvelleAdresse.text.toString().equals("Nouvelle adresse")
+            if (nouveauNom.text.toString().isEmpty() ||
+                nouveauPrénom.text.toString().isEmpty() ||
+                nouvelEmail.text.toString().isEmpty() ||
+                nouvelleVoiture.text.toString().isEmpty() ||
+                nouvelleAdresse.text.toString().isEmpty()
             ) {
                 // Afficher une alerte si les champs sont vides
                 Toast.makeText(requireContext(), "Vueillez remplir tous les champs", Toast.LENGTH_SHORT).show()
             } else {
+                Toast.makeText(requireContext(), "Vos informations seront mises à jour", Toast.LENGTH_SHORT).show()
                 présentateur.mettreAJourPréférence(nom, prénom, email, voiture, adresse, km, clair  )
 
             }
@@ -123,9 +136,7 @@ class PreferenceFragment : Fragment() {
                 themeClair.isChecked = false
             }
         }
-
     }
-
     companion object {
         /**
          * Use this factory method to create a new instance of
