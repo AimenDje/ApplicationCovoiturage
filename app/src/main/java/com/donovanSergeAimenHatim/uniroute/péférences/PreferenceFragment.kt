@@ -29,6 +29,7 @@ class PreferenceFragment : Fragment() {
     private lateinit var buttonEnregistrer: Button
     private lateinit var présentateur: PrésentateurPréférences
     private lateinit var présentateurProfil : PrésentateurProfil
+    private lateinit var utilisateurÀmodifier :String
 
 
 
@@ -97,7 +98,7 @@ class PreferenceFragment : Fragment() {
                 Toast.makeText(requireContext(), "Vueillez remplir tous les champs", Toast.LENGTH_SHORT).show()
             } else {
                 Toast.makeText(requireContext(), "Vos informations seront mises à jour", Toast.LENGTH_SHORT).show()
-                présentateur.mettreAJourPréférence(nom, prénom, email, voiture, adresse, km, clair  )
+                présentateur.mettreAJourPréférence( "Gauthier", nom, prénom, email, voiture, adresse)
 
             }
             }

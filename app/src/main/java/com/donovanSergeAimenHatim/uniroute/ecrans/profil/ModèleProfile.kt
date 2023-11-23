@@ -14,10 +14,10 @@ data class ModèleProfile(
     var typeVoiture : String = "",
     var adresse: String  = "",
  ) {
-    private var _source = SourceKelconke()
+    private val _source = SourceKelconke()
 
 
-    fun obtenirProfils (): List<ModèleProfile>? {
+    fun obtenirProfils (): MutableList<ModèleProfile>? {
 
         return _source.obtenirProfils()
     }
