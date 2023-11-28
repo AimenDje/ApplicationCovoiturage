@@ -19,4 +19,11 @@ data class ModèlePréférences( var utilisateurÀModifier:String = "",
         _source.modifierProfil(utilisateurÀModifier, nom, prénom, email, voiture, adresse)
 
     }
+    fun modifierTheme (themeClair: Boolean){
+
+    }
+
+    fun modifierAffichageDistance (themeClair: Boolean){
+
+    }
 }

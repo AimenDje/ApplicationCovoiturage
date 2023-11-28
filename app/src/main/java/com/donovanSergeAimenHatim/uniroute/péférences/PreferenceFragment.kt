@@ -71,20 +71,21 @@ class PreferenceFragment : Fragment() {
         val email = nouvelEmail.text.toString()
         val voiture = nouvelleVoiture.text.toString()
         val adresse = nouvelleAdresse.text.toString()
-        val km : Boolean
-        val clair : Boolean
-        if(themeClair.isChecked) {
-            km = true
+        var affichageDistancekm : Boolean
+        var themeClairAffichage : Boolean
+
+
+        if(affichagekm.isChecked) {
+            affichageDistancekm = true
+
         }else {
-            km = false
+            affichageDistancekm = false
         }
         if(themeClair.isChecked){
-            clair = true
+            themeClairAffichage = true
         }else {
-            clair = false
+            themeClairAffichage = false
         }
-
-
 
         buttonEnregistrer.setOnClickListener {
             // Vérifier si les champs sont vides
@@ -94,15 +95,17 @@ class PreferenceFragment : Fragment() {
                 nouvelleVoiture.text.toString().isEmpty() ||
                 nouvelleAdresse.text.toString().isEmpty()
             ) {
+
                 // Afficher une alerte si les champs sont vides
                 Toast.makeText(requireContext(), "Vueillez remplir tous les champs", Toast.LENGTH_SHORT).show()
             } else {
                 Toast.makeText(requireContext(), "Vos informations seront mises à jour", Toast.LENGTH_SHORT).show()
-                présentateur.mettreAJourPréférence( "Gauthier", nom, prénom, email, voiture, adresse)
+                présentateur.mettreAJourPréférence( "Gauthier", nom, prénom, email, voiture, adresse, affichageDistancekm, themeClairAffichage )
 
             }
             }
     }
+
 
 
     override fun onCreateView(
