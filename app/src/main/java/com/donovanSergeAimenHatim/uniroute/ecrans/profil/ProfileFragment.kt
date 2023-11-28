@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
+import android.widget.Toast
 import androidx.fragment.app.FragmentManager
 import com.donovanSergeAimenHatim.uniroute.R
 import com.donovanSergeAimenHatim.uniroute.ecrans.historique.HistoriqueFragment
@@ -52,15 +53,16 @@ class ProfileFragment : Fragment() {
         notes = view.findViewById(R.id.textNotes)
         lagueParlée1 = view.findViewById(R.id.imageLangue)
         lagueParlée2 = view.findViewById(R.id.imageLangue1)
-        typeVoiture= view.findViewById(R.id.textVoiture)
+        typeVoiture = view.findViewById(R.id.textVoiture)
         adresse = view.findViewById(R.id.adresseView)
 
         //on récupère les données a afficher à partir du présentateur
         var présentateur = PrésentateurProfil(this)
         val nomPhotoProfil: String? = présentateur.obrenirUnProfilUtilisateur("Gauthier")?.photo
 
-         // Obtenez l'ID de ressource correspondant au nom de l'image
-        val resId: Int = resources.getIdentifier(nomPhotoProfil, "drawable", requireContext().packageName)
+        // Obtenez l'ID de ressource correspondant au nom de l'image
+        val resId: Int =
+            resources.getIdentifier(nomPhotoProfil, "drawable", requireContext().packageName)
         // Vérifiez si l'ID de ressource est valide
         if (resId != 0) {
             // Chargez la photo de profil à partir des ressources et définissez-la dans l'ImageView
@@ -73,21 +75,27 @@ class ProfileFragment : Fragment() {
         // on modifie le nom et prénom
         val leNom: String? = présentateur.obrenirUnProfilUtilisateur("Gauthier")?.nom
         val lePrénom: String? = présentateur.obrenirUnProfilUtilisateur("Gauthier")?.prénom
-        nomPrénom.setText(lePrénom+ " "+leNom)
+        nomPrénom.setText(lePrénom + " " + leNom)
 
         // on modifie l'émail
         email.setText(présentateur.obrenirUnProfilUtilisateur("Gauthier")!!.email)
         // on modifie le téléphone
         téléphone.setText(présentateur.obrenirUnProfilUtilisateur("Gauthier")!!.téléphone)
-        textCovoiturage.setText("Nombre de covoiturage: "+présentateur.obrenirUnProfilUtilisateur("Gauthier")!!.nombre_covoiturage)
+        textCovoiturage.setText(
+            "Nombre de covoiturage: " + présentateur.obrenirUnProfilUtilisateur(
+                "Gauthier"
+            )!!.nombre_covoiturage
+        )
         notes.setText("Notes en moyenne: " + présentateur.obrenirUnProfilUtilisateur("Gauthier")!!.notes)
 
         //Langues Parléés
-        var languesParlees: List<String>? = présentateur.obrenirUnProfilUtilisateur("Gauthier")!!.languesParlées
+        var languesParlees: List<String>? =
+            présentateur.obrenirUnProfilUtilisateur("Gauthier")!!.languesParlées
         val premiereLangueImage: String? = languesParlees?.get(0)
 
         // Première Langue
-        val langue1: Int = resources.getIdentifier(premiereLangueImage, "drawable", requireContext().packageName)
+        val langue1: Int =
+            resources.getIdentifier(premiereLangueImage, "drawable", requireContext().packageName)
         // Vérifiez si l'ID de ressource est valide
         if (resId != 0) {
             // Chargez la photo de profil à partir des ressources et définissez-la dans l'ImageView
@@ -99,7 +107,8 @@ class ProfileFragment : Fragment() {
         val deuxièmeLangueImage: String? = languesParlees?.get(1)
 
         // Obtenez l'ID de ressource correspondant au nom de l'image
-        val langue2: Int = resources.getIdentifier(deuxièmeLangueImage, "drawable", requireContext().packageName)
+        val langue2: Int =
+            resources.getIdentifier(deuxièmeLangueImage, "drawable", requireContext().packageName)
         // Vérifiez si l'ID de ressource est valide
         if (resId != 0) {
             // Chargez la photo de profil à partir des ressources et définissez-la dans l'ImageView
@@ -113,7 +122,8 @@ class ProfileFragment : Fragment() {
         val adresseImage: String? = présentateur.obrenirUnProfilUtilisateur("Gauthier")!!.adresse
 
         // Obtenez l'ID de ressource correspondant au nom de l'image
-        val adresseId: Int = resources.getIdentifier(adresseImage, "drawable", requireContext().packageName)
+        val adresseId: Int =
+            resources.getIdentifier(adresseImage, "drawable", requireContext().packageName)
         // Vérifiez si l'ID de ressource est valide
         if (resId != 0) {
             // Chargez la photo de profil à partir des ressources et définissez-la dans l'ImageView
@@ -143,7 +153,78 @@ class ProfileFragment : Fragment() {
 
     }
 
+    fun mettreAJourProfil(profil: ModèleProfile?) {
+        // Vérifie si l'objet profil n'est pas null
+        if (profil != null) {
+            // Obtient le nom de la photo de profil à partir de l'objet profil
+            val nomPhotoProfil: String = profil.photo
+            // Obtient l'ID de ressource de l'image basé sur son nom
+            val resId: Int = resources.getIdentifier(
+                nomPhotoProfil,
+                "drawable",
+                requireContext().packageName
+            )
+            // Vérifie si l'ID de ressource est valide
+            if (resId != 0) {
+                // Définit la photo de profil dans l'ImageView si l'ID est valide
+                photoProfil.setImageResource(resId)
+            } else {
+                // Utilise une image par défaut si l'ID n'est pas valide
+                photoProfil.setImageResource(R.drawable.adresse)
+            }
+            // Définit le nom et le prénom dans l'interface utilisateur
+            nomPrénom.setText(profil.prénom + " " + profil.nom)
+            // Définit l'email dans l'interface utilisateur
+            email.setText(profil.email)
+            // Définit le numéro de téléphone dans l'interface utilisateur
+            téléphone.setText(profil.téléphone)
+            // Affiche le nombre de covoiturages
+            textCovoiturage.setText("Nombre de covoiturage: " + profil.nombre_covoiturage)
+            // Affiche les notes moyennes
+            notes.setText("Notes en moyenne: " + profil.notes)
+            // Gère l'affichage des langues parlées
+            var languesParlees: List<String> = profil.languesParlées
+            // Première langue parlée
+            val premiereLangueImage: String? = languesParlees.getOrNull(0)
+            premiereLangueImage?.let {
+                val langue1: Int =
+                    resources.getIdentifier(it, "drawable", requireContext().packageName)
+                if (langue1 != 0) {
+                    lagueParlée1.setImageResource(langue1)
+                }
+            }
+            // Deuxième langue parlée
+            val deuxièmeLangueImage: String? = languesParlees.getOrNull(1)
+            deuxièmeLangueImage?.let {
+                val langue2: Int =
+                    resources.getIdentifier(it, "drawable", requireContext().packageName)
+                if (langue2 != 0) {
+                    lagueParlée2.setImageResource(langue2)
+                }
+            }
+            // Définit le type de voiture dans l'interface utilisateur
+            typeVoiture.setText("Type de voiture: " + profil.typeVoiture)
+            // Gère l'affichage de l'adresse
+            val adresseImage: String? = profil.adresse
+            adresseImage?.let {
+                val adresseId: Int =
+                    resources.getIdentifier(it, "drawable", requireContext().packageName)
+                if (adresseId != 0) {
+                    adresse.setBackgroundResource(adresseId)
+                }
+            }
+        } else {
+            // Affiche un message en cas d'erreur (si profil est null)
+            afficherMessage("Une erreur est survenue")
+        }
+    }
+    fun afficherErreur(e: Exception) {
+        Toast.makeText(context, e.message, Toast.LENGTH_SHORT).show()
+    }
 
+    fun afficherMessage(message: String) {
+        Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
+    }
 
 
 
