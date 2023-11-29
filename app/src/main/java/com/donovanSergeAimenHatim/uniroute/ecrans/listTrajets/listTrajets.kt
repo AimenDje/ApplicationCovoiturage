@@ -68,12 +68,15 @@ class listTrajets : Fragment(), TrajetsContract.View{
             }
             critere.append("nbPassager=$nbPassagers")
         }
+
+
         val sourceKelconke = SourceKelconke()
         userDataManager = UtilisateurDataManager(sourceKelconke)
         val dataManager = TrajetDataManager(sourceKelconke)
         val userDataManager = UtilisateurDataManager(sourceKelconke)
         presenter = TrajetsPresenter(this, dataManager, userDataManager)
-        presenter.chargerTrajets(critere.toString())
+     //   presenter.chargerTrajets(critere.toString())
+        presenter.chargerTrajets("utilisateurID=2")
         animation = anim()
     }
 
@@ -118,7 +121,6 @@ class listTrajets : Fragment(), TrajetsContract.View{
             val autoView = trajetView.findViewById<TextView>(R.id.textView_trajetSelectionnerAuto)
             val priseCharge = trajetView.findViewById<TextView>(R.id.textView_trajetSelectionnerDetail)
             val contactBouton = trajetView.findViewById<Button>(R.id.contactBtn)
-            var utilisateurTrajet : Utilisateur? = null
             GlobalScope.launch(Dispatchers.Main) {
                 val utilisateur = presenter.chargerUtilisateur(trajet.utilisateurId)
                 if (utilisateur != null) {

@@ -6,11 +6,13 @@ import android.widget.Toast
 import io.ktor.client.HttpClient
 import io.ktor.client.engine.cio.CIO
 import io.ktor.client.request.parameter
+import io.ktor.client.request.post
 import io.ktor.client.request.request
 import io.ktor.client.statement.HttpResponse
 import io.ktor.client.statement.readText
 import io.ktor.http.HttpMethod
 import io.ktor.http.HttpStatusCode
+import io.ktor.http.Parameters
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
@@ -32,7 +34,7 @@ class SourceKelconke() : SourceDeDonnées {
     ): T? {
         return withContext(Dispatchers.IO) {
             try {
-                val url = "https://donovanbeulze.com/unirouteAPI/" // Remplacez avec l'URL de votre API
+                val url = "https://donovanbeulze.com/unirouteAPI/"
                 val response: HttpResponse = client.request(url) {
                     method = HttpMethod.Get
                     parameter("table", nomTable)
@@ -42,13 +44,38 @@ class SourceKelconke() : SourceDeDonnées {
 
                 if (response.status == HttpStatusCode.OK) {
                     val jsonString = response.readText()
-                    transform(jsonString) // Transforme le JSON en objet Kotlin
+                    transform(jsonString)
                 } else {
-                    null // Gestion d'erreur
+                    null
                 }
             } catch (e: Exception) {
                 e.printStackTrace()
-                null // Gestion d'erreur
+                null
+            }
+        }
+    }
+
+    override suspend fun ajouterDonnee(
+        nomTable: String,
+        donnees: Map<String, Any>
+    ): Boolean {
+        return withContext(Dispatchers.IO) {
+            try {
+                val url = "https://donovanbeulze.com/unirouteAPI/ajouter.php"
+                val formData = Parameters.build {
+                    append("table", nomTable)
+                    donnees.forEach { (key, value) ->
+                        append(key, value.toString())
+                    }
+                }
+                val response: HttpResponse = client.post(url) {
+                    body = formData
+                }
+
+                response.status == HttpStatusCode.OK
+            } catch (e: Exception) {
+                e.printStackTrace()
+                false
             }
         }
     }

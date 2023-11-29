@@ -17,14 +17,13 @@ import com.donovanSergeAimenHatim.uniroute.ecrans.listTrajets.listTrajets
 import com.donovanSergeAimenHatim.uniroute.sourceDeDonnées.SourceKelconke
 import com.google.android.material.button.MaterialButtonToggleGroup
 import com.google.android.material.datepicker.MaterialDatePicker
-import com.google.android.material.slider.Slider
 import com.google.android.material.timepicker.MaterialTimePicker
 import com.google.android.material.timepicker.TimeFormat
-import kotlinx.coroutines.launch
 import com.google.gson.Gson
+import kotlinx.coroutines.launch
 import java.text.ParseException
 import java.text.SimpleDateFormat
-import java.util.Locale
+import java.util.*
 
 
 // TODO: Rename parameter arguments, choose names that match
@@ -37,7 +36,7 @@ private const val ARG_PARAM2 = "param2"
  * Use the [AccueilFragment.newInstance] factory method to
  * create an instance of this fragment.
  */
-class AccueilFragment : Fragment() {
+class AccueilFragment : Fragment(), AjoutTrajetContract.View {
     // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
@@ -57,10 +56,29 @@ class AccueilFragment : Fragment() {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_accueil, container, false)
     }
-
+    private lateinit var presenter: AjoutTrajetPresenter
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        // Initialisation du présentateur
+        val model = AjoutTrajetModel(SourceKelconke())
+        presenter = AjoutTrajetPresenter(this, model)
 
+        val btnAjouterTrajet: Button = view.findViewById(R.id.BtnProposerCoVoiturage)
+        btnAjouterTrajet.setOnClickListener {
+            val depart = view.findViewById<com.google.android.material.textfield.TextInputEditText>(R.id.textFieldDepartProposer).text.toString()
+            val destination = view.findViewById<com.google.android.material.textfield.TextInputEditText>(R.id.textFIeldDestinationProposer).text.toString()
+            val heureDepart = view.findViewById<com.google.android.material.textfield.TextInputEditText>(R.id.timePickerEditText).text.toString()
+            val date = view.findViewById<com.google.android.material.textfield.TextInputEditText>(R.id.datePickerEditTextProposer).text.toString()
+            val auto = view.findViewById<com.google.android.material.textfield.TextInputEditText>(R.id.textFieldAutoProposer).text.toString()
+            val nbPassagers = view?.findViewById<com.google.android.material.slider.Slider>(R.id.nbPassagerProposer)?.value.toString()
+            val donneesTrajet = mapOf(
+                "villeDepart" to depart,
+                "villeDestination" to destination,
+                "date" to convertirDate("${date} ${heureDepart}"),
+                "nbPassager" to nbPassagers
+            )
+           presenter.ajouterTrajet(viewLifecycleOwner.lifecycleScope, donneesTrajet)
+        }
         val datePickerEditText = view.findViewById<TextInputEditText>(R.id.datePickerEditText)
         datePickerEditText.setOnClickListener {
             val datePicker = MaterialDatePicker.Builder.datePicker()
@@ -128,18 +146,30 @@ class AccueilFragment : Fragment() {
                 null
             }
 
-            val bundle = Bundle().apply {
-                putString("DESTINATION", if (destinationInput.isNullOrEmpty()) null else destinationInput)
-                putString("DATE", date)
-                putInt("NB_PASSAGERS", nbPassagers ?: 1)
-            }
+        val timePickerEditText = view.findViewById<TextInputEditText>(R.id.timePickerEditText)
+        timePickerEditText.setOnClickListener {
+            val timePicker = MaterialTimePicker.Builder()
+                .setTimeFormat(TimeFormat.CLOCK_12H)
+                .setHour(12)
+                .setMinute(10)
+                .setTitleText("Select Appointment Time")
+                .build()
 
-            val listTrajetsFragment = listTrajets().apply {
-                arguments = bundle
+            timePicker.show(childFragmentManager, timePicker.toString())
+            timePicker.addOnPositiveButtonClickListener {
+                // Format the picked time to your desired format, e.g., "hh:mm a"
+                val selectedTime = String.format("%02d:%02d %s",
+                    timePicker.hour,
+                    timePicker.minute,
+                    if (timePicker.hour < 12) "AM" else "PM")
+
+                // Set the formatted time to the EditText
+                timePickerEditText.setText(selectedTime)
             }
+        }
 
             activity?.supportFragmentManager?.beginTransaction()?.apply {
-                replace(R.id.fragment_container, listTrajetsFragment)
+                replace(R.id.fragment_container, listTrajets())
                 addToBackStack(null)
                 commit()
             }
@@ -185,8 +215,26 @@ class AccueilFragment : Fragment() {
             }
         }
     }
+    override fun afficherSuccesAjout() {
+        Toast.makeText(context, "Trajet ajouté avec succès", Toast.LENGTH_LONG).show()
+    }
 
+    override fun afficherErreurAjout(message: String) {
+        Toast.makeText(context, message, Toast.LENGTH_LONG).show()
+    }
 
+    fun convertirDate(dateString: String): String {
+        val originalFormat = SimpleDateFormat("MMM d, yyyy hh:mm a", Locale.ENGLISH)
+        val targetFormat = SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.ENGLISH)
+
+        return try {
+            val date = originalFormat.parse(dateString)
+            targetFormat.format(date)
+        } catch (e: Exception) {
+            e.printStackTrace()
+            "Erreur de formatage"
+        }
+    }
 
     companion object {
         /**
