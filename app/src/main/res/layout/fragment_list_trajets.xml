@@ -5,9 +5,7 @@
     android:id="@+id/frameLayout2"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/maps"
     tools:context=".ecrans.listTrajets.listTrajets">
-
 
     <LinearLayout
         android:id="@+id/containerListTrajets"

@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import com.donovanSergeAimenHatim.uniroute.R
+import com.donovanSergeAimenHatim.uniroute.ecrans.carte.CarteFragment
 import com.donovanSergeAimenHatim.uniroute.ecrans.historique.HistoriqueFragment
 
 // TODO: Rename parameter arguments, choose names that match
@@ -46,7 +47,7 @@ class MessagerieFragment : Fragment() {
         val btnHistorique: Button = view.findViewById(R.id.btnHistorique)
         btnHistorique.setOnClickListener {
             activity?.supportFragmentManager?.beginTransaction()?.apply {
-                replace(R.id.fragment_container, HistoriqueFragment())
+                replace(R.id.fragment_container, CarteFragment())
                 addToBackStack(null)
                 commit()
             }

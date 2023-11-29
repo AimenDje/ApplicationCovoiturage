@@ -5,8 +5,8 @@
     android:id="@+id/frameLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/maps"
     tools:context=".ecrans.accueil.AccueilFragment">
+
 
     <LinearLayout
         android:id="@+id/containerAccueil"
@@ -325,4 +325,5 @@
             </LinearLayout>
         </ScrollView>
     </LinearLayout>
+
 </androidx.constraintlayout.widget.ConstraintLayout>
