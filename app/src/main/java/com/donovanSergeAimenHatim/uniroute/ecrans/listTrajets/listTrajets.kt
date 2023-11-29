@@ -68,12 +68,15 @@ class listTrajets : Fragment(), TrajetsContract.View{
             }
             critere.append("nbPassager=$nbPassagers")
         }
+
+
         val sourceKelconke = SourceKelconke()
         userDataManager = UtilisateurDataManager(sourceKelconke)
         val dataManager = TrajetDataManager(sourceKelconke)
         val userDataManager = UtilisateurDataManager(sourceKelconke)
         presenter = TrajetsPresenter(this, dataManager, userDataManager)
-        presenter.chargerTrajets(critere.toString())
+     //   presenter.chargerTrajets(critere.toString())
+        presenter.chargerTrajets("utilisateurID=2")
         animation = anim()
     }
 

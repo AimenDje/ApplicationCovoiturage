@@ -12,7 +12,7 @@ import android.widget.Toast
 import androidx.fragment.app.FragmentManager
 import com.donovanSergeAimenHatim.uniroute.R
 import com.donovanSergeAimenHatim.uniroute.ecrans.historique.HistoriqueFragment
-import com.donovanSergeAimenHatim.uniroute.péférences.PreferenceFragment
+import com.donovanSergeAimenHatim.uniroute.ecrans.péférences.PreferenceFragment
 import com.google.android.gms.maps.MapView
 
 
@@ -58,6 +58,8 @@ class ProfileFragment : Fragment() {
 
         //on récupère les données a afficher à partir du présentateur
         var présentateur = PrésentateurProfil(this)
+        présentateur.chargerProfilUtilisateur(99)
+        /*
         val nomPhotoProfil: String? = présentateur.obrenirUnProfilUtilisateur("Gauthier")?.photo
 
         // Obtenez l'ID de ressource correspondant au nom de l'image
@@ -131,7 +133,7 @@ class ProfileFragment : Fragment() {
 
 
         }
-
+*/
         //charger la page préférences
         val btnPréférences: Button = view.findViewById(R.id.btnPréférences)
         btnPréférences.setOnClickListener {
@@ -225,8 +227,6 @@ class ProfileFragment : Fragment() {
     fun afficherMessage(message: String) {
         Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
     }
-
-
 
 
     /* companion object {

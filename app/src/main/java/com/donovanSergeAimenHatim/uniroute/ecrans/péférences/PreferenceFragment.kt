@@ -1,4 +1,4 @@
-package com.donovanSergeAimenHatim.uniroute.péférences
+package com.donovanSergeAimenHatim.uniroute.ecrans.péférences
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -9,6 +9,7 @@ import android.widget.EditText
 import android.widget.ImageView
 import android.widget.RadioButton
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatDelegate
 import androidx.fragment.app.Fragment
 
 import com.donovanSergeAimenHatim.uniroute.R
@@ -75,6 +76,7 @@ class PreferenceFragment : Fragment() {
         var themeClairAffichage : Boolean
 
 
+
         if(affichagekm.isChecked) {
             affichageDistancekm = true
 
@@ -83,6 +85,7 @@ class PreferenceFragment : Fragment() {
         }
         if(themeClair.isChecked){
             themeClairAffichage = true
+
         }else {
             themeClairAffichage = false
         }
@@ -96,11 +99,20 @@ class PreferenceFragment : Fragment() {
                 nouvelleAdresse.text.toString().isEmpty()
             ) {
 
+
+
                 // Afficher une alerte si les champs sont vides
                 Toast.makeText(requireContext(), "Vueillez remplir tous les champs", Toast.LENGTH_SHORT).show()
             } else {
                 Toast.makeText(requireContext(), "Vos informations seront mises à jour", Toast.LENGTH_SHORT).show()
-                présentateur.mettreAJourPréférence( "Gauthier", nom, prénom, email, voiture, adresse, affichageDistancekm, themeClairAffichage )
+                présentateur.mettreAJourPréférence( "Gauthier", nom, prénom, email, voiture, adresse)
+                if(themeClair.isChecked){
+                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
+
+                }else {
+                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
+                }
+
 
             }
             }

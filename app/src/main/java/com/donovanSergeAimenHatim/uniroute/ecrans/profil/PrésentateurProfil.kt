@@ -4,7 +4,7 @@ import android.text.TextUtils.replace
 import android.widget.Button
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
-import com.donovanSergeAimenHatim.uniroute.péférences.PreferenceFragment
+import com.donovanSergeAimenHatim.uniroute.ecrans.péférences.PreferenceFragment
 import com.donovanSergeAimenHatim.uniroute.R
 import com.donovanSergeAimenHatim.uniroute.ecrans.connexion.Model
 import com.donovanSergeAimenHatim.uniroute.ecrans.historique.HistoriqueFragment

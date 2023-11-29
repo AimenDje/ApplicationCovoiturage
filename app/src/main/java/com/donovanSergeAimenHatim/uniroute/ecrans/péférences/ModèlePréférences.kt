@@ -1,6 +1,7 @@
-package com.donovanSergeAimenHatim.uniroute.péférences
+package com.donovanSergeAimenHatim.uniroute.ecrans.péférences
 
-import com.donovanSergeAimenHatim.uniroute.ecrans.profil.ModèleProfile
+import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatDelegate
 import com.donovanSergeAimenHatim.uniroute.sourceDeDonnées.SourceKelconke
 
 data class ModèlePréférences( var utilisateurÀModifier:String = "",
@@ -10,7 +11,10 @@ data class ModèlePréférences( var utilisateurÀModifier:String = "",
                               var typeDeVoiture: String = "",
                               var adresse : String = "",
                               var affichageEnKm: Boolean = true,
-                              var themeClair: Boolean = false) {
+                              var themeClair: Boolean = false,
+                              var activity: AppCompatActivity? = null
+
+) {
 
     private var _source = SourceKelconke()
 
@@ -19,11 +23,10 @@ data class ModèlePréférences( var utilisateurÀModifier:String = "",
         _source.modifierProfil(utilisateurÀModifier, nom, prénom, email, voiture, adresse)
 
     }
-    fun modifierTheme (themeClair: Boolean){
 
-    }
 
-    fun modifierAffichageDistance (themeClair: Boolean){
+
+    fun modifierAffichageDistance (affichageEnKM: Boolean){
 
     }
 }
