@@ -1,3 +1,4 @@
+
 package com.donovanSergeAimenHatim.uniroute.ecrans.historique
 
 import android.os.Bundle
@@ -6,10 +7,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.LinearLayout
 import android.widget.TextView
 import com.donovanSergeAimenHatim.uniroute.R
-import com.google.android.material.floatingactionbutton.FloatingActionButton
-import com.google.android.material.textfield.MaterialAutoCompleteTextView
+import com.donovanSergeAimenHatim.uniroute.ecrans.listTrajets.Trajets
+import com.donovanSergeAimenHatim.uniroute.trajet.Trajet
+
 
 
 
@@ -58,43 +61,39 @@ class HistoriqueFragment : Fragment() {
         var bouton_Trajet4 : FloatingActionButton = view.findViewById(R.id.btn_trajet4)
         // Stockage et affichage dynamique des données sur le fragment de la liste des trajets
         var présentateur_historique = PrésentateurHistorique(this);
-        titre_vue1.text = présentateur_historique.trajets.titre
-        premier_trajet.text = présentateur_historique.trajets.trajetMontrealToronto
-        deuxieme_trajet.text = présentateur_historique.trajets.trajetCalgaryVancouver
-        troisieme_trajet.text = présentateur_historique.trajets.trajetMississaugaHamilton
-        quatrieme_trajet.text = présentateur_historique.trajets.trajetEdmontonWinnipeg
-            bouton_Trajet1.setOnClickListener {
-            activity?.supportFragmentManager?.beginTransaction()?.apply {
-                replace(R.id.fragment_container, MontrealTorontoFragment())
-                addToBackStack(null)
-                commit()
-            }
-        }
 
+    /*
+    override fun afficherHistorique(trajets: List<Trajet>){
+        val container = view?.findViewById<LinearLayout>(R.id.linear_layout_for_items)
+        val trajetViews = mutableListOf<View>()
+        container?.removeAllViews()
+        trajets.forEachIndexed { index, trajet ->
+            val trajetView =
+                LayoutInflater.from(context).inflate(R.layout.item_trajet, container, false)
+            trajetViews.add(trajetView)
 
-        bouton_Trajet2.setOnClickListener {
-            activity?.supportFragmentManager?.beginTransaction()?.apply {
-                replace(R.id.fragment_container, DétailsHistoriqueFragment())
-                addToBackStack(null)
-                commit()
-            }
+            container?.addView(trajetView)
         }
+    }*/
 
-        bouton_Trajet3.setOnClickListener {
-            activity?.supportFragmentManager?.beginTransaction()?.apply {
-                replace(R.id.fragment_container, DétailsHistoriqueFragment())
-                addToBackStack(null)
-                commit()
+    companion object {
+        /**
+         * Use this factory method to create a new instance of
+         * this fragment using the provided parameters.
+         *
+         * @param param1 Parameter 1.
+         * @param param2 Parameter 2.
+         * @return A new instance of fragment HistoriqueFragment.
+         */
+        // TODO: Rename and change types and number of parameters
+        @JvmStatic
+        fun newInstance(param1: String, param2: String) =
+            HistoriqueFragment().apply {
+                arguments = Bundle().apply {
+                    putString(ARG_PARAM1, param1)
+                    putString(ARG_PARAM2, param2)
+                }
             }
-        }
-
-        bouton_Trajet4.setOnClickListener {
-            activity?.supportFragmentManager?.beginTransaction()?.apply {
-                replace(R.id.fragment_container, DétailsHistoriqueFragment())
-                addToBackStack(null)
-                commit()
-            }
-        }
     }
     companion object {
         /**
