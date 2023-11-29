@@ -1,7 +1,7 @@
 package com.donovanSergeAimenHatim.uniroute.ecrans.historique
 
+import com.donovanSergeAimenHatim.uniroute.ecrans.listTrajets.TrajetDataManager
 import com.donovanSergeAimenHatim.uniroute.sourceDeDonnées.SourceKelconke
-import com.donovanSergeAimenHatim.uniroute.trajet.TrajetDataManager
 
 class PrésentateurDétailsHistorique (val vue : DétailsHistoriqueFragment){
 

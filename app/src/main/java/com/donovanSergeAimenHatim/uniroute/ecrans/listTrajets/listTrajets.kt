@@ -121,7 +121,7 @@ class listTrajets : Fragment(), TrajetsContract.View{
             val priseCharge = trajetView.findViewById<TextView>(R.id.textView_trajetSelectionnerDetail)
             val contactBouton = trajetView.findViewById<Button>(R.id.contactBtn)
             GlobalScope.launch(Dispatchers.Main) {
-                val utilisateur = presenter.chargerUtilisateur(trajet.utilisateurId)
+                val utilisateur = presenter.chargerUtilisateur(trajet.utilisateurID)
                 if (utilisateur != null) {
                     nomConduteurNonSelectioner.text = "${utilisateur.nom} ${utilisateur.prenom}"
                     nomConducteurView.text = "${utilisateur.nom} ${utilisateur.prenom}"
@@ -183,7 +183,7 @@ class listTrajets : Fragment(), TrajetsContract.View{
     override fun afficherTrajetSelectionne(trajet: Trajets) {
         activity?.runOnUiThread {
             val layoutTrajetSelectionne = view?.findViewById<LinearLayout>(R.id.linearLayout_trajetSelectionner)
-            view?.findViewById<TextView>(R.id.textView_trajetPrenomSelectionner)?.text = "${trajet.utilisateurId}"
+            view?.findViewById<TextView>(R.id.textView_trajetPrenomSelectionner)?.text = "${trajet.utilisateurID}"
             view?.findViewById<TextView>(R.id.textView_trajetSelectionner_departDestination)?.text = "${trajet.villeDepart} -> ${trajet.villeDestination}"
             view?.findViewById<com.google.android.material.textfield.TextInputEditText>(R.id.dateTrajetSelectionnerEditText)?.setText(trajet.date)
             layoutTrajetSelectionne?.visibility = View.VISIBLE
