@@ -3,6 +3,7 @@ package com.donovanSergeAimenHatim.uniroute.sourceDeDonnées
 import android.content.Context
 import android.util.Log
 import android.widget.Toast
+import com.donovanSergeAimenHatim.uniroute.ecrans.profil.ModèleProfile
 import io.ktor.client.HttpClient
 import io.ktor.client.engine.cio.CIO
 import io.ktor.client.request.parameter
@@ -24,9 +25,55 @@ import java.sql.ResultSet
 import java.sql.SQLException
 
 class SourceKelconke() : SourceDeDonnées {
+    companion object{
+        val profils = mutableListOf(
 
-    private val client = HttpClient(CIO)
-    override suspend fun <T> obtenirDonnées(
+        ModèleProfile("arnold", "Gauthier", "Arnold", "argauthier@gmail.com ", "(514) 541-1452", 250 , 4.5 ,listOf("ang", "esp"), "Audi RS6", "adresse"),
+        ModèleProfile("serge", "Milongo", "Serge", "sauthier@gmail.com ", "(514) 587-1457", 80 , 3.5,listOf("fran", "ang"), "Audi R8", "adresse2"),
+        ModèleProfile("aimen", "Djemaoune", "Aimen", "djeaimen@gmail.com", "(514) 123-4567", 120, 4.6, listOf("fran", "esp"), "BMW X5", "adresse3"),
+        ModèleProfile("donovan", "Beulze", "Donovan", "DonBeulze@gmail.com", "(514) 789-0123", 180, 4.0, listOf("ang", "fran"), "Mercedes-Benz C-Class", "adresse4"),
+        ModèleProfile("hatim", "Hatimi", "hatim", "thatimie@gmail.com", "(514) 987-6543", 300, 4.5, listOf("ang", "fran", "esp"), "Tesla Model S", "adresse5")
+    )
+    }
+
+private val client = HttpClient(CIO)
+
+    //Simulation de données pour les profils
+    override fun obtenirProfils(): MutableList<ModèleProfile>{
+
+        return profils
+    }
+
+    override fun modifierProfil(
+        utilisateurÀModifier: String,
+        nom: String,
+        prénom: String,
+        email: String,
+        voiture: String,
+        adresse: String
+    ) {
+        for(utilisateur in profils){
+            if(utilisateur.nom == utilisateurÀModifier){
+                val utilisateurModifié = utilisateur.copy (photo = utilisateur.photo, nom =nom, prénom = prénom, email =  email,
+                    typeVoiture = voiture, adresse = adresse
+                )
+                val index = profils.indexOf(utilisateur)
+                if (index != -1) {
+                    profils[index] = utilisateurModifié
+
+                }
+
+
+            }
+
+
+        }
+
+    }
+
+
+
+override suspend fun <T> obtenirDonnées(
         nomTable: String,
         colonne: String,
         condition: String,

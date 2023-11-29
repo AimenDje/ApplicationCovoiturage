@@ -1,4 +1,4 @@
-package com.donovanSergeAimenHatim.uniroute.péférences
+package com.donovanSergeAimenHatim.uniroute.ecrans.péférences
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -9,9 +9,12 @@ import android.widget.EditText
 import android.widget.ImageView
 import android.widget.RadioButton
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatDelegate
 import androidx.fragment.app.Fragment
 
 import com.donovanSergeAimenHatim.uniroute.R
+import com.donovanSergeAimenHatim.uniroute.ecrans.profil.ProfileFragment
+import com.donovanSergeAimenHatim.uniroute.ecrans.profil.PrésentateurProfil
 
 class PreferenceFragment : Fragment() {
 
@@ -26,6 +29,10 @@ class PreferenceFragment : Fragment() {
     private lateinit var themeSombre: RadioButton
     private lateinit var buttonEnregistrer: Button
     private lateinit var présentateur: PrésentateurPréférences
+    private lateinit var présentateurProfil : PrésentateurProfil
+    private lateinit var utilisateurÀmodifier :String
+
+
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -47,6 +54,13 @@ class PreferenceFragment : Fragment() {
         themeSombre = view.findViewById(R.id.radioButtonThemeSombre)
         buttonEnregistrer = view.findViewById(R.id.buttonEnregistrer)
         présentateur = PrésentateurPréférences(this)
+        présentateurProfil = PrésentateurProfil(ProfileFragment())
+
+        nouveauNom.setText(présentateurProfil.obrenirUnProfilUtilisateur("Gauthier")?.nom)
+        nouveauPrénom.setText(présentateurProfil.obrenirUnProfilUtilisateur("Gauthier")?.prénom)
+        nouvelEmail.setText(présentateurProfil.obrenirUnProfilUtilisateur("Gauthier")?.email)
+        nouvelleVoiture.setText(présentateurProfil.obrenirUnProfilUtilisateur("Gauthier")?.typeVoiture)
+        nouvelleAdresse.setText(présentateurProfil.obrenirUnProfilUtilisateur("Gauthier")?.adresse)
 
         affichagekm.isChecked = true
         themeClair.isChecked = true
@@ -58,40 +72,52 @@ class PreferenceFragment : Fragment() {
         val email = nouvelEmail.text.toString()
         val voiture = nouvelleVoiture.text.toString()
         val adresse = nouvelleAdresse.text.toString()
-        val km : Boolean
-        val clair : Boolean
-        if(themeClair.isChecked) {
-            km = true
+        var affichageDistancekm : Boolean
+        var themeClairAffichage : Boolean
+
+
+
+        if(affichagekm.isChecked) {
+            affichageDistancekm = true
+
         }else {
-            km = false
+            affichageDistancekm = false
         }
         if(themeClair.isChecked){
-            clair = true
+            themeClairAffichage = true
+
         }else {
-            clair = false
+            themeClairAffichage = false
         }
-
-
 
         buttonEnregistrer.setOnClickListener {
             // Vérifier si les champs sont vides
-            if (nouveauNom.text.toString().isEmpty() || nouveauNom.text.toString().equals("Nouveau Nom")||
-                nouveauPrénom.text.toString().isEmpty() || nouveauPrénom.text.toString().equals("Nouveau Prénom")                                           ||
-                nouvelEmail.text.toString().isEmpty() || nouvelEmail.text.toString().equals("Nouvel email")||
-                nouvelleVoiture.text.toString().isEmpty() || nouvelleVoiture.text.toString().equals("Nouvelle voiture")||
-                nouvelleAdresse.text.toString().isEmpty() ||  nouvelleAdresse.text.toString().equals("Nouvelle adresse")
+            if (nouveauNom.text.toString().isEmpty() ||
+                nouveauPrénom.text.toString().isEmpty() ||
+                nouvelEmail.text.toString().isEmpty() ||
+                nouvelleVoiture.text.toString().isEmpty() ||
+                nouvelleAdresse.text.toString().isEmpty()
             ) {
+
+
+
                 // Afficher une alerte si les champs sont vides
                 Toast.makeText(requireContext(), "Vueillez remplir tous les champs", Toast.LENGTH_SHORT).show()
             } else {
-                présentateur.mettreAJourPréférence(nom, prénom, email, voiture, adresse, km, clair  )
+                Toast.makeText(requireContext(), "Vos informations seront mises à jour", Toast.LENGTH_SHORT).show()
+                présentateur.mettreAJourPréférence( "Gauthier", nom, prénom, email, voiture, adresse)
+                if(themeClair.isChecked){
+                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
+
+                }else {
+                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
+                }
 
 
             }
             }
-
-
     }
+
 
 
     override fun onCreateView(
@@ -126,9 +152,7 @@ class PreferenceFragment : Fragment() {
                 themeClair.isChecked = false
             }
         }
-
     }
-
     companion object {
         /**
          * Use this factory method to create a new instance of

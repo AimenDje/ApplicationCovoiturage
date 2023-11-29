@@ -1,5 +1,6 @@
 package com.donovanSergeAimenHatim.uniroute
 
+import ConnexionFragment
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import com.donovanSergeAimenHatim.uniroute.ecrans.accueil.AccueilFragment
@@ -12,6 +13,7 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
         val bottomNavigationView = findViewById<BottomNavigationView>(R.id.bottonnav)
         bottomNavigationView.setOnItemSelectedListener { item ->
             when(item.itemId) {
@@ -40,12 +42,10 @@ class MainActivity : AppCompatActivity() {
             }
         }
         if (savedInstanceState == null) {
-            val fragment = AccueilFragment()
+            val fragment = ConnexionFragment()
             supportFragmentManager.beginTransaction()
                 .replace(R.id.fragment_container, fragment)
                 .commit()
         }
     }
-
-
 }
