@@ -1,5 +1,6 @@
 package com.donovanSergeAimenHatim.uniroute.ecrans.listTrajets
 
+import android.util.Log
 import com.donovanSergeAimenHatim.uniroute.utilisateur.Utilisateur
 import com.donovanSergeAimenHatim.uniroute.utilisateur.UtilisateurDataManager
 import kotlinx.coroutines.Dispatchers
@@ -21,6 +22,21 @@ class TrajetsPresenter(val view: TrajetsContract.View, private val dataManager: 
         }
     }
 
+    override fun ajouterTrajet(trajet: Trajets) {
+        trajet.logTrajetInfo()
+        GlobalScope.launch(Dispatchers.Main) {
+            try {
+                if(dataManager.ajouterTrajet(trajet)){
+                    view.afficherErreur("Ajouter avec sucess")
+                }else{
+                    view.afficherErreur("Ajouter sans sucess")
+                }
+            } catch (e: Exception) {
+                view.afficherErreur(e.message ?: "Erreur inconnue")
+            }
+        }
+    }
+
     suspend fun chargerUtilisateur(id: Int): Utilisateur? {
         return try {
             withContext(Dispatchers.IO) {
@@ -34,4 +50,6 @@ class TrajetsPresenter(val view: TrajetsContract.View, private val dataManager: 
     override fun onTrajetSelectionne(trajet: Trajets) {
         view.afficherTrajetSelectionne(trajet)
     }
+
+
 }

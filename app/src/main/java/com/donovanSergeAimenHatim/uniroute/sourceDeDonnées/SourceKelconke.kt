@@ -6,14 +6,18 @@ import android.widget.Toast
 import com.donovanSergeAimenHatim.uniroute.ecrans.profil.ModèleProfile
 import io.ktor.client.HttpClient
 import io.ktor.client.engine.cio.CIO
+import io.ktor.client.request.header
 import io.ktor.client.request.parameter
 import io.ktor.client.request.post
 import io.ktor.client.request.request
 import io.ktor.client.statement.HttpResponse
 import io.ktor.client.statement.readText
+import io.ktor.http.ContentType
+import io.ktor.http.HttpHeaders
 import io.ktor.http.HttpMethod
 import io.ktor.http.HttpStatusCode
 import io.ktor.http.Parameters
+import io.ktor.http.formUrlEncode
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
@@ -101,6 +105,36 @@ override suspend fun <T> obtenirDonnées(
             }
         }
     }
+    override suspend fun modifierDonnee(
+        nomTable: String,
+        donnees: Map<String, Any>,
+        id: String // Ajout d'un paramètre pour l'ID de l'élément à modifier
+    ): Boolean {
+        return withContext(Dispatchers.IO) {
+            try {
+                val url = "https://donovanbeulze.com/unirouteAPI/modifier.php" // URL de votre script de modification
+                val formData = Parameters.build {
+                    append("table", nomTable)
+                    append("id", id) // Ajoutez l'ID à la requête
+                    donnees.forEach { (key, value) ->
+                        append(key, value.toString())
+                    }
+                }
+                Log.d("modifierDonnee", "FormData: ${formData.formUrlEncode()}")
+
+                val response: HttpResponse = client.post(url) {
+                    header(HttpHeaders.ContentType, ContentType.Application.FormUrlEncoded)
+                    body = formData.formUrlEncode()
+                }
+                Log.d("modifierDonnee", "Response: ${response.readText()}")
+
+                response.status == HttpStatusCode.OK
+            } catch (e: Exception) {
+                e.printStackTrace()
+                false
+            }
+        }
+    }
 
     override suspend fun ajouterDonnee(
         nomTable: String,
@@ -115,9 +149,13 @@ override suspend fun <T> obtenirDonnées(
                         append(key, value.toString())
                     }
                 }
+                Log.d("ajouterDonnee", "FormData: ${formData.formUrlEncode()}")
+
                 val response: HttpResponse = client.post(url) {
-                    body = formData
+                    header(HttpHeaders.ContentType, ContentType.Application.FormUrlEncoded)
+                    body = formData.formUrlEncode()
                 }
+                Log.d("ajouterDonnee", "Response: ${response.readText()}")
 
                 response.status == HttpStatusCode.OK
             } catch (e: Exception) {
@@ -126,6 +164,7 @@ override suspend fun <T> obtenirDonnées(
             }
         }
     }
+
 }
 
 

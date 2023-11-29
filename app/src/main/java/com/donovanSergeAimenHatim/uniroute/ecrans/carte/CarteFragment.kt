@@ -1,38 +1,21 @@
 package com.donovanSergeAimenHatim.uniroute.ecrans.carte
 
-import android.Manifest
 import android.animation.Animator
 import android.animation.ValueAnimator
-import android.content.Context
-import android.content.pm.PackageManager
-import android.location.Location
-import android.location.LocationManager
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.app.ActivityCompat
-import androidx.core.content.res.ResourcesCompat
 import androidx.fragment.app.Fragment
 import com.donovanSergeAimenHatim.uniroute.R
 import com.google.android.gms.location.FusedLocationProviderClient
-import com.google.android.gms.location.LocationServices
-import com.mapbox.geojson.Feature
-import com.mapbox.geojson.FeatureCollection
-import com.mapbox.geojson.Point
 import com.mapbox.mapboxsdk.Mapbox
 import com.mapbox.mapboxsdk.WellKnownTileServer
-import com.mapbox.mapboxsdk.annotations.MarkerOptions
 import com.mapbox.mapboxsdk.camera.CameraPosition
 import com.mapbox.mapboxsdk.camera.CameraUpdateFactory
 import com.mapbox.mapboxsdk.geometry.LatLng
 import com.mapbox.mapboxsdk.maps.MapView
 import com.mapbox.mapboxsdk.maps.MapboxMap
-import com.mapbox.mapboxsdk.maps.Style
-import com.mapbox.mapboxsdk.style.layers.PropertyFactory
-import com.mapbox.mapboxsdk.style.layers.SymbolLayer
-import com.mapbox.mapboxsdk.style.sources.GeoJsonSource
-import com.mapbox.mapboxsdk.utils.BitmapUtils
 import java.util.Random
 
 
@@ -53,7 +36,6 @@ class CarteFragment : Fragment() {
     private lateinit var mapView: MapView
     private lateinit var mapboxMap: MapboxMap
     private lateinit var fusedLocationClient: FusedLocationProviderClient
-    private var savedCameraPosition: CameraPosition? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         val key = "Kd8fNeAwnaLndC5iyzVm"
@@ -74,39 +56,27 @@ class CarteFragment : Fragment() {
         val mapId = "fc164886-d314-466d-8f45-a987c6a2b659"
         val styleUrl = "https://api.maptiler.com/maps/$mapId/style.json?key=$key"
         Mapbox.getInstance(requireContext())
-        mapView = view.findViewById(R.id.mapView)
-        mapView.getMapAsync { map -> this.mapboxMap = map
-            map.setStyle(styleUrl) {
-                fusedLocationClient = LocationServices.getFusedLocationProviderClient(requireActivity())
-                try {
-                    fusedLocationClient.lastLocation.addOnSuccessListener { location ->
-                        location?.let {
-                            val latLng = LatLng(location.latitude, location.longitude)
-                            map.cameraPosition = CameraPosition.Builder()
-                                .target(latLng)
-                                .zoom(15.0)
-                                .build()
-                        }
 
-                        animateCameraRandomly()
-                    }
-                } catch (e: SecurityException) {
-                }
+        mapView = view.findViewById(R.id.mapView)
+        mapView!!.getMapAsync { map -> this.mapboxMap = map
+            map.setStyle(styleUrl) {
+                // Remplacement par une localisation fixe
+                val latLng = LatLng(48.8584, 2.2945) // Coordonnées de la Tour Eiffel
+                val position = CameraPosition.Builder()
+                    .target(latLng)
+                    .zoom(10.0)
+                    .build()
+                map.moveCamera(CameraUpdateFactory.newCameraPosition(position))
+                animateCameraRandomly()
             }
         }
     }
+
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
-        outState.putParcelable("CameraPosition", mapboxMap.cameraPosition)
     }
 
-    override fun onViewStateRestored(savedInstanceState: Bundle?) {
-        super.onViewStateRestored(savedInstanceState)
-        val cameraPosition = savedInstanceState?.getParcelable<CameraPosition>("CameraPosition")
-        cameraPosition?.let {
-            mapboxMap.moveCamera(CameraUpdateFactory.newCameraPosition(it))
-        }
-    }
+
     companion object {
         private const val LOCATION_PERMISSION_REQUEST_CODE = 1
         /**
@@ -130,25 +100,17 @@ class CarteFragment : Fragment() {
     override fun onStart() {
         super.onStart()
         mapView.onStart()
+
     }
 
-    override fun onPause() {
-        super.onPause()
-        mapView.onPause()
-        savedCameraPosition = mapboxMap.cameraPosition
+    override fun onStop() {
+        mapView.onStop()
+        super.onStop()
     }
 
     override fun onResume() {
         super.onResume()
         mapView.onResume()
-        savedCameraPosition?.let {
-            mapboxMap.moveCamera(CameraUpdateFactory.newCameraPosition(it))
-        }
-    }
-
-    override fun onStop() {
-        super.onStop()
-        mapView.onStop()
     }
 
     override fun onLowMemory() {
@@ -162,7 +124,7 @@ class CarteFragment : Fragment() {
     }
 
     private fun animateCameraRandomly() {
-        mapboxMap.cameraPosition?.target?.let { currentLatLng ->
+        mapboxMap.cameraPosition.target?.let { currentLatLng ->
             val random = Random()
 
             // Calculer une nouvelle position
@@ -199,8 +161,4 @@ class CarteFragment : Fragment() {
         val lng = (end.longitude - start.longitude) * fraction + start.longitude
         return LatLng(lat, lng)
     }
-}
-
-private fun LocationManager.requestLocationUpdates(gpsProvider: String, l: Long, fl: Float, carteFragment: CarteFragment) {
-
 }

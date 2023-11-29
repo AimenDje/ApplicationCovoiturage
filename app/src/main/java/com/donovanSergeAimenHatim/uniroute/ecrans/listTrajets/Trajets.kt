@@ -1,5 +1,6 @@
 package com.donovanSergeAimenHatim.uniroute.ecrans.listTrajets
 
+import android.util.Log
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 
@@ -17,6 +18,10 @@ class Trajets(val id: Int,
 
     fun getTrajetDescription(): String {
         return "$villeDepart -> $villeDestination"
+    }
+
+    fun logTrajetInfo() {
+        Log.d("InfoTrajet", "Trajet Info - ID: $id, UtilisateurID: $utilisateurID, VilleDepart: $villeDepart, Date: $date, VilleDestination: $villeDestination, NbPassager: $nbPassager, PriseCharge: $priseCharge, PrixTrajet: $prixTrajet, DureeTrajet: $dureeTrajet, DistanceTrajet: $distanceTrajet, ModelVehicule: $modelVehicule")
     }
 
 

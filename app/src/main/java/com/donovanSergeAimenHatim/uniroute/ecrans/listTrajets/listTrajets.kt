@@ -2,6 +2,7 @@ package com.donovanSergeAimenHatim.uniroute.ecrans.listTrajets
 
 import android.annotation.SuppressLint
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -9,6 +10,7 @@ import android.view.ViewGroup
 import android.view.animation.AnimationUtils
 import android.widget.Button
 import android.widget.LinearLayout
+import android.widget.ProgressBar
 import android.widget.TextView
 import android.widget.Toast
 import com.donovanSergeAimenHatim.uniroute.R
@@ -38,7 +40,7 @@ class listTrajets : Fragment(), TrajetsContract.View{
     private lateinit var userDataManager: UtilisateurDataManager
     private lateinit var animation: anim
     private var trajetSelectionneActuel: View? = null
-
+    var loadingLogo: ProgressBar? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -46,10 +48,9 @@ class listTrajets : Fragment(), TrajetsContract.View{
             param1 = it.getString(ARG_PARAM1)
             param2 = it.getString(ARG_PARAM2)
         }
-        val destination = arguments?.getString("DESTINATION")
-        val date = arguments?.getString("DATE")
-        val nbPassagers = arguments?.getInt("NB_PASSAGERS")
-        // Construire la chaîne de critères
+        val destination = arguments?.getString("villeDestination")
+        val date = arguments?.getString("date")
+        val nbPassagers = arguments?.getInt("nbPassager")
         val critere = StringBuilder()
         if (!destination.isNullOrEmpty()) {
             critere.append("villeDestination=$destination")
@@ -69,7 +70,7 @@ class listTrajets : Fragment(), TrajetsContract.View{
             critere.append("nbPassager=$nbPassagers")
         }
 
-
+        Log.d("SQL requete", "SQL String: $critere")
         val sourceKelconke = SourceKelconke()
         userDataManager = UtilisateurDataManager(sourceKelconke)
         val dataManager = TrajetDataManager(sourceKelconke)
@@ -94,7 +95,7 @@ class listTrajets : Fragment(), TrajetsContract.View{
         val fadeIn = AnimationUtils.loadAnimation(context, R.anim.fade_in)
         val fadeOut = AnimationUtils.loadAnimation(context, R.anim.fade_out)
 
-
+        loadingLogo = view.findViewById<ProgressBar>(R.id.progressBar_loading)
         val listTrajetsSection = view.findViewById<LinearLayout>(R.id.containerListTrajets)
         listTrajetsSection.startAnimation(fadeIn)
         listTrajetsSection.visibility = View.VISIBLE
@@ -112,6 +113,7 @@ class listTrajets : Fragment(), TrajetsContract.View{
             val trajetView = LayoutInflater.from(context).inflate(R.layout.item_trajet, container, false)
             trajetViews.add(trajetView)
             trajetView.startAnimation(fadeIn)
+            loadingLogo?.visibility = View.GONE
             val nomConducteurView = trajetView.findViewById<TextView>(R.id.textView_trajetPrenomSelectionner)
             val nomConduteurNonSelectioner = trajetView.findViewById<TextView>(R.id.textView_NomTrajetNonSelectionner)
             val villeDepartDestinationView = trajetView.findViewById<TextView>(R.id.textView_trajetSelectionner_departDestination)

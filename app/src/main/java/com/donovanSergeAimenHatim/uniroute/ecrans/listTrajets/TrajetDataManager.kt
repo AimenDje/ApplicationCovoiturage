@@ -15,6 +15,24 @@ import com.google.gson.reflect.TypeToken
             val trajets = getTrajets("trajet","*",condition)
             return trajets.firstOrNull()
         }
+        suspend fun ajouterTrajet(trajet: Trajets): Boolean {
+            val donnees = mapOf(
+                "id" to trajet.id.toString(),
+                "utilisateurID" to trajet.utilisateurID,
+                "villeDepart" to trajet.villeDepart,
+                "date" to trajet.date,
+                "villeDestination" to trajet.villeDestination,
+                "nbPassager" to trajet.nbPassager,
+                "priseCharge" to trajet.priseCharge,
+                "prixTrajet" to trajet.prixTrajet,
+                "dureeTrajet" to trajet.dureeTrajet,
+                "distanceTrajet" to trajet.distanceTrajet,
+                "modelVehicule" to trajet.modelVehicule
+            )
+            // Log pour afficher les données
+            Log.d("ajouterTrajet", "Données à envoyer: $donnees")
+            return source.ajouterDonnee("trajets", donnees)
+        }
 
         fun transformJsonToTrajets(jsonString: String): List<Trajets> {
             Log.d("listeTrajet", "JSON String: $jsonString")
