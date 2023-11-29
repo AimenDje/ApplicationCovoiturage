@@ -33,51 +33,19 @@ class DétailsHistoriqueFragment : Fragment(){
         var date : TextView = view.findViewById(R.id.dateDemande)
         var conducteur : TextView = view.findViewById(R.id.conducteur)
 
-        var présentateur_détails_histaurique = PrésentateurDétailsHistorique(this)
+        var historique: ModèleHistorique
+        var présentateur_détails_historique = PrésentateurDétailsHistorique(this)
 
-        // Obtenir les données du trajet depuis les arguments du fragment
-        titre_vue.text = présentateur_détails_histaurique.trajet1.titre
-        trajet.text = présentateur_détails_histaurique.trajet1.itineraireTrajet
-        prix.text = présentateur_détails_histaurique.trajet1.prixTrajet
-        durée.text = présentateur_détails_histaurique.trajet1.dureeTrajet
-        distance.text = présentateur_détails_histaurique.trajet1.distanceTrajet
-        véhicule.text = présentateur_détails_histaurique.trajet1.vehiculeType
-        heure.text = présentateur_détails_histaurique.trajet1.heureDemande
-        date.text = présentateur_détails_histaurique.trajet1.dateDemande
-        conducteur.text = présentateur_détails_histaurique.trajet1.conducteur
+        /*var id_utilisateur = 3 // ID utilisateur
+        GlobalScope.launch(Dispatchers.Main) {
+            historique = présentateur_détails_historique.
+            if (historique != null) {
 
 
-        titre_vue.text = présentateur_détails_histaurique.trajet2.titre
-        trajet.text = présentateur_détails_histaurique.trajet2.itineraireTrajet
-        prix.text = présentateur_détails_histaurique.trajet2.prixTrajet
-        durée.text = présentateur_détails_histaurique.trajet2.dureeTrajet
-        distance.text = présentateur_détails_histaurique.trajet2.distanceTrajet
-        véhicule.text = présentateur_détails_histaurique.trajet2.vehiculeType
-        heure.text = présentateur_détails_histaurique.trajet2.heureDemande
-        date.text = présentateur_détails_histaurique.trajet2.dateDemande
-        conducteur.text = présentateur_détails_histaurique.trajet2.conducteur
+            }
+        }*/
 
 
-        titre_vue.text = présentateur_détails_histaurique.trajet3.titre
-        trajet.text = présentateur_détails_histaurique.trajet3.itineraireTrajet
-        prix.text = présentateur_détails_histaurique.trajet3.prixTrajet
-        durée.text = présentateur_détails_histaurique.trajet3.dureeTrajet
-        distance.text = présentateur_détails_histaurique.trajet3.distanceTrajet
-        véhicule.text = présentateur_détails_histaurique.trajet3.vehiculeType
-        heure.text = présentateur_détails_histaurique.trajet3.heureDemande
-        date.text = présentateur_détails_histaurique.trajet3.dateDemande
-        conducteur.text = présentateur_détails_histaurique.trajet3.conducteur
-
-
-        titre_vue.text = présentateur_détails_histaurique.trajet4.titre
-        trajet.text = présentateur_détails_histaurique.trajet4.itineraireTrajet
-        prix.text = présentateur_détails_histaurique.trajet4.prixTrajet
-        durée.text = présentateur_détails_histaurique.trajet4.dureeTrajet
-        distance.text = présentateur_détails_histaurique.trajet4.distanceTrajet
-        véhicule.text = présentateur_détails_histaurique.trajet4.vehiculeType
-        heure.text = présentateur_détails_histaurique.trajet4.heureDemande
-        date.text = présentateur_détails_histaurique.trajet4.dateDemande
-        conducteur.text = présentateur_détails_histaurique.trajet4.conducteur
 
     }
 }
