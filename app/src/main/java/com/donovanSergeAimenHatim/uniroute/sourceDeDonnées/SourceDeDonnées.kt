@@ -18,6 +18,10 @@ interface SourceDeDonnées {
         donnees: Map<String, Any>
     ): Boolean
 
-
+    suspend fun modifierDonnee(
+        nomTable: String,
+        donnees: Map<String, Any>,
+        id: String
+    ): Boolean
 }
 

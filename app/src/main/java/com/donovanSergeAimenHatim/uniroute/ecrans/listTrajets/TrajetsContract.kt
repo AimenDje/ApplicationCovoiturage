@@ -12,6 +12,7 @@ interface TrajetsContract {
 
     interface Presenter {
         fun chargerTrajets(condition: String)
+        fun ajouterTrajet(trajet: Trajets)
         fun onTrajetSelectionne(trajet: Trajets)
     }
 }

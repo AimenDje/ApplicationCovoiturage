@@ -22,4 +22,8 @@ class UniRouteApp : Application() {
     fun setUtilisateurID(nouvelleID: Int) {
         utilisateurId = nouvelleID
     }
+    companion object {
+        lateinit var instance: UniRouteApp
+            private set
+    }
 }

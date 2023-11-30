@@ -1,17 +1,21 @@
 pluginManagement {
     repositories {
+        gradlePluginPortal()
         google()
         mavenCentral()
-        gradlePluginPortal()
+        maven(url = "https://api.mapbox.com/downloads/v2/releases/maven")
     }
 }
+
 dependencyResolutionManagement {
-    repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
+    repositoriesMode.set(RepositoriesMode.PREFER_SETTINGS)
     repositories {
         google()
         mavenCentral()
+        maven(url = "https://api.mapbox.com/downloads/v2/releases/maven")
     }
 }
+
 
 rootProject.name = "UniRoute"
 include(":app")

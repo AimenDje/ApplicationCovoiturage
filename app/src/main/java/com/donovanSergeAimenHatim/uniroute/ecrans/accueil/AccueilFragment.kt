@@ -12,9 +12,15 @@ import android.widget.Button
 import android.widget.LinearLayout
 import android.widget.Toast
 import androidx.lifecycle.lifecycleScope
+import com.donovanSergeAimenHatim.uniroute.UniRouteApp
+import com.donovanSergeAimenHatim.uniroute.ecrans.listTrajets.TrajetDataManager
 import com.donovanSergeAimenHatim.uniroute.ecrans.listTrajets.Trajets
+import com.donovanSergeAimenHatim.uniroute.ecrans.listTrajets.TrajetsContract
+import com.donovanSergeAimenHatim.uniroute.ecrans.listTrajets.TrajetsPresenter
 import com.donovanSergeAimenHatim.uniroute.ecrans.listTrajets.listTrajets
 import com.donovanSergeAimenHatim.uniroute.sourceDeDonnées.SourceKelconke
+import com.donovanSergeAimenHatim.uniroute.utilisateur.Utilisateur
+import com.donovanSergeAimenHatim.uniroute.utilisateur.UtilisateurDataManager
 import com.google.android.material.button.MaterialButtonToggleGroup
 import com.google.android.material.datepicker.MaterialDatePicker
 import com.google.android.material.timepicker.MaterialTimePicker
@@ -36,11 +42,12 @@ private const val ARG_PARAM2 = "param2"
  * Use the [AccueilFragment.newInstance] factory method to
  * create an instance of this fragment.
  */
-class AccueilFragment : Fragment(), AjoutTrajetContract.View {
+class AccueilFragment : Fragment(), TrajetsContract.View{
     // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
-
+    private lateinit var presenter: TrajetsPresenter
+    private lateinit var userDataManager: UtilisateurDataManager
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
@@ -56,28 +63,30 @@ class AccueilFragment : Fragment(), AjoutTrajetContract.View {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_accueil, container, false)
     }
-    private lateinit var presenter: AjoutTrajetPresenter
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         // Initialisation du présentateur
-        val model = AjoutTrajetModel(SourceKelconke())
-        presenter = AjoutTrajetPresenter(this, model)
+        val sourceKelconke = SourceKelconke()
+        userDataManager = UtilisateurDataManager(sourceKelconke)
+        val dataManager = TrajetDataManager(sourceKelconke)
+        val userDataManager = UtilisateurDataManager(sourceKelconke)
+        presenter = TrajetsPresenter(this, dataManager, userDataManager)
 
         val btnAjouterTrajet: Button = view.findViewById(R.id.BtnProposerCoVoiturage)
         btnAjouterTrajet.setOnClickListener {
+            val idUtilisateur =99
             val depart = view.findViewById<com.google.android.material.textfield.TextInputEditText>(R.id.textFieldDepartProposer).text.toString()
             val destination = view.findViewById<com.google.android.material.textfield.TextInputEditText>(R.id.textFIeldDestinationProposer).text.toString()
             val heureDepart = view.findViewById<com.google.android.material.textfield.TextInputEditText>(R.id.timePickerEditText).text.toString()
             val date = view.findViewById<com.google.android.material.textfield.TextInputEditText>(R.id.datePickerEditTextProposer).text.toString()
             val auto = view.findViewById<com.google.android.material.textfield.TextInputEditText>(R.id.textFieldAutoProposer).text.toString()
-            val nbPassagers = view?.findViewById<com.google.android.material.slider.Slider>(R.id.nbPassagerProposer)?.value.toString()
-            val donneesTrajet = mapOf(
-                "villeDepart" to depart,
-                "villeDestination" to destination,
-                "date" to convertirDate("${date} ${heureDepart}"),
-                "nbPassager" to nbPassagers
-            )
-           presenter.ajouterTrajet(viewLifecycleOwner.lifecycleScope, donneesTrajet)
+            val nbPassagers = view?.findViewById<com.google.android.material.slider.Slider>(R.id.nbPassagerProposer)?.value
+            val priseCharge =view.findViewById<com.google.android.material.textfield.TextInputEditText>(R.id.textFieldPriseChargeProposer).text.toString()
+            val prixTrajet = "0$"
+            val dureeTrajet = "0h"
+            val distanceTrajet = "0km"
+            var trajet = Trajets(0,idUtilisateur,depart,"${date} ${heureDepart}",destination,5, priseCharge, prixTrajet, dureeTrajet, distanceTrajet, auto)
+            presenter.ajouterTrajet(trajet)
         }
         val datePickerEditText = view.findViewById<TextInputEditText>(R.id.datePickerEditText)
         datePickerEditText.setOnClickListener {
@@ -131,45 +140,29 @@ class AccueilFragment : Fragment(), AjoutTrajetContract.View {
         }
         val btnChercherCoVoiturage: Button = view.findViewById(R.id.BtnTrouverCoVoiturage)
         btnChercherCoVoiturage.setOnClickListener {
-            val destinationInput = view?.findViewById<com.google.android.material.textfield.TextInputEditText>(R.id.destinationTrouver)?.text?.toString()
-            val dateInput = view?.findViewById<com.google.android.material.textfield.TextInputEditText>(R.id.datePickerEditText)?.text?.toString()
+            val destinationInput = view?.findViewById<TextInputEditText>(R.id.destinationTrouver)?.text?.toString()
+            val dateInput = view?.findViewById<TextInputEditText>(R.id.datePickerEditText)?.text?.toString()
             val nbPassagers = view?.findViewById<com.google.android.material.slider.Slider>(R.id.nbPassagerSlider)?.value?.toInt()
-            val dateFormat = SimpleDateFormat("MMM d, yyyy", Locale.ENGLISH)
+
             val outputFormat = SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH)
-            val date = if (!dateInput.isNullOrEmpty()) {
+            val date = dateInput?.let {
                 try {
-                    dateFormat.parse(dateInput)?.let { outputFormat.format(it) }
+                    val dateFormat = SimpleDateFormat("MMM d, yyyy", Locale.ENGLISH)
+                    dateFormat.parse(it)?.let { date -> outputFormat.format(date) }
                 } catch (e: ParseException) {
                     null
                 }
-            } else {
-                null
             }
-
-        val timePickerEditText = view.findViewById<TextInputEditText>(R.id.timePickerEditText)
-        timePickerEditText.setOnClickListener {
-            val timePicker = MaterialTimePicker.Builder()
-                .setTimeFormat(TimeFormat.CLOCK_12H)
-                .setHour(12)
-                .setMinute(10)
-                .setTitleText("Select Appointment Time")
-                .build()
-
-            timePicker.show(childFragmentManager, timePicker.toString())
-            timePicker.addOnPositiveButtonClickListener {
-                // Format the picked time to your desired format, e.g., "hh:mm a"
-                val selectedTime = String.format("%02d:%02d %s",
-                    timePicker.hour,
-                    timePicker.minute,
-                    if (timePicker.hour < 12) "AM" else "PM")
-
-                // Set the formatted time to the EditText
-                timePickerEditText.setText(selectedTime)
+            val bundle = Bundle().apply {
+                putString("villeDestination", destinationInput)
+                putString("date", date)
+                if (nbPassagers != null) putInt("nbPassager", nbPassagers)
             }
-        }
-
+            val listTrajetsFragment = listTrajets().apply {
+                arguments = bundle
+            }
             activity?.supportFragmentManager?.beginTransaction()?.apply {
-                replace(R.id.fragment_container, listTrajets())
+                replace(R.id.fragment_container, listTrajetsFragment)
                 addToBackStack(null)
                 commit()
             }
@@ -193,33 +186,13 @@ class AccueilFragment : Fragment(), AjoutTrajetContract.View {
                 timePickerEditText.setText(selectedTime)
             }
         }
-        viewLifecycleOwner.lifecycleScope.launch {
-            val source = SourceKelconke()
-            val nomTable = "trajets"
-            val colonne = "villeDestination"
-            val condition = "villeDepart = 'Paris'"
-            val villeDestination = source.obtenirDonnées(
-                nomTable,
-                colonne,
-                condition
-            ) { jsonResponse ->
-                Gson().fromJson(jsonResponse, Trajets::class.java)
-            }
-            if (villeDestination != null) {
-                val text = "Hello toast!"
-                val duration = Toast.LENGTH_SHORT
 
-                val toast = Toast.makeText(context, text, duration)
-                toast.show()
-            } else {
-            }
-        }
     }
-    override fun afficherSuccesAjout() {
+    fun afficherSuccesAjout() {
         Toast.makeText(context, "Trajet ajouté avec succès", Toast.LENGTH_LONG).show()
     }
 
-    override fun afficherErreurAjout(message: String) {
+    fun afficherErreurAjout(message: String) {
         Toast.makeText(context, message, Toast.LENGTH_LONG).show()
     }
 
@@ -254,5 +227,18 @@ class AccueilFragment : Fragment(), AjoutTrajetContract.View {
                     putString(ARG_PARAM2, param2)
                 }
             }
+    }
+
+    override fun afficherTrajets(trajets: List<Trajets>) {
+        TODO("Not yet implemented")
+    }
+    override fun afficherTrajetSelectionne(trajet: Trajets) {
+        TODO("Not yet implemented")
+    }
+    override fun afficherErreur(message: String) {
+        Toast.makeText(context, message, Toast.LENGTH_LONG).show()
+    }
+    override fun afficherUtilisateur(utilisateur: Utilisateur) {
+        TODO("Not yet implemented")
     }
 }

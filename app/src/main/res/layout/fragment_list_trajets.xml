@@ -5,9 +5,7 @@
     android:id="@+id/frameLayout2"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/maps"
     tools:context=".ecrans.listTrajets.listTrajets">
-
 
     <LinearLayout
         android:id="@+id/containerListTrajets"
@@ -58,10 +56,20 @@
                 android:id="@+id/linear_layout_for_items"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical">
-            </LinearLayout>
+                android:orientation="vertical"></LinearLayout>
         </ScrollView>
 
     </LinearLayout>
+
+    <ProgressBar
+        android:id="@+id/progressBar_loading"
+        style="?android:attr/progressBarStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:indeterminateTint="@color/purple_200"
+        app:layout_constraintBottom_toBottomOf="@+id/containerListTrajets"
+        app:layout_constraintEnd_toEndOf="@+id/containerListTrajets"
+        app:layout_constraintStart_toStartOf="@+id/containerListTrajets"
+        app:layout_constraintTop_toTopOf="@+id/containerListTrajets" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
