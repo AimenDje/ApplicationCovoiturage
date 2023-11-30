@@ -102,12 +102,8 @@ class PreferenceFragment : Fragment() {
             } else {
                 Toast.makeText(requireContext(), "Vos informations seront mises à jour", Toast.LENGTH_SHORT).show()
                 présentateur.mettreAJourPréférence( "Gauthier", nom, prénom, email, voiture, adresse)
-                if(themeClair.isChecked){
-                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
-
-                }else {
-                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
-                }
+                
+                présentateur.modifierTheme(themeClair.isChecked)
             }
             }
     }
