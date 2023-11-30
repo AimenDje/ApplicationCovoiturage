@@ -66,17 +66,9 @@ private val client = HttpClient(CIO)
                     profils[index] = utilisateurModifié
 
                 }
-
-
             }
-
-
         }
-
     }
-
-
-
 override suspend fun <T> obtenirDonnées(
         nomTable: String,
         colonne: String,
@@ -108,14 +100,14 @@ override suspend fun <T> obtenirDonnées(
     override suspend fun modifierDonnee(
         nomTable: String,
         donnees: Map<String, Any>,
-        id: String // Ajout d'un paramètre pour l'ID de l'élément à modifier
+        id: String
     ): Boolean {
         return withContext(Dispatchers.IO) {
             try {
-                val url = "https://donovanbeulze.com/unirouteAPI/modifier.php" // URL de votre script de modification
+                val url = "https://donovanbeulze.com/unirouteAPI/modifier.php"
                 val formData = Parameters.build {
                     append("table", nomTable)
-                    append("id", id) // Ajoutez l'ID à la requête
+                    append("id", id)
                     donnees.forEach { (key, value) ->
                         append(key, value.toString())
                     }
@@ -135,7 +127,6 @@ override suspend fun <T> obtenirDonnées(
             }
         }
     }
-
     override suspend fun ajouterDonnee(
         nomTable: String,
         donnees: Map<String, Any>
