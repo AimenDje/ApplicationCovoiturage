@@ -30,9 +30,7 @@ class PreferenceFragment : Fragment() {
     private lateinit var buttonEnregistrer: Button
     private lateinit var présentateur: PrésentateurPréférences
     private lateinit var présentateurProfil : PrésentateurProfil
-    private lateinit var utilisateurÀmodifier :String
-
-
+    //private lateinit var utilisateurÀmodifier :String
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -99,8 +97,6 @@ class PreferenceFragment : Fragment() {
                 nouvelleAdresse.text.toString().isEmpty()
             ) {
 
-
-
                 // Afficher une alerte si les champs sont vides
                 Toast.makeText(requireContext(), "Vueillez remplir tous les champs", Toast.LENGTH_SHORT).show()
             } else {
@@ -112,12 +108,9 @@ class PreferenceFragment : Fragment() {
                 }else {
                     AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
                 }
-
-
             }
             }
     }
-
 
 
     override fun onCreateView(
@@ -140,13 +133,11 @@ class PreferenceFragment : Fragment() {
                 affichagekm.isChecked = false
             }
         }
-
         themeClair.setOnCheckedChangeListener { _, isChecked ->
             if (isChecked) {
                 themeSombre.isChecked = false
             }
         }
-
         themeSombre.setOnCheckedChangeListener { _, isChecked ->
             if (isChecked) {
                 themeClair.isChecked = false

@@ -24,8 +24,6 @@ data class ModèlePréférences( var utilisateurÀModifier:String = "",
 
     }
 
-
-
     fun modifierAffichageDistance (affichageEnKM: Boolean){
 
     }
