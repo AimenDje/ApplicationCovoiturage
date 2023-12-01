@@ -8,7 +8,7 @@ import com.google.gson.reflect.TypeToken
 class UtilisateurDataManager(private val source: SourceKelconke) {
 
     suspend fun getUtilisateur(nomTable: String, colonne: String = "*", condition: String = ""): List<Utilisateur> {
-        val utilisateurJson = source.obtenirDonnées(nomTable, colonne, condition, ::transformJsonToTrajets)
+        val utilisateurJson = source.obtenirDonnées(nomTable, colonne, condition, ::transformJsonToUtilisateurs)
         return utilisateurJson ?: emptyList()
     }
 
@@ -17,8 +17,13 @@ class UtilisateurDataManager(private val source: SourceKelconke) {
         val utilisateurs = getUtilisateur("utilisateur", "*", condition)
         return utilisateurs.firstOrNull()
     }
+    suspend fun modifierUtilisateurByID(utilisateurID: String, nouvellesDonnees:Map<String, Any>):Boolean{
+        val table = "utilisateur"
+        return source.modifierDonnee(table, nouvellesDonnees, utilisateurID)
+    }
 
-    fun transformJsonToTrajets(jsonString: String): List<Utilisateur> {
+
+    fun transformJsonToUtilisateurs(jsonString: String): List<Utilisateur> {
         Log.d("listUtilisateur", "JSON String: $jsonString")
         val gson = Gson()
         val type = object : TypeToken<List<String>>() {}.type

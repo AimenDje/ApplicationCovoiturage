@@ -12,21 +12,20 @@ data class ModèlePréférences( var utilisateurÀModifier:String = "",
                               var adresse : String = "",
                               var affichageEnKm: Boolean = true,
                               var themeClair: Boolean = false,
-                              var activity: AppCompatActivity? = null
+
 
 ) {
 
-    private var _source = SourceKelconke()
 
-    fun modifierUnProfil( utilisateurÀModifier:String, nom:String, prénom:String, email:String,
+   // private var _source = SourceKelconke()
+
+    /*fun modifierUnProfil( utilisateurÀModifier:String, nom:String, prénom:String, email:String,
                           voiture:String, adresse:String){
         _source.modifierProfil(utilisateurÀModifier, nom, prénom, email, voiture, adresse)
 
-    }
+    }*/
 
+    /*fun modifierAffichageDistance (affichageEnKM: Boolean){
 
-
-    fun modifierAffichageDistance (affichageEnKM: Boolean){
-
-    }
+    }*/
 }
