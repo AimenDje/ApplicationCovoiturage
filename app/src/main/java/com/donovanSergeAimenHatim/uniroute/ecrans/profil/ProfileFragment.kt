@@ -28,7 +28,7 @@ class ProfileFragment : Fragment() {
     private lateinit var lagueParlée2: ImageView
     private lateinit var typeVoiture: TextView
     private lateinit var adresse: MapView
-    private lateinit var buttonHistorique: Button
+
 
 
     override fun onCreateView(

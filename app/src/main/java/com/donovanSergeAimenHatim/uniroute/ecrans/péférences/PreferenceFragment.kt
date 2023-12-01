@@ -13,6 +13,7 @@ import androidx.appcompat.app.AppCompatDelegate
 import androidx.fragment.app.Fragment
 
 import com.donovanSergeAimenHatim.uniroute.R
+import com.donovanSergeAimenHatim.uniroute.ecrans.profil.ModèleProfile
 import com.donovanSergeAimenHatim.uniroute.ecrans.profil.ProfileFragment
 import com.donovanSergeAimenHatim.uniroute.ecrans.profil.PrésentateurProfil
 
@@ -54,11 +55,14 @@ class PreferenceFragment : Fragment() {
         présentateur = PrésentateurPréférences(this)
         présentateurProfil = PrésentateurProfil(ProfileFragment())
 
-        nouveauNom.setText(présentateurProfil.obrenirUnProfilUtilisateur("Gauthier")?.nom)
-        nouveauPrénom.setText(présentateurProfil.obrenirUnProfilUtilisateur("Gauthier")?.prénom)
-        nouvelEmail.setText(présentateurProfil.obrenirUnProfilUtilisateur("Gauthier")?.email)
-        nouvelleVoiture.setText(présentateurProfil.obrenirUnProfilUtilisateur("Gauthier")?.typeVoiture)
-        nouvelleAdresse.setText(présentateurProfil.obrenirUnProfilUtilisateur("Gauthier")?.adresse)
+
+        présentateur.chargerProfilUtilisateur(99)
+
+        //nouveauNom.setText(présentateurProfil.chargerProfileDepuisAPI(99)?.nom)
+        //nouveauPrénom.setText(présentateurProfil.obrenirUnProfilUtilisateur("Gauthier")?.prénom)
+        //nouvelEmail.setText(présentateurProfil.obrenirUnProfilUtilisateur("Gauthier")?.email)
+        //nouvelleVoiture.setText(présentateurProfil.obrenirUnProfilUtilisateur("Gauthier")?.typeVoiture)
+        //nouvelleAdresse.setText(présentateurProfil.obrenirUnProfilUtilisateur("Gauthier")?.adresse)
 
         affichagekm.isChecked = true
         themeClair.isChecked = true
@@ -100,9 +104,14 @@ class PreferenceFragment : Fragment() {
                 // Afficher une alerte si les champs sont vides
                 Toast.makeText(requireContext(), "Vueillez remplir tous les champs", Toast.LENGTH_SHORT).show()
             } else {
+                val nouvellesDonnees = mapOf(
+                    "nom" to nom,
+                    "prenom" to prénom,
+                    "email" to email,
+                    "adresse" to adresse,
+                    "voiture" to voiture )
                 Toast.makeText(requireContext(), "Vos informations seront mises à jour", Toast.LENGTH_SHORT).show()
-                présentateur.mettreAJourPréférence( "Gauthier", nom, prénom, email, voiture, adresse)
-                
+                présentateur.modifierProfilUtilisateur("99" , nouvellesDonnees)
                 présentateur.modifierTheme(themeClair.isChecked)
             }
             }
@@ -139,6 +148,46 @@ class PreferenceFragment : Fragment() {
                 themeClair.isChecked = false
             }
         }
+    }
+    fun modifierUnUtilisateur(modification: Boolean){
+        if(modification){
+
+
+        }else {
+            // Affiche un message en cas d'erreur (si la modification ne s'effectue pas)
+            afficherMessage("Une erreur est survenue")
+        }
+
+
+
+
+
+    }
+    fun afficherInformations(profil: ModèleProfile?) {
+        // Vérifie si l'objet profil n'est pas null
+        if (profil != null) {
+            // Obtient le nom de la photo de profil à partir de l'objet profil
+
+            // Définit le nom et le prénom dans l'interface utilisateur
+            nouveauNom.setText(profil?.nom)
+            // Définit l'email dans l'interface utilisateur
+            nouveauPrénom.setText(profil?.prénom)
+            // Définit le numéro de téléphone dans l'interface utilisateur
+            nouvelEmail.setText(profil?.email)
+            nouvelleVoiture.setText(profil?.typeVoiture)
+            nouvelleAdresse.setText(profil?.adresse)
+
+        } else {
+            // Affiche un message en cas d'erreur (si profil est null)
+            afficherMessage("Une erreur est survenue")
+        }
+    }
+    fun afficherMessage(message: String) {
+        Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
+    }
+
+    fun afficherErreur(e: Exception) {
+        Toast.makeText(context, e.message, Toast.LENGTH_SHORT).show()
     }
     companion object {
         /**
