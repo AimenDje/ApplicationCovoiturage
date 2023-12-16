@@ -1,36 +1,41 @@
 package com.donovanSergeAimenHatim.uniroute.ecrans.Liste_des_reservations
 
-import androidx.recyclerview.widget.RecyclerView
+import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.TextView
-
-import com.donovanSergeAimenHatim.uniroute.ecrans.Liste_des_reservations.placeholder.PlaceholderContent.PlaceholderItem
+import androidx.recyclerview.widget.RecyclerView
 import com.donovanSergeAimenHatim.uniroute.databinding.FragmentItemBinding
-import com.donovanSergeAimenHatim.uniroute.ecrans.listTrajets.Reservations
+import com.donovanSergeAimenHatim.uniroute.ecrans.listTrajets.ReservationsModele
 
-/**
- * [RecyclerView.Adapter] that can display a [PlaceholderItem].
- * TODO: Replace the implementation with code for your data type.
- */
-class MyreservationsRecyclerViewAdapter(
-        private val values: List <Reservations.Reservation>
-)
-    : RecyclerView.Adapter<MyreservationsRecyclerViewAdapter.ViewHolder>() {
+class MyReservationsRecyclerViewAdapter(reservationsModele: List<ReservationsModele.Reservation>) :
+    RecyclerView.Adapter<MyReservationsRecyclerViewAdapter.ViewHolder>() {
+
+    private var reservationsModele: List<ReservationsModele.Reservation> = emptyList()
+
+    @SuppressLint("NotifyDataSetChanged")
+    fun updateData(newReservationsModele: List<ReservationsModele.Reservation>) {
+        reservationsModele = newReservationsModele
+        notifyDataSetChanged()
+    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-
-    return ViewHolder(FragmentItemBinding.inflate(LayoutInflater.from(parent.context), parent, false))
-
+        return ViewHolder(
+            FragmentItemBinding.inflate(
+                LayoutInflater.from(parent.context),
+                parent,
+                false
+            )
+        )
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        val item = values[position]
-        holder.idView.text = item.idReservation.toString()
+        val item = reservationsModele[position]
+        holder.idView.text = item.id.toString()
         holder.contentView.text = item.getReservationInfo()
     }
 
-    override fun getItemCount(): Int = values.size
+    override fun getItemCount(): Int = reservationsModele.size
 
     inner class ViewHolder(binding: FragmentItemBinding) : RecyclerView.ViewHolder(binding.root) {
         val idView: TextView = binding.itemNumber
@@ -40,5 +45,4 @@ class MyreservationsRecyclerViewAdapter(
             return super.toString() + " '" + contentView.text + "'"
         }
     }
-
 }
