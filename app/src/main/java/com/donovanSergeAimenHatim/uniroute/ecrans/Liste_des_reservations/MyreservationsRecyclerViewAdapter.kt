@@ -2,38 +2,32 @@ package com.donovanSergeAimenHatim.uniroute.ecrans.Liste_des_reservations
 
 import androidx.recyclerview.widget.RecyclerView
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
-import com.donovanSergeAimenHatim.uniroute.R
 
 import com.donovanSergeAimenHatim.uniroute.ecrans.Liste_des_reservations.placeholder.PlaceholderContent.PlaceholderItem
 import com.donovanSergeAimenHatim.uniroute.databinding.FragmentItemBinding
+import com.donovanSergeAimenHatim.uniroute.ecrans.listTrajets.Reservations
 
 /**
  * [RecyclerView.Adapter] that can display a [PlaceholderItem].
  * TODO: Replace the implementation with code for your data type.
  */
 class MyreservationsRecyclerViewAdapter(
-    private val values: List<PlaceholderItem>
-) : RecyclerView.Adapter<MyreservationsRecyclerViewAdapter.ViewHolder>() {
+        private val values: List <Reservations.Reservation>
+)
+    : RecyclerView.Adapter<MyreservationsRecyclerViewAdapter.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
 
-        return ViewHolder(
-            FragmentItemBinding.inflate(
-                LayoutInflater.from(parent.context),
-                parent,
-                false
-            )
-        )
+    return ViewHolder(FragmentItemBinding.inflate(LayoutInflater.from(parent.context), parent, false))
 
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val item = values[position]
-        holder.idView.text = item.id
-        holder.contentView.text = item.content
+        holder.idView.text = item.idReservation.toString()
+        holder.contentView.text = item.getReservationInfo()
     }
 
     override fun getItemCount(): Int = values.size
