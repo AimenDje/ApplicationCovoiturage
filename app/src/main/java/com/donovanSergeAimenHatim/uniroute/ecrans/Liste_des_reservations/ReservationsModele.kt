@@ -1,7 +1,7 @@
 package com.donovanSergeAimenHatim.uniroute.ecrans.listTrajets
 
-class Reservations {
-    private val reservationsList: MutableList<Reservation> = mutableListOf()
+class ReservationsModele {
+    val reservationsList: MutableList<Reservation> = mutableListOf()
 
     fun ajouterReservation(id: Int, utilisateurID: Int, trajet: Trajets) {
         val reservation = Reservation(id, utilisateurID, trajet)
@@ -13,13 +13,13 @@ class Reservations {
     }
 
     inner class Reservation(
-        val idReservation: Int,
+        val id: Int,
         val utilisateurID: Int,
         val trajet: Trajets
     ) {
 
         fun getReservationInfo(): String {
-            return "Réservation Info - ID: $idReservation, UtilisateurID: $utilisateurID, Trajet: ${trajet.getTrajetDescription()}"
+            return "Réservation Info - ID: $id, UtilisateurID: $utilisateurID, Trajet: ${trajet.getTrajetDescription()}"
         }
     }
 }
