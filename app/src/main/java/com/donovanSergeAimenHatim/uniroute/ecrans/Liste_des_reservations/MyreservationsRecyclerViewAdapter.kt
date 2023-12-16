@@ -8,7 +8,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.donovanSergeAimenHatim.uniroute.databinding.FragmentItemBinding
 import com.donovanSergeAimenHatim.uniroute.ecrans.listTrajets.ReservationsModele
 
-class MyReservationsRecyclerViewAdapter(reservationsModele: List<ReservationsModele.Reservation>) :
+class MyReservationsRecyclerViewAdapter(ReservationsModele: List<ReservationsModele.Reservation>) :
     RecyclerView.Adapter<MyReservationsRecyclerViewAdapter.ViewHolder>() {
 
     private var reservationsModele: List<ReservationsModele.Reservation> = emptyList()
