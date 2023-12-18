@@ -14,7 +14,8 @@ class Trajets(val id: Int,
               val prixTrajet : String,
               val dureeTrajet : String,
               val distanceTrajet : String,
-              val modelVehicule : String) {
+              val modelVehicule : String,
+              var utilisateursReserves: String) {
 
     fun getTrajetDescription(): String {
         return "$villeDepart -> $villeDestination"

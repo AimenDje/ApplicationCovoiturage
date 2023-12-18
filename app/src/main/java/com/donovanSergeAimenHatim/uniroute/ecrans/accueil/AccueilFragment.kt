@@ -85,7 +85,8 @@ class AccueilFragment : Fragment(), TrajetsContract.View{
             val prixTrajet = "0$"
             val dureeTrajet = "0h"
             val distanceTrajet = "0km"
-            var trajet = Trajets(0,idUtilisateur,depart,"${date} ${heureDepart}",destination,5, priseCharge, prixTrajet, dureeTrajet, distanceTrajet, auto)
+            val utilisateurReserver = ""
+            var trajet = Trajets(0,idUtilisateur,depart,"${date} ${heureDepart}",destination,5, priseCharge, prixTrajet, dureeTrajet, distanceTrajet, auto, utilisateurReserver)
             presenter.ajouterTrajet(trajet)
         }
         val datePickerEditText = view.findViewById<TextInputEditText>(R.id.datePickerEditText)
@@ -239,6 +240,10 @@ class AccueilFragment : Fragment(), TrajetsContract.View{
         Toast.makeText(context, message, Toast.LENGTH_LONG).show()
     }
     override fun afficherUtilisateur(utilisateur: Utilisateur) {
+        TODO("Not yet implemented")
+    }
+
+    override fun aucunTrajetDisponible() {
         TODO("Not yet implemented")
     }
 }

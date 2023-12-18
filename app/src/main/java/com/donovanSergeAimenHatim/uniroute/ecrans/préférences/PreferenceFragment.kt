@@ -4,8 +4,10 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.animation.AnimationUtils
 import android.widget.Button
 import android.widget.EditText
+import android.widget.LinearLayout
 import android.widget.RadioButton
 import android.widget.Toast
 import androidx.fragment.app.Fragment
@@ -30,6 +32,7 @@ class PreferenceFragment : Fragment() {
     private lateinit var buttonEnregistrer: Button
     private lateinit var présentateur: PrésentateurPréférences
     private lateinit var présentateurProfil : PrésentateurProfil
+    private lateinit var loadingPanel: LinearLayout
     //private lateinit var utilisateurÀmodifier :String
 
 
@@ -52,6 +55,7 @@ class PreferenceFragment : Fragment() {
         présentateur = PrésentateurPréférences(this)
         présentateurProfil = PrésentateurProfil(ProfileFragment())
 
+        loadingPanel = view.findViewById(R.id.loadingPanel)
 
         présentateur.chargerProfilUtilisateur(99)
 
@@ -137,6 +141,7 @@ class PreferenceFragment : Fragment() {
     }
     fun afficherInformations(profil: ModèleProfile?) {
         // Vérifie si l'objet profil n'est pas null
+        val fadeOut = AnimationUtils.loadAnimation(context, R.anim.fade_out)
         if (profil != null) {
             // Obtient le nom de la photo de profil à partir de l'objet profil
 
@@ -148,6 +153,9 @@ class PreferenceFragment : Fragment() {
             nouvelEmail.setText(profil?.email)
             nouvelleVoiture.setText(profil?.typeVoiture)
             nouvelleAdresse.setText(profil?.adresse)
+
+            loadingPanel.startAnimation(fadeOut)
+            loadingPanel.visibility = View.GONE
 
         } else {
             // Affiche un message en cas d'erreur (si profil est null)

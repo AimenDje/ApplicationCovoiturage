@@ -35,12 +35,23 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="1.0">
 
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" >
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"></LinearLayout>
+        </ScrollView>
+
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="75dp"
             android:layout_marginHorizontal="25dp"
             android:layout_marginVertical="15dp"
-            android:background="@drawable/rounded_rectangle">
+            android:background="@drawable/rounded_rectangle"
+            tools:visibility="gone">
 
             <TextView
                 android:id="@+id/trajetMontrealToronto"
@@ -72,7 +83,8 @@
             android:layout_height="75dp"
             android:layout_marginHorizontal="25dp"
             android:layout_marginVertical="15dp"
-            android:background="@drawable/rounded_rectangle">
+            android:background="@drawable/rounded_rectangle"
+            tools:visibility="gone">
 
             <TextView
                 android:id="@+id/trajetCalgaryVancouver"
@@ -105,7 +117,8 @@
             android:layout_height="75dp"
             android:layout_marginHorizontal="25dp"
             android:layout_marginVertical="15dp"
-            android:background="@drawable/rounded_rectangle">
+            android:background="@drawable/rounded_rectangle"
+            tools:visibility="gone">
 
             <TextView
                 android:id="@+id/trajetMississaugeHamilton"
@@ -138,7 +151,8 @@
             android:layout_height="75dp"
             android:layout_marginHorizontal="25dp"
             android:layout_marginVertical="15dp"
-            android:background="@drawable/rounded_rectangle">
+            android:background="@drawable/rounded_rectangle"
+            tools:visibility="gone">
 
             <TextView
                 android:id="@+id/trajetEdmontonWinnipeg"

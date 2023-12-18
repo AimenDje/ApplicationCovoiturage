@@ -16,6 +16,7 @@ import android.widget.Toast
 import com.donovanSergeAimenHatim.uniroute.R
 import com.donovanSergeAimenHatim.uniroute.sourceDeDonnées.SourceKelconke
 import com.donovanSergeAimenHatim.uniroute.animation.anim
+import com.donovanSergeAimenHatim.uniroute.ecrans.accueil.AccueilFragment
 import com.donovanSergeAimenHatim.uniroute.utilisateur.Utilisateur
 import com.donovanSergeAimenHatim.uniroute.utilisateur.UtilisateurDataManager
 import kotlinx.coroutines.Dispatchers
@@ -41,7 +42,7 @@ class listTrajets : Fragment(), TrajetsContract.View{
     private lateinit var animation: anim
     private var trajetSelectionneActuel: View? = null
     var loadingLogo: ProgressBar? = null
-
+    var confirmationBtn: Button? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
@@ -94,7 +95,6 @@ class listTrajets : Fragment(), TrajetsContract.View{
 
         val fadeIn = AnimationUtils.loadAnimation(context, R.anim.fade_in)
         val fadeOut = AnimationUtils.loadAnimation(context, R.anim.fade_out)
-
         loadingLogo = view.findViewById<ProgressBar>(R.id.progressBar_loading)
         val listTrajetsSection = view.findViewById<LinearLayout>(R.id.containerListTrajets)
         listTrajetsSection.startAnimation(fadeIn)
@@ -107,6 +107,8 @@ class listTrajets : Fragment(), TrajetsContract.View{
         val fadeOut = AnimationUtils.loadAnimation(context, R.anim.fade_out)
         val container = view?.findViewById<LinearLayout>(R.id.linear_layout_for_items)
         val titreTrajet = view?.findViewById<TextView>(R.id.textView_listTrajet_Title)
+        var trajetId: Int = 0
+        var utilisateurId: Int = 0
         container?.removeAllViews()
         val trajetViews = mutableListOf<View>()
         trajets.forEachIndexed { index, trajet ->
@@ -114,6 +116,7 @@ class listTrajets : Fragment(), TrajetsContract.View{
             trajetViews.add(trajetView)
             trajetView.startAnimation(fadeIn)
             loadingLogo?.visibility = View.GONE
+            var utilisateur: Utilisateur? = null
             val nomConducteurView = trajetView.findViewById<TextView>(R.id.textView_trajetPrenomSelectionner)
             val nomConduteurNonSelectioner = trajetView.findViewById<TextView>(R.id.textView_NomTrajetNonSelectionner)
             val villeDepartDestinationView = trajetView.findViewById<TextView>(R.id.textView_trajetSelectionner_departDestination)
@@ -123,22 +126,28 @@ class listTrajets : Fragment(), TrajetsContract.View{
             val priseCharge = trajetView.findViewById<TextView>(R.id.textView_trajetSelectionnerDetail)
             val contactBouton = trajetView.findViewById<Button>(R.id.contactBtn)
             GlobalScope.launch(Dispatchers.Main) {
-                val utilisateur = presenter.chargerUtilisateur(trajet.utilisateurID)
+                utilisateur = presenter.chargerUtilisateur(trajet.utilisateurID)
                 if (utilisateur != null) {
-                    nomConduteurNonSelectioner.text = "${utilisateur.nom} ${utilisateur.prenom}"
-                    nomConducteurView.text = "${utilisateur.nom} ${utilisateur.prenom}"
-                    contactBouton.setText("Contact ${utilisateur.prenom}")
+                    utilisateurId = utilisateur!!.id
+                    nomConduteurNonSelectioner.text = "${utilisateur!!.nom} ${utilisateur!!.prenom}"
+                    nomConducteurView.text = "${utilisateur!!.nom} ${utilisateur!!.prenom}"
+                    contactBouton.setText("Contact ${utilisateur!!.prenom}")
                 } else {
                     afficherErreur("Erreur utilisateur non trouver")
                 }
             }
+            trajetId = trajet.id
             titreTrajet?.text = "Trajet disponible:"
             priseCharge.text = "Prise en charge:\n${trajet.priseCharge}"
             dateNonSelectionner.setText("${trajet.date}")
             villeDepartDestinationView.text = "${trajet.villeDepart} -> ${trajet.villeDestination}"
             date.setText("${trajet.date}")
             autoView.text = "Voiture: Avenir"
-
+            val confirmationBtnLocal = trajetView.findViewById<Button>(R.id.BtnParticiper)
+            confirmationBtnLocal.setOnClickListener {
+                afficherConfirmation(utilisateur!!.prenom)
+                presenter.reserverTrajet(trajetId, getString(R.string.utilisateurID).toInt())
+            }
             trajetView.findViewById<LinearLayout>(R.id.linearLayout_trajet).setOnClickListener {
                 trajetViews.forEach { view ->
                     view.findViewById<LinearLayout>(R.id.linearLayout_trajetSelectionner).visibility = View.GONE
@@ -155,12 +164,35 @@ class listTrajets : Fragment(), TrajetsContract.View{
                 trajetView.findViewById<LinearLayout>(R.id.linearLayout_trajet).visibility = View.VISIBLE
             }
 
+
             container?.addView(trajetView)
+            trajetView.startAnimation(fadeIn)
         }
     }
 
 
+    fun afficherConfirmation(nomConducteur: String){
+        val bundle = Bundle().apply {
+            putString("nomConducteur", nomConducteur)
+        }
+        val confirmationFragment = confirmationTrajetFragment().apply {
+        arguments = bundle
+    }
+        activity?.supportFragmentManager?.beginTransaction()?.apply {
+            replace(R.id.fragment_container, confirmationFragment)
+            addToBackStack(null)
+            commit()
+        }
+    }
 
+    override fun aucunTrajetDisponible(){
+        activity?.supportFragmentManager?.beginTransaction()?.apply {
+            replace(R.id.fragment_container, AccueilFragment())
+            addToBackStack(null)
+            commit()
+        }
+        afficherErreur("Aucun trajet de disponible")
+    }
 
     companion object {
         /**

@@ -12,9 +12,38 @@ import com.google.gson.reflect.TypeToken
 
         suspend fun getTrajetById(id : Int): Trajets?{
             val condition = "id=$id"
-            val trajets = getTrajets("trajet","*",condition)
+            val trajets = getTrajets("trajets","*",condition)
             return trajets.firstOrNull()
         }
+        suspend fun reserverTrajet(idTrajet: Int, idUtilisateur: Int): Boolean {
+            val trajet = getTrajetById(idTrajet)
+            trajet?.let {
+                val utilisateursReserves = it.utilisateursReserves.split(';').filterNot { it.isEmpty() }
+                if (utilisateursReserves.size < it.nbPassager) {
+                    val updatedUtilisateursReserves = (utilisateursReserves + idUtilisateur.toString()).joinToString(";")
+                    val donneesMisesAJour = mapOf(
+                        "id" to it.id.toString(),
+                        "utilisateurID" to it.utilisateurID,
+                        "villeDepart" to it.villeDepart,
+                        "date" to it.date,
+                        "villeDestination" to it.villeDestination,
+                        "nbPassager" to it.nbPassager,
+                        "priseCharge" to it.priseCharge,
+                        "prixTrajet" to it.prixTrajet,
+                        "dureeTrajet" to it.dureeTrajet,
+                        "distanceTrajet" to it.distanceTrajet,
+                        "modelVehicule" to it.modelVehicule,
+                        "utilisateursReserves" to updatedUtilisateursReserves
+                    )
+                    // Log pour afficher les données
+                    Log.d("reserverTrajet", "Données à envoyer: $donneesMisesAJour")
+                    return source.modifierDonnee("trajets", donneesMisesAJour, it.id.toString())
+                }
+            }
+            return false
+        }
+
+
         suspend fun ajouterTrajet(trajet: Trajets): Boolean {
             val donnees = mapOf(
                 "id" to trajet.id.toString(),
@@ -53,7 +82,8 @@ import com.google.gson.reflect.TypeToken
                     prixTrajet = parts[7],
                     dureeTrajet = parts[8],
                     distanceTrajet = parts[9],
-                    modelVehicule = parts[10]
+                    modelVehicule = parts[10],
+                    utilisateursReserves = parts[11]
                 )
 
             }

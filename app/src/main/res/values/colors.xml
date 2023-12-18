@@ -13,4 +13,6 @@
     <color name="ActiveBtn">#e8def8</color>
     <color name="fondlogo">#f5f5f5</color>
     <color name="LogoFond">#e9ecf8</color>
+    <color name="confirmationColorText">#4A4747</color>
+    <color name="ButtonColor">#6750a4</color>
 </resources>
