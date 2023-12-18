@@ -1,21 +1,24 @@
-package com.donovanSergeAimenHatim.uniroute.ecrans.péférences
+package com.donovanSergeAimenHatim.uniroute.ecrans.préférences
 
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.animation.AnimationUtils
 import android.widget.Button
 import android.widget.EditText
-import android.widget.ImageView
+import android.widget.LinearLayout
 import android.widget.RadioButton
 import android.widget.Toast
-import androidx.appcompat.app.AppCompatDelegate
 import androidx.fragment.app.Fragment
 
 import com.donovanSergeAimenHatim.uniroute.R
 import com.donovanSergeAimenHatim.uniroute.ecrans.profil.ModèleProfile
 import com.donovanSergeAimenHatim.uniroute.ecrans.profil.ProfileFragment
 import com.donovanSergeAimenHatim.uniroute.ecrans.profil.PrésentateurProfil
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 
 class PreferenceFragment : Fragment() {
 
@@ -24,13 +27,12 @@ class PreferenceFragment : Fragment() {
     private lateinit var nouvelEmail: EditText
     private lateinit var nouvelleVoiture: EditText
     private lateinit var nouvelleAdresse: EditText
-    private lateinit var affichagekm: RadioButton
-    private lateinit var affichageMiles: RadioButton
     private lateinit var themeClair: RadioButton
     private lateinit var themeSombre: RadioButton
     private lateinit var buttonEnregistrer: Button
     private lateinit var présentateur: PrésentateurPréférences
     private lateinit var présentateurProfil : PrésentateurProfil
+    private lateinit var loadingPanel: LinearLayout
     //private lateinit var utilisateurÀmodifier :String
 
 
@@ -47,44 +49,29 @@ class PreferenceFragment : Fragment() {
         nouvelEmail = view.findViewById(R.id.editTextEmail)
         nouvelleVoiture = view.findViewById(R.id.editTextTypeVoiture)
         nouvelleAdresse = view.findViewById(R.id.editTextAdresse)
-        affichagekm = view.findViewById(R.id.radioButtonKm)
-        affichageMiles = view.findViewById(R.id.radioButtonMiles)
         themeClair = view.findViewById(R.id.radioButtonThemeClair)
         themeSombre = view.findViewById(R.id.radioButtonThemeSombre)
         buttonEnregistrer = view.findViewById(R.id.buttonEnregistrer)
         présentateur = PrésentateurPréférences(this)
         présentateurProfil = PrésentateurProfil(ProfileFragment())
 
+        loadingPanel = view.findViewById(R.id.loadingPanel)
 
         présentateur.chargerProfilUtilisateur(99)
 
-        //nouveauNom.setText(présentateurProfil.chargerProfileDepuisAPI(99)?.nom)
-        //nouveauPrénom.setText(présentateurProfil.obrenirUnProfilUtilisateur("Gauthier")?.prénom)
-        //nouvelEmail.setText(présentateurProfil.obrenirUnProfilUtilisateur("Gauthier")?.email)
-        //nouvelleVoiture.setText(présentateurProfil.obrenirUnProfilUtilisateur("Gauthier")?.typeVoiture)
-        //nouvelleAdresse.setText(présentateurProfil.obrenirUnProfilUtilisateur("Gauthier")?.adresse)
 
-        affichagekm.isChecked = true
         themeClair.isChecked = true
         désactiverOuActiverRaddionButton()
 
         //récupération des données
-        val nom = nouveauNom.text.toString()
-        val prénom = nouveauPrénom.text.toString()
-        val email = nouvelEmail.text.toString()
-        val voiture = nouvelleVoiture.text.toString()
-        val adresse = nouvelleAdresse.text.toString()
-        var affichageDistancekm : Boolean
+        var nom = nouveauNom.text.toString()
+        var prénom = nouveauPrénom.text.toString()
+        var email = nouvelEmail.text.toString()
+        var voiture = nouvelleVoiture.text.toString()
+        var adresse = nouvelleAdresse.text.toString()
         var themeClairAffichage : Boolean
 
 
-
-        if(affichagekm.isChecked) {
-            affichageDistancekm = true
-
-        }else {
-            affichageDistancekm = false
-        }
         if(themeClair.isChecked){
             themeClairAffichage = true
 
@@ -105,39 +92,34 @@ class PreferenceFragment : Fragment() {
                 Toast.makeText(requireContext(), "Vueillez remplir tous les champs", Toast.LENGTH_SHORT).show()
             } else {
                 val nouvellesDonnees = mapOf(
-                    "nom" to nom,
-                    "prenom" to prénom,
-                    "email" to email,
-                    "adresse" to adresse,
-                    "voiture" to voiture )
-                Toast.makeText(requireContext(), "Vos informations seront mises à jour", Toast.LENGTH_SHORT).show()
-                présentateur.modifierProfilUtilisateur("99" , nouvellesDonnees)
-                présentateur.modifierTheme(themeClair.isChecked)
+                    "nom" to nouveauNom.text.toString() ,
+                    "prenom" to nouveauPrénom.text.toString(),
+                    "email" to nouvelEmail.text.toString(),
+                    "voiture" to  nouvelleVoiture.text.toString(),
+                    "adresse" to nouvelleAdresse.text.toString())
+                GlobalScope.launch(Dispatchers.Main) {
+                    try {
+                        présentateur.modifierUtilisateurApi("99" , nouvellesDonnees)
+                        Toast.makeText(requireContext(), "Vos informations seront mises à jour", Toast.LENGTH_SHORT).show()
+                        présentateur.modifierTheme(themeClair.isChecked)
+
+                    } catch (e: Exception) {
+                        // Affichage d'une erreur sur la vue en cas d'exception
+                        afficherErreur(e)
+                    }
+                }
             }
             }
     }
-
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_preference, container, false)
     }
 
     private fun désactiverOuActiverRaddionButton(){
-        affichagekm.setOnCheckedChangeListener { _, isChecked ->
-            if (isChecked) {
-                affichageMiles.isChecked = false
-            }
-        }
 
-        affichageMiles.setOnCheckedChangeListener { _, isChecked ->
-            if (isChecked) {
-                affichagekm.isChecked = false
-            }
-        }
         themeClair.setOnCheckedChangeListener { _, isChecked ->
             if (isChecked) {
                 themeSombre.isChecked = false
@@ -149,22 +131,17 @@ class PreferenceFragment : Fragment() {
             }
         }
     }
+
     fun modifierUnUtilisateur(modification: Boolean){
         if(modification){
-
-
         }else {
             // Affiche un message en cas d'erreur (si la modification ne s'effectue pas)
             afficherMessage("Une erreur est survenue")
         }
-
-
-
-
-
     }
     fun afficherInformations(profil: ModèleProfile?) {
         // Vérifie si l'objet profil n'est pas null
+        val fadeOut = AnimationUtils.loadAnimation(context, R.anim.fade_out)
         if (profil != null) {
             // Obtient le nom de la photo de profil à partir de l'objet profil
 
@@ -176,6 +153,9 @@ class PreferenceFragment : Fragment() {
             nouvelEmail.setText(profil?.email)
             nouvelleVoiture.setText(profil?.typeVoiture)
             nouvelleAdresse.setText(profil?.adresse)
+
+            loadingPanel.startAnimation(fadeOut)
+            loadingPanel.visibility = View.GONE
 
         } else {
             // Affiche un message en cas d'erreur (si profil est null)
