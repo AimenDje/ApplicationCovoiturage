@@ -9,11 +9,9 @@ import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
-import androidx.fragment.app.FragmentManager
 import com.donovanSergeAimenHatim.uniroute.R
 import com.donovanSergeAimenHatim.uniroute.ecrans.historique.HistoriqueFragment
-import com.donovanSergeAimenHatim.uniroute.ecrans.péférences.PreferenceFragment
-import com.google.android.gms.maps.MapView
+import com.donovanSergeAimenHatim.uniroute.ecrans.préférences.PreferenceFragment
 
 
 class ProfileFragment : Fragment() {
@@ -27,7 +25,7 @@ class ProfileFragment : Fragment() {
     private lateinit var lagueParlée1: ImageView
     private lateinit var lagueParlée2: ImageView
     private lateinit var typeVoiture: TextView
-    private lateinit var adresse: MapView
+    private lateinit var adresse: TextView
 
 
 
@@ -54,7 +52,8 @@ class ProfileFragment : Fragment() {
         lagueParlée1 = view.findViewById(R.id.imageLangue)
         lagueParlée2 = view.findViewById(R.id.imageLangue1)
         typeVoiture = view.findViewById(R.id.textVoiture)
-        adresse = view.findViewById(R.id.adresseView)
+        adresse = view.findViewById(R.id.adresse)
+
 
         //on récupère les données a afficher à partir du présentateur
         var présentateur = PrésentateurProfil(this)
@@ -206,15 +205,8 @@ class ProfileFragment : Fragment() {
             }
             // Définit le type de voiture dans l'interface utilisateur
             typeVoiture.setText("Type de voiture: " + profil.typeVoiture)
-            // Gère l'affichage de l'adresse
-            val adresseImage: String? = profil.adresse
-            adresseImage?.let {
-                val adresseId: Int =
-                    resources.getIdentifier(it, "drawable", requireContext().packageName)
-                if (adresseId != 0) {
-                    adresse.setBackgroundResource(adresseId)
-                }
-            }
+            adresse.setText("Adresse: " + profil.adresse)
+
         } else {
             // Affiche un message en cas d'erreur (si profil est null)
             afficherMessage("Une erreur est survenue")
