@@ -10,6 +10,7 @@ import android.view.animation.AnimationUtils
 import android.widget.LinearLayout
 import android.widget.TextView
 import android.widget.Toast
+import androidx.lifecycle.lifecycleScope
 import com.donovanSergeAimenHatim.uniroute.R
 import com.donovanSergeAimenHatim.uniroute.ecrans.listTrajets.Trajets
 import kotlinx.coroutines.Dispatchers
@@ -17,8 +18,9 @@ import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 
 class DétailsHistoriqueFragment : Fragment(){
-
+    var historique: ModèleDétailsHistorique? = null
     var idTrajet: String? = null
+    lateinit var présentateur_détails_historique : PrésentateurDétailsHistorique
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         idTrajet = arguments?.getString("idTrajet")
@@ -28,7 +30,9 @@ class DétailsHistoriqueFragment : Fragment(){
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
+
     ): View? {
+        présentateur_détails_historique = PrésentateurDétailsHistorique(this)
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_details_historique, container, false)
     }
@@ -45,20 +49,20 @@ class DétailsHistoriqueFragment : Fragment(){
         var date : TextView = view.findViewById(R.id.dateDemande)
         var conducteur : TextView = view.findViewById(R.id.conducteur)
 
-        var historique: ModèleDétailsHistorique?
-        var présentateur_détails_historique = PrésentateurDétailsHistorique(this)
-      //  historique = idTrajet?.let { présentateur_détails_historique.ChargerDetailsHistorique(it.toInt()) }
-        historique = présentateur_détails_historique.ChargerDetailsHistorique(24)
-        if (historique != null) {
-            titre_vue.text = historique.titre
-            trajet.text = "${historique.villeDepart} -> ${historique.villeDestination}"
-            prix.text = historique.prixTrajet
-            durée.text = historique.dureeTrajet
-            distance.text = historique.distanceTrajet
-            véhicule.text = historique.modelVehicule
-            date.text = historique.date
-        }else{
-            Toast.makeText(context, "HISTORIQUE NULL", Toast.LENGTH_SHORT).show()
+        lifecycleScope.launch {
+            historique = idTrajet?.let { présentateur_détails_historique.ChargerDetailsHistorique(it.toInt()) }
+            if (historique != null) {
+                titre_vue.text = historique!!.titre
+                trajet.text = "${historique!!.villeDepart} -> ${historique!!.villeDestination}"
+                prix.text = historique!!.prixTrajet
+                durée.text = historique!!.dureeTrajet
+                distance.text = historique!!.distanceTrajet
+                véhicule.text = historique!!.modelVehicule
+                date.text = historique!!.date
+            } else {
+                // Gérer le cas où historique est null, par exemple afficher un message d'erreur
+                Toast.makeText(context, "Erreur : les détails du trajet ne peuvent pas être chargés.", Toast.LENGTH_SHORT).show()
+            }
         }
     }
 
