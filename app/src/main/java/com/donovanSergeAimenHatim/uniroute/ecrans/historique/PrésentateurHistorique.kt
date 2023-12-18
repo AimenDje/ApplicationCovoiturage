@@ -1,5 +1,6 @@
 package com.donovanSergeAimenHatim.uniroute.ecrans.historique
 
+import android.util.Log
 import com.donovanSergeAimenHatim.uniroute.ecrans.listTrajets.TrajetDataManager
 import com.donovanSergeAimenHatim.uniroute.ecrans.listTrajets.Trajets
 import com.donovanSergeAimenHatim.uniroute.ecrans.listTrajets.TrajetsContract
@@ -12,20 +13,6 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
 class PrésentateurHistorique (val view : HistoriqueInterface.View, private val dataManager: TrajetDataManager,private val utilisateurDataManager: UtilisateurDataManager): HistoriqueInterface.Presenter {
-    private lateinit var trajetDataManager : TrajetDataManager
-
-    suspend fun ChargerHistorique(userID : Int): ModèleHistorique? {
-        val sourceKelconque = SourceKelconke()
-        trajetDataManager = TrajetDataManager(sourceKelconque)
-        val historique : ModèleHistorique?
-            val trajet = trajetDataManager.getTrajetById(userID)
-            historique = trajet?.let {
-                ModèleHistorique( "Historique des trajets",  trajet.villeDepart,
-                 trajet.date, trajet.villeDestination)
-            }
-        return historique
-    }
-
     override fun chargerTrajets(condition: String) {
         GlobalScope.launch(Dispatchers.Main) {
             try {
@@ -35,6 +22,7 @@ class PrésentateurHistorique (val view : HistoriqueInterface.View, private val 
                 view.afficherHistorique(trajets)
             } catch (e: Exception) {
                 view.afficherErreur(e.message ?: "Erreur inconnue")
+                e.message?.let { Log.d("ErreurTrajets", it) }
             }
         }
     }

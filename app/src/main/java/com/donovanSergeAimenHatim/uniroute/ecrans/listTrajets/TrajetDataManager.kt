@@ -12,7 +12,15 @@ import com.google.gson.reflect.TypeToken
 
         suspend fun getTrajetById(id : Int): Trajets?{
             val condition = "id=$id"
-            val trajets = getTrajets("trajet","*",condition)
+            Log.d("getTrajetById", "CONDITION: id=$id")
+            val trajets = getTrajets("trajets","*",condition)
+
+            return trajets.firstOrNull()
+        }
+        suspend fun getTrajetByUserId(id : Int): Trajets?{
+            val condition = "utilisateurID=$id"
+            val trajets = getTrajets("trajets","*",condition)
+
             return trajets.firstOrNull()
         }
         suspend fun ajouterTrajet(trajet: Trajets): Boolean {
