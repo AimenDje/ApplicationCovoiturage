@@ -6,10 +6,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.animation.AnimationUtils
+import android.widget.Button
 import android.widget.LinearLayout
 import android.widget.ProgressBar
 import android.widget.TextView
 import com.donovanSergeAimenHatim.uniroute.R
+import com.donovanSergeAimenHatim.uniroute.ecrans.accueil.AccueilFragment
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -49,13 +51,20 @@ class confirmationTrajetFragment : Fragment() {
         val fadeIn = AnimationUtils.loadAnimation(context, R.anim.fade_in)
         val fadeOut = AnimationUtils.loadAnimation(context, R.anim.fade_out)
         val confirmationTrajetSection = view.findViewById<LinearLayout>(R.id.containerConfirmation)
+        val button_viewReservation = view.findViewById<Button>(R.id.button_viewReservation)
         confirmationTrajetSection.startAnimation(fadeIn)
         confirmationTrajetSection.visibility = View.VISIBLE
         var detailText: TextView? = view.findViewById(R.id.textView_confirmation_detail)
         detailText?.text = "Super ! Votre trajet a été réservé. \n" +
-                "${conducteur} doit maintenant accepter ou refuser votre reservation, dans les deux cas vous serez notifié de sa decision.\n" +
+                "En cas de modification  de la part de ${conducteur} vous serez notifié.\n" +
                 "Vous pouvez voir l’état de votre réservation en appuyant sur le bouton “Voir mes réservation”"
-
+        button_viewReservation.setOnClickListener{
+            activity?.supportFragmentManager?.beginTransaction()?.apply {
+                replace(R.id.fragment_container, TrajetReserverFragment())
+                addToBackStack(null)
+                commit()
+            }
+        }
     }
 
     companion object {

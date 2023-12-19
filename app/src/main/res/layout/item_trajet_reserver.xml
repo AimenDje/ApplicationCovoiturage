@@ -25,7 +25,8 @@
             android:layout_height="100dp"
             android:background="@drawable/rounded_rectangle_blanc"
             android:gravity="center_horizontal|center_vertical"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:visibility="visible">
 
             <ProgressBar
                 android:id="@+id/progressBar_loading2"
@@ -51,7 +52,7 @@
                 android:src="@drawable/arnold" />
 
             <LinearLayout
-                android:layout_width="match_parent"
+                android:layout_width="204dp"
                 android:layout_height="match_parent"
                 android:layout_marginVertical="20dp"
                 android:layout_marginLeft="10dp"
@@ -81,6 +82,15 @@
                     android:text="05/11/2023 15h00" />
 
             </LinearLayout>
+
+            <Button
+                android:id="@+id/button_annulerReservation"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="20dp"
+                android:backgroundTint="@color/ButtonColor"
+                android:text="Annuler" />
+
         </LinearLayout>
 
 

@@ -42,7 +42,33 @@ import com.google.gson.reflect.TypeToken
             }
             return false
         }
-
+        suspend fun annulerTrajet(idTrajet: Int, idUtilisateur: Int):Boolean{
+            val trajet = getTrajetById(idTrajet)
+            trajet?.let {
+                val utilisateursReserves = it.utilisateursReserves.split(';').filterNot { it.isEmpty() }
+                if (idUtilisateur.toString() in utilisateursReserves) {
+                    val updatedUtilisateursReserves = utilisateursReserves.filter { it != idUtilisateur.toString() }.joinToString(";")
+                    val donneesMisesAJour = mapOf(
+                        "id" to it.id.toString(),
+                        "utilisateurID" to it.utilisateurID,
+                        "villeDepart" to it.villeDepart,
+                        "date" to it.date,
+                        "villeDestination" to it.villeDestination,
+                        "nbPassager" to it.nbPassager,
+                        "priseCharge" to it.priseCharge,
+                        "prixTrajet" to it.prixTrajet,
+                        "dureeTrajet" to it.dureeTrajet,
+                        "distanceTrajet" to it.distanceTrajet,
+                        "modelVehicule" to it.modelVehicule,
+                        "utilisateursReserves" to updatedUtilisateursReserves
+                    )
+                    // Log pour afficher les données
+                    Log.d("annulerTrajet", "Données à envoyer: $donneesMisesAJour")
+                    return source.modifierDonnee("trajets", donneesMisesAJour, it.id.toString())
+                }
+            }
+            return false
+        }
 
         suspend fun ajouterTrajet(trajet: Trajets): Boolean {
             val donnees = mapOf(

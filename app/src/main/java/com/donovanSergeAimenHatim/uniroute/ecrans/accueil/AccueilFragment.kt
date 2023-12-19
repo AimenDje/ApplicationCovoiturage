@@ -156,7 +156,7 @@ class AccueilFragment : Fragment(), TrajetsContract.View{
             }
             val bundle = Bundle().apply {
                 putString("villeDestination", destinationInput)
-                putString("date", date)
+                putString("date", dateInput)
                 if (nbPassagers != null) putInt("nbPassager", nbPassagers)
             }
             val listTrajetsFragment = listTrajets().apply {

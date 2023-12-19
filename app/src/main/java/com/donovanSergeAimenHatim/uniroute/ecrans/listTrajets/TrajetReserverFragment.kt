@@ -5,7 +5,9 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.animation.Animation
 import android.view.animation.AnimationUtils
+import android.widget.Button
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
@@ -38,6 +40,8 @@ class TrajetReserverFragment : Fragment(), TrajetsContract.View {
     private lateinit var presenter: TrajetsPresenter
     private lateinit var userDataManager: UtilisateurDataManager
     private lateinit var loadingPanel: LinearLayout
+    private lateinit var fadeIn: Animation
+    private lateinit var fadeOut: Animation
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
@@ -66,6 +70,10 @@ class TrajetReserverFragment : Fragment(), TrajetsContract.View {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        fadeIn = AnimationUtils.loadAnimation(context, R.anim.fade_in)
+        fadeOut = AnimationUtils.loadAnimation(context, R.anim.fade_out)
+        loadingPanel = view.findViewById<LinearLayout>(R.id.loadingPanel_trajetReserver)
     }
 
     companion object {
@@ -89,19 +97,18 @@ class TrajetReserverFragment : Fragment(), TrajetsContract.View {
     }
 
     override fun afficherTrajets(trajets: List<Trajets>) {
-        val fadeIn = AnimationUtils.loadAnimation(context, R.anim.fade_in)
-        val fadeOut = AnimationUtils.loadAnimation(context, R.anim.fade_out)
         val container = view?.findViewById<LinearLayout>(R.id.reservedTrajetList)
         val titreTrajet = view?.findViewById<TextView>(R.id.textView_listTrajet_Title)
-        var trajetId: Int = 0
         var utilisateurId: Int = 0
         container?.removeAllViews()
         val trajetViews = mutableListOf<View>()
         trajets.forEachIndexed { index, trajet ->
+            var trajetId: Int = 0
             val trajetView = LayoutInflater.from(context).inflate(R.layout.item_trajet_reserver, container, false)
             trajetViews.add(trajetView)
             trajetView.startAnimation(fadeIn)
             var utilisateur: Utilisateur? = null
+            trajetId = trajet.id
             val nomConducteurView = trajetView.findViewById<TextView>(R.id.textView_nom_conducteur_trajet_reserver)
             val loadingPanel_item = trajetView.findViewById<LinearLayout>(R.id.loadingPanel_trajetNonSelectionner)
             val villeDepartDestinationView = trajetView.findViewById<TextView>(R.id.textView_destination_trajet)
@@ -122,12 +129,18 @@ class TrajetReserverFragment : Fragment(), TrajetsContract.View {
                     afficherErreur("Erreur utilisateur non trouver")
                 }
             }
-            trajetId = trajet.id
+            val boutonAnnuler = trajetView.findViewById<Button>(R.id.button_annulerReservation)
+            boutonAnnuler.setOnClickListener{
+                presenter.annulerTrajet(trajetId, getString(R.string.utilisateurID).toInt())
+                (trajetView.parent as ViewGroup).removeView(trajetView)
+            }
             titreTrajet?.text = "Trajet disponible:"
             villeDepartDestinationView.text = "${trajet.villeDepart} -> ${trajet.villeDestination}"
             date.text = "${trajet.date.toString()}"
             container?.addView(trajetView)
             trajetView.startAnimation(fadeIn)
+            loadingPanel?.startAnimation(fadeOut)
+            loadingPanel?.visibility = View.GONE
         }
     }
 
@@ -145,5 +158,12 @@ class TrajetReserverFragment : Fragment(), TrajetsContract.View {
 
     override fun aucunTrajetDisponible() {
         Toast.makeText(context, "Aucune reservation", Toast.LENGTH_SHORT).show()
+        loadingPanel?.startAnimation(fadeOut)
+        loadingPanel?.visibility = View.GONE
     }
+
+    fun reloadFragment() {
+
+    }
+
 }

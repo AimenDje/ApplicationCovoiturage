@@ -61,7 +61,7 @@ class TrajetsPresenter(val view: TrajetsContract.View, private val dataManager: 
         GlobalScope.launch(Dispatchers.Main) {
             try {
                 if (dataManager.reserverTrajet(trajetId, utilisateurId)) {
-                    view.afficherErreur("Réservation réussie")
+                   //view.afficherErreur("Réservation réussie")
                 } else {
                     view.afficherErreur("La réservation a échoué")
                 }
@@ -70,5 +70,21 @@ class TrajetsPresenter(val view: TrajetsContract.View, private val dataManager: 
             }
         }
     }
+
+    fun annulerTrajet(trajetId: Int, utilisateurId: Int){
+        GlobalScope.launch(Dispatchers.Main) {
+            try {
+                if (dataManager.annulerTrajet(trajetId, utilisateurId)) {
+                    //view.afficherErreur("Annulation réussie")
+
+                } else {
+                    view.afficherErreur("L'annulation a échoué")
+                }
+            } catch (e: Exception) {
+                view.afficherErreur(e.message ?: "Erreur inconnue")
+            }
+        }
+    }
+
 
 }
