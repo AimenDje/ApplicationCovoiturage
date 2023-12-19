@@ -6,4 +6,8 @@
     <string name="trouverTitle">Where do you want to go?</string>
     <string name="labelNbPassager">"Number of passengers: "</string>
     <string name="datePickerEditText">Date</string>
+    <string name="usernameconnexion">Username</string>
+    <string name="motdepasseconnexion">Password</string>
+    <string name="loginButton">Login</string>
+    <string name="titreFragmentReservations">My Bookings</string>
 </resources>

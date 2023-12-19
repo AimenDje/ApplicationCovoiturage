@@ -8,4 +8,8 @@
     <string name="trouverTitle">Où voulez vous allez ?</string>
     <string name="labelNbPassager">"Nombre de passagers: "</string>
     <string name="datePickerEditText">Date</string>
+    <string name="usernameconnexion">Nom d\'utilisateur</string>
+    <string name="motdepasseconnexion">Mot de passe</string>
+    <string name="loginButton">Connexion</string>
+    <string name="titreFragmentReservations">Mes Réservations</string>
 </resources>
