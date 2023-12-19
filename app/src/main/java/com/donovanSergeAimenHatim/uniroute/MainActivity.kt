@@ -8,8 +8,8 @@ import android.view.View
 import android.view.animation.AnimationUtils
 import androidx.fragment.app.FragmentContainerView
 import com.donovanSergeAimenHatim.uniroute.ecrans.accueil.AccueilFragment
+import com.donovanSergeAimenHatim.uniroute.ecrans.listTrajets.TrajetReserverFragment
 import com.donovanSergeAimenHatim.uniroute.ecrans.logo.LogoFragment
-import com.donovanSergeAimenHatim.uniroute.ecrans.messagerie.MessagerieFragment
 import com.donovanSergeAimenHatim.uniroute.ecrans.profil.ProfileFragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
@@ -46,8 +46,8 @@ class MainActivity : AppCompatActivity() {
                         .commit()
                     true
                 }
-                R.id.messagerie -> {
-                    val fragment = MessagerieFragment()
+                R.id.reservation -> {
+                    val fragment = TrajetReserverFragment()
                     supportFragmentManager.beginTransaction()
                         .replace(R.id.fragment_container, fragment)
                         .commit()

@@ -40,7 +40,8 @@ class UtilisateurDataManager(private val source: SourceKelconke) {
                 adresse = parts[5],
                 voiture = parts[6],
                 note = parts[7].toDouble(),
-                langue = parts[8]
+                langue = parts[8],
+                photo = parts[9]
             )
         }
     }

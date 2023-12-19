@@ -5,15 +5,16 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.animation.AnimationUtils
 import android.widget.Button
 import android.widget.ImageView
+import android.widget.LinearLayout
 import android.widget.TextView
-import android.widget.Toast
-import androidx.fragment.app.FragmentManager
+import com.donovanSergeAimenHatim.uniroute.CircleTransform
 import com.donovanSergeAimenHatim.uniroute.R
 import com.donovanSergeAimenHatim.uniroute.ecrans.historique.HistoriqueFragment
-import com.donovanSergeAimenHatim.uniroute.ecrans.péférences.PreferenceFragment
-import com.google.android.gms.maps.MapView
+import com.donovanSergeAimenHatim.uniroute.ecrans.préférences.PreferenceFragment
+import com.squareup.picasso.Picasso
 
 
 class ProfileFragment : Fragment() {
@@ -27,7 +28,8 @@ class ProfileFragment : Fragment() {
     private lateinit var lagueParlée1: ImageView
     private lateinit var lagueParlée2: ImageView
     private lateinit var typeVoiture: TextView
-    private lateinit var adresse: MapView
+    private lateinit var adresse: TextView
+    private lateinit var loadingPanel: LinearLayout
 
 
 
@@ -54,7 +56,9 @@ class ProfileFragment : Fragment() {
         lagueParlée1 = view.findViewById(R.id.imageLangue)
         lagueParlée2 = view.findViewById(R.id.imageLangue1)
         typeVoiture = view.findViewById(R.id.textVoiture)
-        adresse = view.findViewById(R.id.adresseView)
+        adresse = view.findViewById(R.id.adresse)
+        loadingPanel = view.findViewById(R.id.loadingPanel_trajetNonSelectionner)
+
 
         //on récupère les données a afficher à partir du présentateur
         var présentateur = PrésentateurProfil(this)
@@ -157,25 +161,15 @@ class ProfileFragment : Fragment() {
 
     fun mettreAJourProfil(profil: ModèleProfile?) {
         // Vérifie si l'objet profil n'est pas null
+        val fadeOut = AnimationUtils.loadAnimation(context, R.anim.fade_out)
         if (profil != null) {
             // Obtient le nom de la photo de profil à partir de l'objet profil
-            val nomPhotoProfil: String = profil.photo
-            // Obtient l'ID de ressource de l'image basé sur son nom
-            val resId: Int = resources.getIdentifier(
-                nomPhotoProfil,
-                "drawable",
-                requireContext().packageName
-            )
-            // Vérifie si l'ID de ressource est valide
-            if (resId != 0) {
-                // Définit la photo de profil dans l'ImageView si l'ID est valide
-                photoProfil.setImageResource(resId)
-            } else {
-                // Utilise une image par défaut si l'ID n'est pas valide
-                photoProfil.setImageResource(R.drawable.adresse)
-            }
+            Picasso.get()
+                .load("https://donovanbeulze.com/unirouteAPI/img/" + profil.photo)
+                .transform(CircleTransform())
+                .into(photoProfil)
             // Définit le nom et le prénom dans l'interface utilisateur
-            nomPrénom.setText(profil.prénom + " " + profil.nom)
+            nomPrénom.setText(profil.nom + " " + profil.prénom)
             // Définit l'email dans l'interface utilisateur
             email.setText(profil.email)
             // Définit le numéro de téléphone dans l'interface utilisateur
@@ -206,26 +200,21 @@ class ProfileFragment : Fragment() {
             }
             // Définit le type de voiture dans l'interface utilisateur
             typeVoiture.setText("Type de voiture: " + profil.typeVoiture)
-            // Gère l'affichage de l'adresse
-            val adresseImage: String? = profil.adresse
-            adresseImage?.let {
-                val adresseId: Int =
-                    resources.getIdentifier(it, "drawable", requireContext().packageName)
-                if (adresseId != 0) {
-                    adresse.setBackgroundResource(adresseId)
-                }
-            }
+            adresse.setText("Adresse: " + profil.adresse)
+            loadingPanel.startAnimation(fadeOut)
+            loadingPanel.visibility = View.GONE
+
         } else {
             // Affiche un message en cas d'erreur (si profil est null)
             afficherMessage("Une erreur est survenue")
         }
     }
     fun afficherErreur(e: Exception) {
-        Toast.makeText(context, e.message, Toast.LENGTH_SHORT).show()
+//        Toast.makeText(context, e.message, Toast.LENGTH_SHORT).show()
     }
 
     fun afficherMessage(message: String) {
-        Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
+      //  Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
     }
 
 

@@ -9,5 +9,7 @@ class Utilisateur(
     val adresse: String,
     val voiture: String,
     val note: Double,
-    val langue: String) {
+    val langue: String,
+    val photo: String) {
+
 }

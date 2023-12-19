@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/frameLayout4"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ecrans.listTrajets.confirmationTrajetFragment">
+
+    <LinearLayout
+        android:id="@+id/containerConfirmation"
+        android:layout_width="363dp"
+        android:layout_height="493dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginEnd="24dp"
+        android:layout_marginBottom="24dp"
+        android:background="@drawable/rounded_rectangle"
+        android:orientation="vertical"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.84000003">
+
+        <TextView
+            android:id="@+id/textView_reserver_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="20dp"
+            android:layout_marginVertical="20dp"
+            android:text="Trajet réserver "
+            android:textSize="24sp"
+            android:textStyle="bold" />
+
+        <ImageView
+            android:id="@+id/imageView_confirmation"
+            android:layout_width="363dp"
+            android:layout_height="67dp"
+            android:src="@drawable/confirmationicon" />
+
+        <TextView
+            android:id="@+id/textView_confirmation_detail"
+            android:layout_width="match_parent"
+            android:layout_height="238dp"
+            android:layout_marginHorizontal="20dp"
+            android:layout_marginVertical="20dp"
+            android:lineSpacingExtra="8sp"
+            android:textColor="@color/confirmationColorText"
+            android:textSize="14sp" />
+
+        <Button
+            android:id="@+id/button_viewReservation"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="70dp"
+            android:backgroundTint="@color/ButtonColor"
+            android:text="Voir mes réservation" />
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

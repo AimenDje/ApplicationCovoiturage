@@ -1,4 +1,4 @@
-package com.donovanSergeAimenHatim.uniroute.ecrans.péférences
+package com.donovanSergeAimenHatim.uniroute.ecrans.préférences
 
 import androidx.appcompat.app.AppCompatDelegate
 import com.donovanSergeAimenHatim.uniroute.ecrans.profil.ModèleProfile
@@ -11,7 +11,7 @@ import kotlinx.coroutines.launch
 class PrésentateurPréférences(private val vue: PreferenceFragment) {
     private val model = ModèlePréférences()
     private lateinit var userDataManager: UtilisateurDataManager
-     /*fun mettreAJourPréférence(utilisateurÀModifier:String,
+    fun mettreAJourPréférence(utilisateurÀModifier:String,
                                       nouveauNom:String, nouveauPrénom:String, nouvelEmail:String,
                                       nouveauTypedeVoiture:String, nouvelleAdresse : String
     ){
@@ -19,8 +19,8 @@ class PrésentateurPréférences(private val vue: PreferenceFragment) {
         model.modifierUnProfil(utilisateurÀModifier, nouveauNom, nouveauPrénom,
             nouvelEmail, nouveauTypedeVoiture, nouvelleAdresse)
 
-    }*/
-    // Déclaration de UtilisateurDataManager mais non initialisé
+    }
+
      suspend fun modifierUtilisateurApi(UtilisateurID: String, nouvellesDonnnes: Map<String, Any>):Boolean{
          val sourceKelconke = SourceKelconke()
          userDataManager = UtilisateurDataManager(sourceKelconke)
@@ -52,9 +52,7 @@ class PrésentateurPréférences(private val vue: PreferenceFragment) {
             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
         }
     }
-    fun modifierAffichaeDistance (AffichageDistance:Boolean){
 
-    }
 
 
 
