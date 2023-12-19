@@ -75,7 +75,7 @@ class HistoriqueFragment : Fragment(), HistoriqueInterface.View {
         super.onViewCreated(view, savedInstanceState)
         //Stockage et affichage dinamyque des données sur le fragemnt de la liste des trajets
         ///var présentateur_historique = PrésentateurHistorique(this)
-        loadingLogo = view.findViewById<ProgressBar>(R.id.loadingPanel_hisoriqueTrajets)
+        loadingLogo = view.findViewById<ProgressBar>(R.id.loadingPanel_historiqueTrajets)
     }
 
     @SuppressLint("MissingInflatedId")
