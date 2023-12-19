@@ -75,7 +75,7 @@ class HistoriqueFragment : Fragment(), HistoriqueInterface.View {
         super.onViewCreated(view, savedInstanceState)
         //Stockage et affichage dinamyque des données sur le fragemnt de la liste des trajets
         ///var présentateur_historique = PrésentateurHistorique(this)
-        loadingLogo = view.findViewById<ProgressBar>(R.id.progressBar_loading)
+        loadingLogo = view.findViewById<ProgressBar>(R.id.loadingPanel_hisoriqueTrajets)
     }
 
     @SuppressLint("MissingInflatedId")
@@ -104,9 +104,10 @@ class HistoriqueFragment : Fragment(), HistoriqueInterface.View {
                 } else {
                     afficherErreur("Erreur utilisateur non trouver")
                 }
+                loadingLogo?.visibility = View.GONE
             }
-            titreHitorique?.text = "Historique des trajets"
-            villeDepartDestination.text = "${trajets.villeDepart} ${trajets.villeDestination}"
+            titreHitorique?.text = "Historique de vos trajets"
+            villeDepartDestination.text = "${trajets.villeDepart} -> ${trajets.villeDestination}"
             dateTrajet.text = "${trajets.date}"
 
            trajetView.findViewById<LinearLayout>(R.id.linearLayout_item_historique).setOnClickListener {
@@ -125,7 +126,7 @@ class HistoriqueFragment : Fragment(), HistoriqueInterface.View {
 
                 }
             }
-            loadingLogo?.visibility = View.GONE
+
             containerListe?.addView(trajetView)
         }
     }
