@@ -44,6 +44,7 @@ android {
 
 dependencies {
     implementation("com.google.code.gson:gson:2.10.1")
+    implementation("com.squareup.picasso:picasso:2.71828")
     implementation("io.ktor:ktor-client-core:1.6.0")
     implementation("io.ktor:ktor-client-cio:1.6.0")
     implementation("io.ktor:ktor-client-serialization:1.6.0")

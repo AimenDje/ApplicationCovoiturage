@@ -42,7 +42,7 @@ class PrésentateurProfil (val vue : ProfileFragment) {
 
             // Construction de l'objet ModèleProfile à partir des données utilisateur
             var profil = utilisateur?.let {
-                ModèleProfile ("arnold", utilisateur.nom, utilisateur.prenom, utilisateur.email,
+                ModèleProfile (utilisateur.photo, utilisateur.nom, utilisateur.prenom, utilisateur.email,
                     it.telephone, 12, utilisateur.note.toDouble(), listOf("ang", "esp"),
                     utilisateur.voiture, utilisateur.adresse)
             }

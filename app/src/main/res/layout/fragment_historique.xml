@@ -21,7 +21,7 @@
         tools:layout_editor_absoluteY="121dp" />
 
     <LinearLayout
-        android:id="@+id/containerTrajet"
+        android:id="@+id/containerTrajetReserver"
         android:layout_width="363dp"
         android:layout_height="435dp"
         android:layout_marginStart="24dp"

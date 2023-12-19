@@ -55,7 +55,7 @@ class PreferenceFragment : Fragment() {
         présentateur = PrésentateurPréférences(this)
         présentateurProfil = PrésentateurProfil(ProfileFragment())
 
-        loadingPanel = view.findViewById(R.id.loadingPanel)
+        loadingPanel = view.findViewById(R.id.loadingPanel_trajetNonSelectionner)
 
         présentateur.chargerProfilUtilisateur(99)
 
@@ -92,8 +92,8 @@ class PreferenceFragment : Fragment() {
                 Toast.makeText(requireContext(), "Vueillez remplir tous les champs", Toast.LENGTH_SHORT).show()
             } else {
                 val nouvellesDonnees = mapOf(
-                    "nom" to nouveauNom.text.toString() ,
-                    "prenom" to nouveauPrénom.text.toString(),
+                    "nom" to nouveauPrénom.text.toString() ,
+                    "prenom" to nouveauNom.text.toString(),
                     "email" to nouvelEmail.text.toString(),
                     "voiture" to  nouvelleVoiture.text.toString(),
                     "adresse" to nouvelleAdresse.text.toString())

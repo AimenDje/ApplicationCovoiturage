@@ -5,9 +5,9 @@
         android:icon="@drawable/covoiturage_icon"
         android:title="CoVoiturage" />
     <item
-        android:id="@+id/messagerie"
+        android:id="@+id/reservation"
         android:icon="@drawable/messagerie_icon"
-        android:title="Messagerie"/>
+        android:title="Reservation" />
     <item
         android:id="@+id/profile"
         android:icon="@drawable/profile_icon"
