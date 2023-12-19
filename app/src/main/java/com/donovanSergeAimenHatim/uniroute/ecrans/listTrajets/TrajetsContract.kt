@@ -8,6 +8,7 @@ interface TrajetsContract {
         fun afficherTrajetSelectionne(trajet: Trajets)
         fun afficherErreur(message: String)
         fun afficherUtilisateur(utilisateur: Utilisateur)
+        fun aucunTrajetDisponible()
     }
 
     interface Presenter {

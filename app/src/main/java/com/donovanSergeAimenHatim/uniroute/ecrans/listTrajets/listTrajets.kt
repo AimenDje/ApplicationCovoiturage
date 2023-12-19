@@ -9,18 +9,23 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.animation.AnimationUtils
 import android.widget.Button
+import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.ProgressBar
 import android.widget.TextView
 import android.widget.Toast
+import com.donovanSergeAimenHatim.uniroute.CircleTransform
 import com.donovanSergeAimenHatim.uniroute.R
 import com.donovanSergeAimenHatim.uniroute.sourceDeDonnées.SourceKelconke
 import com.donovanSergeAimenHatim.uniroute.animation.anim
+import com.donovanSergeAimenHatim.uniroute.ecrans.accueil.AccueilFragment
 import com.donovanSergeAimenHatim.uniroute.utilisateur.Utilisateur
 import com.donovanSergeAimenHatim.uniroute.utilisateur.UtilisateurDataManager
+import com.squareup.picasso.Picasso
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
+import java.net.URLEncoder
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -41,7 +46,7 @@ class listTrajets : Fragment(), TrajetsContract.View{
     private lateinit var animation: anim
     private var trajetSelectionneActuel: View? = null
     var loadingLogo: ProgressBar? = null
-
+    var confirmationBtn: Button? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
@@ -51,32 +56,26 @@ class listTrajets : Fragment(), TrajetsContract.View{
         val destination = arguments?.getString("villeDestination")
         val date = arguments?.getString("date")
         val nbPassagers = arguments?.getInt("nbPassager")
-        val critere = StringBuilder()
+        val critere = mutableListOf<String>()
         if (!destination.isNullOrEmpty()) {
-            critere.append("villeDestination=$destination")
+            critere.add("villeDestination=$destination")
         }
-
         if (!date.isNullOrEmpty()) {
-            if (critere.isNotEmpty()) {
-                critere.append("&")
-            }
-            critere.append("date=$date")
+            critere.add("date='$date'")
         }
-
         if (nbPassagers != null) {
-            if (critere.isNotEmpty()) {
-                critere.append("&")
-            }
-            critere.append("nbPassager=$nbPassagers")
+            critere.add("nbPassager=$nbPassagers")
         }
-
-        Log.d("SQL requete", "SQL String: $critere")
+        val customCondition =  URLEncoder.encode("NOT FIND_IN_SET(\"99\",REPLACE(utilisateursReserves,\";\",\",\"))")
+        critere.add("customCondition=$customCondition")
+        val finalCriteria = critere.joinToString("&")
+        Log.d("SQL requete", "SQL String: $finalCriteria")
         val sourceKelconke = SourceKelconke()
         userDataManager = UtilisateurDataManager(sourceKelconke)
         val dataManager = TrajetDataManager(sourceKelconke)
         val userDataManager = UtilisateurDataManager(sourceKelconke)
         presenter = TrajetsPresenter(this, dataManager, userDataManager)
-        presenter.chargerTrajets(critere.toString())
+        presenter.chargerTrajets(finalCriteria)
         animation = anim()
     }
 
@@ -94,7 +93,6 @@ class listTrajets : Fragment(), TrajetsContract.View{
 
         val fadeIn = AnimationUtils.loadAnimation(context, R.anim.fade_in)
         val fadeOut = AnimationUtils.loadAnimation(context, R.anim.fade_out)
-
         loadingLogo = view.findViewById<ProgressBar>(R.id.progressBar_loading)
         val listTrajetsSection = view.findViewById<LinearLayout>(R.id.containerListTrajets)
         listTrajetsSection.startAnimation(fadeIn)
@@ -107,6 +105,8 @@ class listTrajets : Fragment(), TrajetsContract.View{
         val fadeOut = AnimationUtils.loadAnimation(context, R.anim.fade_out)
         val container = view?.findViewById<LinearLayout>(R.id.linear_layout_for_items)
         val titreTrajet = view?.findViewById<TextView>(R.id.textView_listTrajet_Title)
+        var trajetId: Int = 0
+        var utilisateurId: Int = 0
         container?.removeAllViews()
         val trajetViews = mutableListOf<View>()
         trajets.forEachIndexed { index, trajet ->
@@ -114,6 +114,7 @@ class listTrajets : Fragment(), TrajetsContract.View{
             trajetViews.add(trajetView)
             trajetView.startAnimation(fadeIn)
             loadingLogo?.visibility = View.GONE
+            var utilisateur: Utilisateur? = null
             val nomConducteurView = trajetView.findViewById<TextView>(R.id.textView_trajetPrenomSelectionner)
             val nomConduteurNonSelectioner = trajetView.findViewById<TextView>(R.id.textView_NomTrajetNonSelectionner)
             val villeDepartDestinationView = trajetView.findViewById<TextView>(R.id.textView_trajetSelectionner_departDestination)
@@ -121,24 +122,46 @@ class listTrajets : Fragment(), TrajetsContract.View{
             val date = trajetView.findViewById<com.google.android.material.textfield.TextInputEditText>(R.id.dateTrajetSelectionnerEditText)
             val autoView = trajetView.findViewById<TextView>(R.id.textView_trajetSelectionnerAuto)
             val priseCharge = trajetView.findViewById<TextView>(R.id.textView_trajetSelectionnerDetail)
+            val loadingPanelTrajetSelectionner = trajetView.findViewById<LinearLayout>(R.id.loadingPanel_trajetSelectionner)
+            val loadingPanelNonTrajetSelectionner = trajetView.findViewById<LinearLayout>(R.id.loadingPanel_trajetNonSelectionner)
             val contactBouton = trajetView.findViewById<Button>(R.id.contactBtn)
+            val photoProfileSelectionner = trajetView.findViewById<ImageView>(R.id.imageView_profilePicTrajetSelectionner)
+            val photoProfileNonSelectionner = trajetView.findViewById<ImageView>(R.id.imageView_profilePicNonSelectionner)
             GlobalScope.launch(Dispatchers.Main) {
-                val utilisateur = presenter.chargerUtilisateur(trajet.utilisateurID)
+                utilisateur = presenter.chargerUtilisateur(trajet.utilisateurID)
                 if (utilisateur != null) {
-                    nomConduteurNonSelectioner.text = "${utilisateur.nom} ${utilisateur.prenom}"
-                    nomConducteurView.text = "${utilisateur.nom} ${utilisateur.prenom}"
-                    contactBouton.setText("Contact ${utilisateur.prenom}")
+                    utilisateurId = utilisateur!!.id
+                    nomConduteurNonSelectioner.text = "${utilisateur!!.nom} ${utilisateur!!.prenom}"
+                    nomConducteurView.text = "${utilisateur!!.nom} ${utilisateur!!.prenom}"
+                    contactBouton.setText("Contact ${utilisateur!!.prenom}")
+                    Picasso.get()
+                        .load("https://donovanbeulze.com/unirouteAPI/img/" + utilisateur!!.photo)
+                        .transform(CircleTransform())
+                        .into(photoProfileSelectionner)
+                    Picasso.get()
+                        .load("https://donovanbeulze.com/unirouteAPI/img/" + utilisateur!!.photo)
+                        .transform(CircleTransform())
+                        .into(photoProfileNonSelectionner)
+                    loadingPanelNonTrajetSelectionner.startAnimation(fadeOut)
+                    loadingPanelNonTrajetSelectionner.visibility = View.GONE
+                    loadingPanelTrajetSelectionner.startAnimation(fadeOut)
+                    loadingPanelTrajetSelectionner.visibility = View.GONE
                 } else {
                     afficherErreur("Erreur utilisateur non trouver")
                 }
             }
+            trajetId = trajet.id
             titreTrajet?.text = "Trajet disponible:"
             priseCharge.text = "Prise en charge:\n${trajet.priseCharge}"
             dateNonSelectionner.setText("${trajet.date}")
             villeDepartDestinationView.text = "${trajet.villeDepart} -> ${trajet.villeDestination}"
             date.setText("${trajet.date}")
             autoView.text = "Voiture: Avenir"
-
+            val confirmationBtnLocal = trajetView.findViewById<Button>(R.id.BtnParticiper)
+            confirmationBtnLocal.setOnClickListener {
+                afficherConfirmation(utilisateur!!.prenom)
+                presenter.reserverTrajet(trajetId, getString(R.string.utilisateurID).toInt())
+            }
             trajetView.findViewById<LinearLayout>(R.id.linearLayout_trajet).setOnClickListener {
                 trajetViews.forEach { view ->
                     view.findViewById<LinearLayout>(R.id.linearLayout_trajetSelectionner).visibility = View.GONE
@@ -156,11 +179,33 @@ class listTrajets : Fragment(), TrajetsContract.View{
             }
 
             container?.addView(trajetView)
+            trajetView.startAnimation(fadeIn)
         }
     }
 
 
+    fun afficherConfirmation(nomConducteur: String){
+        val bundle = Bundle().apply {
+            putString("nomConducteur", nomConducteur)
+        }
+        val confirmationFragment = confirmationTrajetFragment().apply {
+        arguments = bundle
+    }
+        activity?.supportFragmentManager?.beginTransaction()?.apply {
+            replace(R.id.fragment_container, confirmationFragment)
+            addToBackStack(null)
+            commit()
+        }
+    }
 
+    override fun aucunTrajetDisponible(){
+        activity?.supportFragmentManager?.beginTransaction()?.apply {
+            replace(R.id.fragment_container, AccueilFragment())
+            addToBackStack(null)
+            commit()
+        }
+        afficherErreur("Aucun trajet de disponible")
+    }
 
     companion object {
         /**

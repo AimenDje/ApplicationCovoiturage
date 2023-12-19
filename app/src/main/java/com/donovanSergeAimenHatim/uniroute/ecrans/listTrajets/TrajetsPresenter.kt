@@ -1,6 +1,9 @@
 package com.donovanSergeAimenHatim.uniroute.ecrans.listTrajets
 
+import android.provider.Settings.Global.getString
 import android.util.Log
+import com.donovanSergeAimenHatim.uniroute.R
+import com.donovanSergeAimenHatim.uniroute.UniRouteApp
 import com.donovanSergeAimenHatim.uniroute.utilisateur.Utilisateur
 import com.donovanSergeAimenHatim.uniroute.utilisateur.UtilisateurDataManager
 import kotlinx.coroutines.Dispatchers
@@ -14,6 +17,9 @@ class TrajetsPresenter(val view: TrajetsContract.View, private val dataManager: 
             try {
                 val trajets = withContext(Dispatchers.IO) {
                     dataManager.getTrajets("trajets","*",condition)
+                }
+                if(trajets.isEmpty()){
+                    view.aucunTrajetDisponible()
                 }
                 view.afficherTrajets(trajets)
             } catch (e: Exception) {
@@ -51,5 +57,18 @@ class TrajetsPresenter(val view: TrajetsContract.View, private val dataManager: 
         view.afficherTrajetSelectionne(trajet)
     }
 
+    fun reserverTrajet(trajetId: Int, utilisateurId: Int) {
+        GlobalScope.launch(Dispatchers.Main) {
+            try {
+                if (dataManager.reserverTrajet(trajetId, utilisateurId)) {
+                    view.afficherErreur("Réservation réussie")
+                } else {
+                    view.afficherErreur("La réservation a échoué")
+                }
+            } catch (e: Exception) {
+                view.afficherErreur(e.message ?: "Erreur inconnue")
+            }
+        }
+    }
 
 }

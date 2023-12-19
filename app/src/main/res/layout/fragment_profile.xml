@@ -5,11 +5,14 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_gravity="center"
+    android:background="@color/BlancRose"
     tools:context=".ecrans.profil.ProfileFragment">
 
     <LinearLayout
+        android:id="@+id/linearLayout5"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:gravity="center|center_horizontal"
         android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -20,16 +23,16 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="140dp"
+            android:layout_marginTop="50dp"
+            android:gravity="center"
             android:orientation="horizontal">
 
             <!-- drawable/ellipse_52.xml -->
             <!--suppress AndroidUnresolvableTag -->
             <ImageView
                 android:id="@+id/photo"
-                android:layout_width="122dp"
-                android:layout_height="56dp"
-                android:layout_marginLeft="130dp"
-                android:layout_marginTop="79dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:background="@drawable/gradient_background" />
         </LinearLayout>
 
@@ -97,6 +100,7 @@
                 android:gravity="center"
                 android:text="Nombre de covoiturage : 213"
                 android:textSize="14sp" />
+
         </LinearLayout>
 
         <LinearLayout
@@ -137,86 +141,73 @@
 
         </LinearLayout>
 
-        <LinearLayout
-            android:layout_width="wrap_content"
+        <TextView
+            android:id="@+id/textVoiture"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:gravity="center"
-            android:orientation="horizontal">
+            android:gravity="center_horizontal"
+            android:text="Type de voiture:  Audi RS3 "
+            android:textSize="16sp" />
 
-            <TextView
-                android:id="@+id/textVoiture"
-                android:layout_width="422dp"
-                android:layout_height="41dp"
-                android:layout_weight="1"
-                android:gravity="center_horizontal"
-                android:text="Type de voiture:  Audi RS3 "
-                android:textSize="16sp" />
-
-        </LinearLayout>
+        <TextView
+            android:id="@+id/adresse"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center_horizontal"
+            android:text="Adresse:"
+            android:textSize="16sp" />
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
-
-            <TextView
-                android:id="@+id/textAdresse"
-                android:layout_width="wrap_content"
-                android:layout_height="45dp"
-                android:layout_weight="1"
-                android:gravity="center_horizontal"
-                android:text="Adresse:"
-                android:textSize="16sp" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-
-            <com.google.android.gms.maps.MapView
-                android:id="@+id/adresseView"
-                android:layout_width="200dp"
-                android:layout_height="103dp"
-                android:layout_gravity="center_vertical"
-                android:layout_weight="1"
-                android:accessibilityHeading="false"
-                tools:ignore="SpeakableTextPresentCheck" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="200dp"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:gravity="center"
+            android:layout_marginBottom="100dp"
             android:orientation="horizontal">
 
             <Button
                 android:id="@+id/btnPréférences"
                 android:layout_width="179dp"
                 android:layout_height="wrap_content"
+                android:layout_marginHorizontal="10dp"
                 android:layout_weight="1"
+                android:backgroundTint="@color/ButtonColor"
                 android:gravity="center_horizontal|center_vertical"
                 android:text="Préférences" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="206dp"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:orientation="horizontal">
 
             <Button
                 android:id="@+id/btnHistorique1"
                 android:layout_width="179dp"
                 android:layout_height="wrap_content"
+                android:layout_marginHorizontal="10dp"
                 android:layout_weight="1"
+                android:backgroundTint="@color/ButtonColor"
                 android:gravity="center_horizontal|center_vertical"
                 android:text="Historique" />
         </LinearLayout>
 
 
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/loadingPanel_trajetNonSelectionner"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/BlancRose"
+        android:gravity="center_horizontal|center_vertical"
+        android:orientation="horizontal"
+        android:visibility="visible"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ProgressBar
+            android:id="@+id/progressBar_loading2"
+            style="?android:attr/progressBarStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:indeterminateTint="@color/purple_200" />
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

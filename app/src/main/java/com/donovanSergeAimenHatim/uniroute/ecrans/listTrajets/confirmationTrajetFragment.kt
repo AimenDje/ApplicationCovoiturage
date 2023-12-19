@@ -1,15 +1,15 @@
-package com.donovanSergeAimenHatim.uniroute.ecrans.messagerie
+package com.donovanSergeAimenHatim.uniroute.ecrans.listTrajets
 
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
+import android.view.animation.AnimationUtils
+import android.widget.LinearLayout
+import android.widget.ProgressBar
+import android.widget.TextView
 import com.donovanSergeAimenHatim.uniroute.R
-import com.donovanSergeAimenHatim.uniroute.ecrans.carte.CarteFragment
-import com.donovanSergeAimenHatim.uniroute.ecrans.historique.HistoriqueFragment
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -18,20 +18,22 @@ private const val ARG_PARAM2 = "param2"
 
 /**
  * A simple [Fragment] subclass.
- * Use the [MessagerieFragment.newInstance] factory method to
+ * Use the [confirmationTrajetFragment.newInstance] factory method to
  * create an instance of this fragment.
  */
-class MessagerieFragment : Fragment() {
+class confirmationTrajetFragment : Fragment() {
     // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
-
+    var detailText: TextView? = null
+    var conducteur: String? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
             param1 = it.getString(ARG_PARAM1)
             param2 = it.getString(ARG_PARAM2)
         }
+        conducteur = arguments?.getString("nomConducteur")
     }
 
     override fun onCreateView(
@@ -39,19 +41,21 @@ class MessagerieFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_messagerie, container, false)
+        return inflater.inflate(R.layout.fragment_confirmation_trajet, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val btnHistorique: Button = view.findViewById(R.id.btnHistorique)
-        btnHistorique.setOnClickListener {
-            activity?.supportFragmentManager?.beginTransaction()?.apply {
-                replace(R.id.fragment_container, CarteFragment())
-                addToBackStack(null)
-                commit()
-            }
-        }
+        val fadeIn = AnimationUtils.loadAnimation(context, R.anim.fade_in)
+        val fadeOut = AnimationUtils.loadAnimation(context, R.anim.fade_out)
+        val confirmationTrajetSection = view.findViewById<LinearLayout>(R.id.containerConfirmation)
+        confirmationTrajetSection.startAnimation(fadeIn)
+        confirmationTrajetSection.visibility = View.VISIBLE
+        var detailText: TextView? = view.findViewById(R.id.textView_confirmation_detail)
+        detailText?.text = "Super ! Votre trajet a été réservé. \n" +
+                "${conducteur} doit maintenant accepter ou refuser votre reservation, dans les deux cas vous serez notifié de sa decision.\n" +
+                "Vous pouvez voir l’état de votre réservation en appuyant sur le bouton “Voir mes réservation”"
+
     }
 
     companion object {
@@ -61,12 +65,12 @@ class MessagerieFragment : Fragment() {
          *
          * @param param1 Parameter 1.
          * @param param2 Parameter 2.
-         * @return A new instance of fragment MessagerieFragment.
+         * @return A new instance of fragment confirmationTrajetFragment.
          */
         // TODO: Rename and change types and number of parameters
         @JvmStatic
         fun newInstance(param1: String, param2: String) =
-            MessagerieFragment().apply {
+            confirmationTrajetFragment().apply {
                 arguments = Bundle().apply {
                     putString(ARG_PARAM1, param1)
                     putString(ARG_PARAM2, param2)
