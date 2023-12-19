@@ -1,21 +1,15 @@
 package com.donovanSergeAimenHatim.uniroute.ecrans.historique
 
-import android.annotation.SuppressLint
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.animation.AnimationUtils
-import android.widget.LinearLayout
 import android.widget.ProgressBar
 import android.widget.TextView
 import android.widget.Toast
 import androidx.lifecycle.lifecycleScope
 import com.donovanSergeAimenHatim.uniroute.R
-import com.donovanSergeAimenHatim.uniroute.ecrans.listTrajets.Trajets
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 
 class DétailsHistoriqueFragment : Fragment(){
@@ -54,7 +48,7 @@ class DétailsHistoriqueFragment : Fragment(){
         var véhicule : TextView = view.findViewById(R.id.vehiculeType)
         var laDate : TextView = view.findViewById(R.id.textViewDate)
         var date : TextView = view.findViewById(R.id.dateDemande)
-        loadingLogo = view.findViewById<ProgressBar>(R.id.loadingPanel_detailsHistorique)
+        loadingLogo = view.findViewById<ProgressBar>(R.id.loadingPanel_historiqueTrajets)
 
 
         lifecycleScope.launch {

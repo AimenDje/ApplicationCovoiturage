@@ -24,6 +24,22 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
+        <LinearLayout
+            android:id="@+id/loadingPanel_historiqueTrajets"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/rounded_rectangle_blanc"
+            android:gravity="center_horizontal|center_vertical"
+            android:orientation="horizontal">
+
+            <ProgressBar
+                android:id="@+id/progressBar_loading_historiqueTrajets"
+                style="?android:attr/progressBarStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:indeterminateTint="@color/purple_200" />
+        </LinearLayout>
+
         <ScrollView
             android:layout_width="match_parent"
             android:layout_height="match_parent">
@@ -53,17 +69,5 @@
                 android:text="Historique des trajets"
                 android:textSize="24sp" />
         </LinearLayout>
-
-    <ProgressBar
-        android:id="@+id/progressBar_loading"
-        style="?android:attr/progressBarStyle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:indeterminateTint="@color/purple_200"
-        android:visibility="visible"
-        app:layout_constraintBottom_toBottomOf="@+id/contener_liste_historique"
-        app:layout_constraintEnd_toEndOf="@+id/contener_liste_historique"
-        app:layout_constraintStart_toStartOf="@+id/contener_liste_historique"
-        app:layout_constraintTop_toTopOf="@+id/contener_liste_historique" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
