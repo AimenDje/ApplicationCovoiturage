@@ -19,20 +19,18 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.Fragment
 
 import com.donovanSergeAimenHatim.uniroute.R
-import com.donovanSergeAimenHatim.uniroute.ecrans.profil.ModèleProfile
 import com.donovanSergeAimenHatim.uniroute.ecrans.profil.ProfileFragment
 import com.donovanSergeAimenHatim.uniroute.ecrans.profil.PrésentateurProfil
+import com.donovanSergeAimenHatim.uniroute.model.ModelUniRoute
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import okhttp3.Call
 import okhttp3.Callback
-import okhttp3.MediaType
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
 import okhttp3.OkHttpClient
 import okhttp3.Request
-import okhttp3.RequestBody
 import okhttp3.RequestBody.Companion.asRequestBody
 import okhttp3.Response
 import java.io.File
@@ -229,7 +227,7 @@ class PreferenceFragment : Fragment() {
             afficherMessage("Une erreur est survenue")
         }
     }
-    fun afficherInformations(profil: ModèleProfile?) {
+    fun afficherInformations(profil: ModelUniRoute.Profil?) {
         // Vérifie si l'objet profil n'est pas null
         val fadeOut = AnimationUtils.loadAnimation(context, R.anim.fade_out)
         if (profil != null) {

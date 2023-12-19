@@ -11,22 +11,17 @@ import android.view.animation.AnimationUtils
 import android.widget.Button
 import android.widget.LinearLayout
 import android.widget.Toast
-import androidx.lifecycle.lifecycleScope
-import com.donovanSergeAimenHatim.uniroute.UniRouteApp
 import com.donovanSergeAimenHatim.uniroute.ecrans.listTrajets.TrajetDataManager
-import com.donovanSergeAimenHatim.uniroute.ecrans.listTrajets.Trajets
 import com.donovanSergeAimenHatim.uniroute.ecrans.listTrajets.TrajetsContract
 import com.donovanSergeAimenHatim.uniroute.ecrans.listTrajets.TrajetsPresenter
 import com.donovanSergeAimenHatim.uniroute.ecrans.listTrajets.listTrajets
+import com.donovanSergeAimenHatim.uniroute.model.ModelUniRoute
 import com.donovanSergeAimenHatim.uniroute.sourceDeDonnées.SourceKelconke
-import com.donovanSergeAimenHatim.uniroute.utilisateur.Utilisateur
 import com.donovanSergeAimenHatim.uniroute.utilisateur.UtilisateurDataManager
 import com.google.android.material.button.MaterialButtonToggleGroup
 import com.google.android.material.datepicker.MaterialDatePicker
 import com.google.android.material.timepicker.MaterialTimePicker
 import com.google.android.material.timepicker.TimeFormat
-import com.google.gson.Gson
-import kotlinx.coroutines.launch
 import java.text.ParseException
 import java.text.SimpleDateFormat
 import java.util.*
@@ -86,7 +81,7 @@ class AccueilFragment : Fragment(), TrajetsContract.View{
             val dureeTrajet = "0h"
             val distanceTrajet = "0km"
             val utilisateurReserver = ""
-            var trajet = Trajets(0,idUtilisateur,depart,"${date} ${heureDepart}",destination,nbPassagers!!.toInt(), priseCharge, prixTrajet, dureeTrajet, distanceTrajet, auto, utilisateurReserver)
+            var trajet = ModelUniRoute.Trajets(0,idUtilisateur,depart,"${date} ${heureDepart}",destination,nbPassagers!!.toInt(), priseCharge, prixTrajet, dureeTrajet, distanceTrajet, auto, utilisateurReserver)
             presenter.ajouterTrajet(trajet)
         }
         val datePickerEditText = view.findViewById<TextInputEditText>(R.id.datePickerEditText)
@@ -230,16 +225,16 @@ class AccueilFragment : Fragment(), TrajetsContract.View{
             }
     }
 
-    override fun afficherTrajets(trajets: List<Trajets>) {
+    override fun afficherTrajets(trajets: List<ModelUniRoute.Trajets>) {
         TODO("Not yet implemented")
     }
-    override fun afficherTrajetSelectionne(trajet: Trajets) {
+    override fun afficherTrajetSelectionne(trajet: ModelUniRoute.Trajets) {
         TODO("Not yet implemented")
     }
     override fun afficherErreur(message: String) {
         Toast.makeText(context, message, Toast.LENGTH_LONG).show()
     }
-    override fun afficherUtilisateur(utilisateur: Utilisateur) {
+    override fun afficherUtilisateur(utilisateur: ModelUniRoute.Utilisateur) {
         TODO("Not yet implemented")
     }
 

@@ -11,10 +11,11 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.lifecycle.lifecycleScope
 import com.donovanSergeAimenHatim.uniroute.R
+import com.donovanSergeAimenHatim.uniroute.model.ModelUniRoute
 import kotlinx.coroutines.launch
 
 class DétailsHistoriqueFragment : Fragment(){
-    var historique: ModèleDétailsHistorique? = null
+    var historique: ModelUniRoute.DetailsHistorique? = null
     var idTrajet: String? = null
     lateinit var présentateur_détails_historique : PrésentateurDétailsHistorique
     private lateinit var loadingLogo: LinearLayout

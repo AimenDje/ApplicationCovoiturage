@@ -14,8 +14,8 @@ import android.widget.TextView
 import android.widget.Toast
 import com.donovanSergeAimenHatim.uniroute.CircleTransform
 import com.donovanSergeAimenHatim.uniroute.R
+import com.donovanSergeAimenHatim.uniroute.model.ModelUniRoute
 import com.donovanSergeAimenHatim.uniroute.sourceDeDonnées.SourceKelconke
-import com.donovanSergeAimenHatim.uniroute.utilisateur.Utilisateur
 import com.donovanSergeAimenHatim.uniroute.utilisateur.UtilisateurDataManager
 import com.squareup.picasso.Picasso
 import kotlinx.coroutines.Dispatchers
@@ -96,7 +96,7 @@ class TrajetReserverFragment : Fragment(), TrajetsContract.View {
             }
     }
 
-    override fun afficherTrajets(trajets: List<Trajets>) {
+    override fun afficherTrajets(trajets: List<ModelUniRoute.Trajets>) {
         val container = view?.findViewById<LinearLayout>(R.id.reservedTrajetList)
         val titreTrajet = view?.findViewById<TextView>(R.id.textView_listTrajet_Title)
         var utilisateurId: Int = 0
@@ -107,7 +107,7 @@ class TrajetReserverFragment : Fragment(), TrajetsContract.View {
             val trajetView = LayoutInflater.from(context).inflate(R.layout.item_trajet_reserver, container, false)
             trajetViews.add(trajetView)
             trajetView.startAnimation(fadeIn)
-            var utilisateur: Utilisateur? = null
+            var utilisateur: ModelUniRoute.Utilisateur? = null
             trajetId = trajet.id
             val nomConducteurView = trajetView.findViewById<TextView>(R.id.textView_nom_conducteur_trajet_reserver)
             val loadingPanel_item = trajetView.findViewById<LinearLayout>(R.id.loadingPanel_trajetNonSelectionner)
@@ -144,7 +144,7 @@ class TrajetReserverFragment : Fragment(), TrajetsContract.View {
         }
     }
 
-    override fun afficherTrajetSelectionne(trajet: Trajets) {
+    override fun afficherTrajetSelectionne(trajet: ModelUniRoute.Trajets) {
         TODO("Not yet implemented")
     }
 
@@ -152,7 +152,7 @@ class TrajetReserverFragment : Fragment(), TrajetsContract.View {
         Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
     }
 
-    override fun afficherUtilisateur(utilisateur: Utilisateur) {
+    override fun afficherUtilisateur(utilisateur: ModelUniRoute.Utilisateur) {
         TODO("Not yet implemented")
     }
 
@@ -161,9 +161,4 @@ class TrajetReserverFragment : Fragment(), TrajetsContract.View {
         loadingPanel?.startAnimation(fadeOut)
         loadingPanel?.visibility = View.GONE
     }
-
-    fun reloadFragment() {
-
-    }
-
 }

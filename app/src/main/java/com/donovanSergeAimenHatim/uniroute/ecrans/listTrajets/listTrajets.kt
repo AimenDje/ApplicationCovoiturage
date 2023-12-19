@@ -19,7 +19,7 @@ import com.donovanSergeAimenHatim.uniroute.R
 import com.donovanSergeAimenHatim.uniroute.sourceDeDonnées.SourceKelconke
 import com.donovanSergeAimenHatim.uniroute.animation.anim
 import com.donovanSergeAimenHatim.uniroute.ecrans.accueil.AccueilFragment
-import com.donovanSergeAimenHatim.uniroute.utilisateur.Utilisateur
+import com.donovanSergeAimenHatim.uniroute.model.ModelUniRoute
 import com.donovanSergeAimenHatim.uniroute.utilisateur.UtilisateurDataManager
 import com.squareup.picasso.Picasso
 import kotlinx.coroutines.Dispatchers
@@ -100,7 +100,7 @@ class listTrajets : Fragment(), TrajetsContract.View{
     }
 
     @SuppressLint("MissingInflatedId")
-    override fun afficherTrajets(trajets: List<Trajets>) {
+    override fun afficherTrajets(trajets: List<ModelUniRoute.Trajets>) {
         val fadeIn = AnimationUtils.loadAnimation(context, R.anim.fade_in)
         val fadeOut = AnimationUtils.loadAnimation(context, R.anim.fade_out)
         val container = view?.findViewById<LinearLayout>(R.id.linear_layout_for_items)
@@ -114,7 +114,7 @@ class listTrajets : Fragment(), TrajetsContract.View{
             trajetViews.add(trajetView)
             trajetView.startAnimation(fadeIn)
             loadingLogo?.visibility = View.GONE
-            var utilisateur: Utilisateur? = null
+            var utilisateur: ModelUniRoute.Utilisateur? = null
             var trajetId: Int = 0
             val nomConducteurView = trajetView.findViewById<TextView>(R.id.textView_trajetPrenomSelectionner)
             val nomConduteurNonSelectioner = trajetView.findViewById<TextView>(R.id.textView_NomTrajetNonSelectionner)
@@ -228,7 +228,7 @@ class listTrajets : Fragment(), TrajetsContract.View{
             }
     }
 
-    override fun afficherTrajetSelectionne(trajet: Trajets) {
+    override fun afficherTrajetSelectionne(trajet: ModelUniRoute.Trajets) {
         activity?.runOnUiThread {
             val layoutTrajetSelectionne = view?.findViewById<LinearLayout>(R.id.linearLayout_trajetSelectionner)
             view?.findViewById<TextView>(R.id.textView_trajetPrenomSelectionner)?.text = "${trajet.utilisateurID}"
@@ -241,7 +241,7 @@ class listTrajets : Fragment(), TrajetsContract.View{
         Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
     }
 
-    override fun afficherUtilisateur(utilisateur: Utilisateur) {
+    override fun afficherUtilisateur(utilisateur: ModelUniRoute.Utilisateur) {
         TODO("Not yet implemented")
     }
 

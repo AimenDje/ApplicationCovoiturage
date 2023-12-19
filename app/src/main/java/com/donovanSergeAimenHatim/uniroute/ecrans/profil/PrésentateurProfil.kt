@@ -1,5 +1,6 @@
 package com.donovanSergeAimenHatim.uniroute.ecrans.profil
 
+import com.donovanSergeAimenHatim.uniroute.model.ModelUniRoute
 import com.donovanSergeAimenHatim.uniroute.sourceDeDonnées.SourceKelconke
 import com.donovanSergeAimenHatim.uniroute.utilisateur.UtilisateurDataManager
 import kotlinx.coroutines.Dispatchers
@@ -9,10 +10,11 @@ import kotlinx.coroutines.launch
 
 class PrésentateurProfil (val vue : ProfileFragment) {
 
-    private val modèle = ModèleProfile()
+    private val modèle: ModelUniRoute.Profil = ModelUniRoute.Profil("","","","","",0,0.00,
+        emptyList(),"","")
 
-    fun obrenirUnProfilUtilisateur(unNom :String) : ModèleProfile?{
-        var utilisateurRecherché :ModèleProfile? =null
+    fun obrenirUnProfilUtilisateur(unNom :String) : ModelUniRoute.Profil?{
+        var utilisateurRecherché :ModelUniRoute.Profil? =null
         var listProfil = modèle.obtenirProfils()
         if (listProfil != null) {
             for (utilisateur in listProfil){
@@ -31,7 +33,7 @@ class PrésentateurProfil (val vue : ProfileFragment) {
         private lateinit var userDataManager: UtilisateurDataManager
 
         // Fonction suspendue pour charger un profil depuis une API
-        suspend fun chargerProfileDepuisAPI(userID: Int): ModèleProfile? {
+        suspend fun chargerProfileDepuisAPI(userID: Int): ModelUniRoute.Profil? {
             // Création d'une instance de SourceKelconke pour gérer les données
             val sourceKelconke = SourceKelconke()
             // Initialisation de userDataManager avec sourceKelconke
@@ -42,7 +44,7 @@ class PrésentateurProfil (val vue : ProfileFragment) {
 
             // Construction de l'objet ModèleProfile à partir des données utilisateur
             var profil = utilisateur?.let {
-                ModèleProfile (utilisateur.photo, utilisateur.nom, utilisateur.prenom, utilisateur.email,
+                ModelUniRoute.Profil(utilisateur.photo, utilisateur.nom, utilisateur.prenom, utilisateur.email,
                     it.telephone, 12, utilisateur.note.toDouble(), listOf("ang", "esp"),
                     utilisateur.voiture, utilisateur.adresse)
             }

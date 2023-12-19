@@ -14,6 +14,7 @@ import com.donovanSergeAimenHatim.uniroute.CircleTransform
 import com.donovanSergeAimenHatim.uniroute.R
 import com.donovanSergeAimenHatim.uniroute.ecrans.historique.HistoriqueFragment
 import com.donovanSergeAimenHatim.uniroute.ecrans.préférences.PreferenceFragment
+import com.donovanSergeAimenHatim.uniroute.model.ModelUniRoute
 import com.squareup.picasso.Picasso
 
 
@@ -159,7 +160,7 @@ class ProfileFragment : Fragment() {
 
     }
 
-    fun mettreAJourProfil(profil: ModèleProfile?) {
+    fun mettreAJourProfil(profil: ModelUniRoute.Profil?) {
         // Vérifie si l'objet profil n'est pas null
         val fadeOut = AnimationUtils.loadAnimation(context, R.anim.fade_out)
         if (profil != null) {
