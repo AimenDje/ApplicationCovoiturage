@@ -43,7 +43,7 @@ class HistoriqueFragment : Fragment(), HistoriqueInterface.View {
     private lateinit var userDataManager: UtilisateurDataManager
     private lateinit var animation: anim
     val critere = StringBuilder()
-    var loadingLogo: ProgressBar? = null
+    private lateinit var loadingLogo: LinearLayout
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -57,7 +57,7 @@ class HistoriqueFragment : Fragment(), HistoriqueInterface.View {
         val userDataManager = UtilisateurDataManager(sourceKelconke)
         presentateur = PrésentateurHistorique(this, dataManager, userDataManager)
         try {
-            presentateur.chargerTrajets("utilisateurID=1")
+            presentateur.chargerTrajets("utilisateurID=${context?.getString(R.string.utilisateurID)}")
         } catch (e: Exception) { afficherErreur(e.message ?: "Erreur inconnue")
         }
         animation = anim()
@@ -75,7 +75,7 @@ class HistoriqueFragment : Fragment(), HistoriqueInterface.View {
         super.onViewCreated(view, savedInstanceState)
         //Stockage et affichage dinamyque des données sur le fragemnt de la liste des trajets
         ///var présentateur_historique = PrésentateurHistorique(this)
-        loadingLogo = view.findViewById<ProgressBar>(R.id.loadingPanel_historiqueTrajets)
+        loadingLogo = view.findViewById<LinearLayout>(R.id.loadingPanel_historiqueTrajets)
     }
 
     @SuppressLint("MissingInflatedId")

@@ -45,7 +45,7 @@ class TrajetReserverFragment : Fragment(), TrajetsContract.View {
             param2 = it.getString(ARG_PARAM2)
         }
         val critere = mutableListOf<String>()
-        val customCondition =  URLEncoder.encode("FIND_IN_SET(\"99\",REPLACE(utilisateursReserves,\";\",\",\"))")
+        val customCondition =  URLEncoder.encode("FIND_IN_SET(\"${context?.getString(R.string.utilisateurID)}\",REPLACE(utilisateursReserves,\";\",\",\"))")
         critere.add("customCondition=$customCondition")
         val finalCriteria = critere.joinToString("&")
         val sourceKelconke = SourceKelconke()

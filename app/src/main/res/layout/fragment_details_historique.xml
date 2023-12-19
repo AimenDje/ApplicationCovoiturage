@@ -14,7 +14,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="80dp"
-        android:text="Titre"
         android:textSize="24sp"
         app:layout_constraintBottom_toTopOf="@+id/containerTrajet"
         app:layout_constraintEnd_toEndOf="parent"
@@ -42,13 +41,12 @@
             android:layout_marginHorizontal="30dp"
             android:background="@drawable/rounded_rectangle_blanc"
             android:orientation="vertical"
-            android:visibility="visible"
             app:layout_constraintTop_toTopOf="parent"
             tools:ignore="MissingConstraints"
             tools:layout_editor_absoluteX="25dp">
 
             <LinearLayout
-                android:id="@+id/loadingPanel_historiqueTrajets"
+                android:id="@+id/loadingPanel_detailsHistorique"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:background="@drawable/rounded_rectangle_blanc"
@@ -56,7 +54,7 @@
                 android:orientation="horizontal">
 
                 <ProgressBar
-                    android:id="@+id/progressBar_loading_historiqueTrajets"
+                    android:id="@+id/progressBar_loading_detailsHistorique"
                     style="?android:attr/progressBarStyle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -179,7 +177,6 @@
                 </LinearLayout>
 
             </LinearLayout>
-
         </LinearLayout>
 
 

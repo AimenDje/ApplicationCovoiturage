@@ -3,7 +3,7 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment" translatable="false">Hello blank fragment</string>
     <string name="reservations">Réservations</string>
-    <string name="utilisateurID" translatable="false">99</string>
+    <string name="utilisateurID" translatable="false">4</string>
     <string name="chercheCoVoiturage">Trouver un covoiturage</string>
     <string name="trouverTitle">Où voulez vous allez ?</string>
     <string name="labelNbPassager">"Nombre de passagers: "</string>

@@ -5,6 +5,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.LinearLayout
 import android.widget.ProgressBar
 import android.widget.TextView
 import android.widget.Toast
@@ -16,7 +17,7 @@ class DétailsHistoriqueFragment : Fragment(){
     var historique: ModèleDétailsHistorique? = null
     var idTrajet: String? = null
     lateinit var présentateur_détails_historique : PrésentateurDétailsHistorique
-    var loadingLogo: ProgressBar? = null
+    private lateinit var loadingLogo: LinearLayout
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         idTrajet = arguments?.getString("idTrajet")
@@ -48,12 +49,12 @@ class DétailsHistoriqueFragment : Fragment(){
         var véhicule : TextView = view.findViewById(R.id.vehiculeType)
         var laDate : TextView = view.findViewById(R.id.textViewDate)
         var date : TextView = view.findViewById(R.id.dateDemande)
-        loadingLogo = view.findViewById<ProgressBar>(R.id.loadingPanel_historiqueTrajets)
+        loadingLogo = view.findViewById<LinearLayout>(R.id.loadingPanel_detailsHistorique)
+
 
 
         lifecycleScope.launch {
             historique = idTrajet?.let { présentateur_détails_historique.ChargerDetailsHistorique(it.toInt()) }
-            loadingLogo?.visibility = View.GONE
             if (historique != null) {
                 titre_vue.text = historique!!.titre
                 itinéraireTrajet.text = "Trajet : "
@@ -68,6 +69,7 @@ class DétailsHistoriqueFragment : Fragment(){
                 véhicule.text = historique!!.modelVehicule + "\n"
                 laDate.text = "Date du trajet : "
                 date.text = historique!!.date
+                loadingLogo.visibility = View.GONE
             } else {
                 // Gérer le cas où historique est null, par exemple afficher un message d'erreur
                 Toast.makeText(context, "Erreur : les détails du trajet ne peuvent pas être chargés.", Toast.LENGTH_SHORT).show()

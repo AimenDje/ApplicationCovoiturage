@@ -62,7 +62,7 @@ class ProfileFragment : Fragment() {
 
         //on récupère les données a afficher à partir du présentateur
         var présentateur = PrésentateurProfil(this)
-        présentateur.chargerProfilUtilisateur(99)
+        présentateur.chargerProfilUtilisateur(context?.getString(R.string.utilisateurID)!!.toInt())
         /*
         val nomPhotoProfil: String? = présentateur.obrenirUnProfilUtilisateur("Gauthier")?.photo
 

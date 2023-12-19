@@ -47,7 +47,8 @@
                 android:text="@string/chercheCoVoiturage"
 
                 android:textSize="10dp"
-                app:icon="@drawable/icon_selector" />
+                app:icon="@drawable/icon_selector"
+                app:iconSize="15dp" />
 
 
             <Button
@@ -58,7 +59,8 @@
                 android:backgroundTint="@drawable/background_color_selector"
                 android:text="Proposer CoVoiturage"
                 android:textSize="10dp"
-                app:icon="@drawable/icon_selector" />
+                app:icon="@drawable/icon_selector"
+                app:iconSize="15dp" />
 
         </com.google.android.material.button.MaterialButtonToggleGroup>
         <LinearLayout

@@ -80,7 +80,8 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:visibility="visible">
 
             <RadioButton
                 android:id="@+id/radioButtonThemeClair"
@@ -104,6 +105,7 @@
             android:id="@+id/button_changeProfilePic"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:backgroundTint="@color/ButtonColor"
             android:text="Changer image profile" />
 
         <Button
@@ -111,6 +113,7 @@
             android:layout_width="150dp"
             android:layout_height="10dp"
             android:layout_weight="1"
+            android:backgroundTint="@color/ButtonColor"
             android:gravity="center"
             android:text="Enregistrer"
             android:textColorLink="#3F51B5" />

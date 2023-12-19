@@ -74,19 +74,19 @@ class AccueilFragment : Fragment(), TrajetsContract.View{
 
         val btnAjouterTrajet: Button = view.findViewById(R.id.BtnProposerCoVoiturage)
         btnAjouterTrajet.setOnClickListener {
-            val idUtilisateur =99
+            val idUtilisateur =context?.getString(R.string.utilisateurID)!!.toInt()
             val depart = view.findViewById<com.google.android.material.textfield.TextInputEditText>(R.id.textFieldDepartProposer).text.toString()
             val destination = view.findViewById<com.google.android.material.textfield.TextInputEditText>(R.id.textFIeldDestinationProposer).text.toString()
             val heureDepart = view.findViewById<com.google.android.material.textfield.TextInputEditText>(R.id.timePickerEditText).text.toString()
             val date = view.findViewById<com.google.android.material.textfield.TextInputEditText>(R.id.datePickerEditTextProposer).text.toString()
             val auto = view.findViewById<com.google.android.material.textfield.TextInputEditText>(R.id.textFieldAutoProposer).text.toString()
-            val nbPassagers = view?.findViewById<com.google.android.material.slider.Slider>(R.id.nbPassagerProposer)?.value
+            val nbPassagers = view.findViewById<com.google.android.material.slider.Slider>(R.id.nbPassagerProposer)?.value
             val priseCharge =view.findViewById<com.google.android.material.textfield.TextInputEditText>(R.id.textFieldPriseChargeProposer).text.toString()
             val prixTrajet = "0$"
             val dureeTrajet = "0h"
             val distanceTrajet = "0km"
             val utilisateurReserver = ""
-            var trajet = Trajets(0,idUtilisateur,depart,"${date} ${heureDepart}",destination,5, priseCharge, prixTrajet, dureeTrajet, distanceTrajet, auto, utilisateurReserver)
+            var trajet = Trajets(0,idUtilisateur,depart,"${date} ${heureDepart}",destination,nbPassagers!!.toInt(), priseCharge, prixTrajet, dureeTrajet, distanceTrajet, auto, utilisateurReserver)
             presenter.ajouterTrajet(trajet)
         }
         val datePickerEditText = view.findViewById<TextInputEditText>(R.id.datePickerEditText)

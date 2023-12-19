@@ -82,7 +82,7 @@ class PreferenceFragment : Fragment() {
         boutonImageProfile = view.findViewById<Button>(R.id.button_changeProfilePic)
         loadingPanel = view.findViewById(R.id.loadingPanel_trajetNonSelectionner)
 
-        présentateur.chargerProfilUtilisateur(99)
+        présentateur.chargerProfilUtilisateur(context?.getString(R.string.utilisateurID)!!.toInt())
 
 
         themeClair.isChecked = true
@@ -124,7 +124,7 @@ class PreferenceFragment : Fragment() {
                     "adresse" to nouvelleAdresse.text.toString())
                 GlobalScope.launch(Dispatchers.Main) {
                     try {
-                        présentateur.modifierUtilisateurApi("99" , nouvellesDonnees)
+                        présentateur.modifierUtilisateurApi("${context?.getString(R.string.utilisateurID)}" , nouvellesDonnees)
                         Toast.makeText(requireContext(), "Vos informations seront mises à jour", Toast.LENGTH_SHORT).show()
                         présentateur.modifierTheme(themeClair.isChecked)
 
@@ -188,7 +188,7 @@ class PreferenceFragment : Fragment() {
                             try {
                                 val nouvellesDonnees = mapOf(
                                 "image" to file.name)
-                                présentateur.modifierUtilisateurApi("99" , nouvellesDonnees)
+                                présentateur.modifierUtilisateurApi("${context?.getString(R.string.utilisateurID)}" , nouvellesDonnees)
                                 Toast.makeText(requireContext(), "Photo mise à jour", Toast.LENGTH_SHORT).show()
 
                             } catch (e: Exception) {
