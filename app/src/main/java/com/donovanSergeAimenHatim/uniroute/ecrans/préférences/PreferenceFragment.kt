@@ -170,7 +170,7 @@ class PreferenceFragment : Fragment() {
             .build()
 
         val request = Request.Builder()
-            .url("https://donovanbeulze.com/unirouteAPI/uploadImg.php") // Remplacez avec l'URL de votre API
+            .url("https://donovanbeulze.com/unirouteAPI/uploadImg.php")
             .post(requestBody)
             .build()
 
@@ -184,6 +184,18 @@ class PreferenceFragment : Fragment() {
                     if (response.isSuccessful) {
                         val responseBody = response.body?.string()
                         Log.d("UploadImage", "Réponse réussie: $responseBody")
+                        GlobalScope.launch(Dispatchers.Main) {
+                            try {
+                                val nouvellesDonnees = mapOf(
+                                "image" to file.name)
+                                présentateur.modifierUtilisateurApi("99" , nouvellesDonnees)
+                                Toast.makeText(requireContext(), "Photo mise à jour", Toast.LENGTH_SHORT).show()
+
+                            } catch (e: Exception) {
+                                // Affichage d'une erreur sur la vue en cas d'exception
+                                afficherErreur(e)
+                            }
+                        }
                     } else {
                         Log.e("UploadImage", "Réponse non réussie: ${response.message}")
                     }
