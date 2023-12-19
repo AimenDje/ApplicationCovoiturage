@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">UniRoute</string>
+    <string name="reservations">Reservierungen</string>
+    <string name="chercheCoVoiturage">Finden Sie eine Fahrgemeinschaft</string>
+    <string name="trouverTitle">Wo willst du hin?</string>
+    <string name="labelNbPassager">"Anzahl der Passagiere: "</string>
+    <string name="datePickerEditText">Datum</string>
+    <string name="usernameconnexion">Nutzername</string>
+    <string name="motdepasseconnexion">Passwort</string>
+    <string name="loginButton">Verbindung</string>
+    <string name="titreFragmentReservations">Meine Buchungen</string>
+</resources>
