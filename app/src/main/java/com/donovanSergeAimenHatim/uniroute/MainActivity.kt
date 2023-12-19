@@ -39,21 +39,21 @@ class MainActivity : AppCompatActivity() {
         }, 3000)
         bottomNavigationView.setOnItemSelectedListener { item ->
             when(item.itemId) {
-                R.id.coVoiturage -> {
+                R.id.coVoituragemenu -> {
                     val fragment = AccueilFragment()
                     supportFragmentManager.beginTransaction()
                         .replace(R.id.fragment_container, fragment)
                         .commit()
                     true
                 }
-                R.id.reservation -> {
+                R.id.reservationmenu -> {
                     val fragment = TrajetReserverFragment()
                     supportFragmentManager.beginTransaction()
                         .replace(R.id.fragment_container, fragment)
                         .commit()
                     true
                 }
-                R.id.profile -> {
+                R.id.profilemenu -> {
                     val fragment = ProfileFragment()
                     supportFragmentManager.beginTransaction()
                         .replace(R.id.fragment_container, fragment)

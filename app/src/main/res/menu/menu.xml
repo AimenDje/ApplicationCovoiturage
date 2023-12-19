@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
-        android:id="@+id/coVoiturage"
+        android:id="@+id/coVoituragemenu"
         android:icon="@drawable/covoiturage_icon"
-        android:title="CoVoiturage" />
+        android:title="@string/coVoituragemenu" />
     <item
-        android:id="@+id/reservation"
+        android:id="@+id/reservationmenu"
         android:icon="@drawable/messagerie_icon"
         android:title="@string/reservations" />
     <item
-        android:id="@+id/profile"
+        android:id="@+id/profilemenu"
         android:icon="@drawable/profile_icon"
-        android:title="Profile"/>
+        android:title="@string/profilemenu" />
 </menu>

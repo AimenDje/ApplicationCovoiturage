@@ -10,4 +10,7 @@
     <string name="motdepasseconnexion">Passwort</string>
     <string name="loginButton">Verbindung</string>
     <string name="titreFragmentReservations">Meine Buchungen</string>
+    <string name="coVoituragemenu">Fahrgemeinschaften</string>
+    <string name="reservationmenu">Reservierungen</string>
+    <string name="profilemenu">Profil</string>
 </resources>
