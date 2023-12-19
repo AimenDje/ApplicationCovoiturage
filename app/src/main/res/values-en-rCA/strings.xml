@@ -4,6 +4,6 @@
     <string name="reservations">Reservations</string>
     <string name="chercheCoVoiturage">Find a carpool</string>
     <string name="trouverTitle">Where do you want to go?</string>
-    <string name="label">"Number of passengers: "</string>
+    <string name="labelNbPassager">"Number of passengers: "</string>
     <string name="datePickerEditText">Date</string>
 </resources>

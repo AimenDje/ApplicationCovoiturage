@@ -6,6 +6,6 @@
     <string name="utilisateurID" translatable="false">99</string>
     <string name="chercheCoVoiturage">Trouver un covoiturage</string>
     <string name="trouverTitle">Où voulez vous allez ?</string>
-    <string name="label">"Nombre de passagers: "</string>
+    <string name="labelNbPassager">"Nombre de passagers: "</string>
     <string name="datePickerEditText">Date</string>
 </resources>
