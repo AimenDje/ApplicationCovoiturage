@@ -1,10 +1,10 @@
 package com.donovanSergeAimenHatim.uniroute.ecrans.historique
 
-import com.donovanSergeAimenHatim.uniroute.ecrans.listTrajets.Trajets
+import com.donovanSergeAimenHatim.uniroute.model.ModelUniRoute
 
 interface HistoriqueInterface {
     interface View {
-        fun afficherHistorique(historique: List<Trajets>)
+        fun afficherHistorique(historique: List<ModelUniRoute.Trajets>)
         fun afficherErreur(message: String)
     }
     interface Presenter {

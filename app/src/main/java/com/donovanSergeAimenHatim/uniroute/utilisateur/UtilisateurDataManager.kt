@@ -1,18 +1,19 @@
 package com.donovanSergeAimenHatim.uniroute.utilisateur
 
 import android.util.Log
+import com.donovanSergeAimenHatim.uniroute.model.ModelUniRoute
 import com.donovanSergeAimenHatim.uniroute.sourceDeDonnées.SourceKelconke
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 
 class UtilisateurDataManager(private val source: SourceKelconke) {
 
-    suspend fun getUtilisateur(nomTable: String, colonne: String = "*", condition: String = ""): List<Utilisateur> {
+    suspend fun getUtilisateur(nomTable: String, colonne: String = "*", condition: String = ""): List<ModelUniRoute.Utilisateur> {
         val utilisateurJson = source.obtenirDonnées(nomTable, colonne, condition, ::transformJsonToUtilisateurs)
         return utilisateurJson ?: emptyList()
     }
 
-    suspend fun getUtilisateurById(id: Int): Utilisateur? {
+    suspend fun getUtilisateurById(id: Int): ModelUniRoute.Utilisateur? {
         val condition = "id=$id"
         val utilisateurs = getUtilisateur("utilisateur", "*", condition)
         return utilisateurs.firstOrNull()
@@ -23,7 +24,7 @@ class UtilisateurDataManager(private val source: SourceKelconke) {
     }
 
 
-    fun transformJsonToUtilisateurs(jsonString: String): List<Utilisateur> {
+    fun transformJsonToUtilisateurs(jsonString: String): List<ModelUniRoute.Utilisateur> {
         Log.d("listUtilisateur", "JSON String: $jsonString")
         val gson = Gson()
         val type = object : TypeToken<List<String>>() {}.type
@@ -31,7 +32,7 @@ class UtilisateurDataManager(private val source: SourceKelconke) {
 
         return utilisateursString.map { utilisateurString ->
             val parts = utilisateurString.split("|")
-            Utilisateur(
+            ModelUniRoute.Utilisateur(
                 id = parts[0].toInt(),
                 nom = parts[1],
                 prenom = parts[2],

@@ -1,10 +1,6 @@
 package com.donovanSergeAimenHatim.uniroute.ecrans.listTrajets
 
-import android.provider.Settings.Global.getString
-import android.util.Log
-import com.donovanSergeAimenHatim.uniroute.R
-import com.donovanSergeAimenHatim.uniroute.UniRouteApp
-import com.donovanSergeAimenHatim.uniroute.utilisateur.Utilisateur
+import com.donovanSergeAimenHatim.uniroute.model.ModelUniRoute
 import com.donovanSergeAimenHatim.uniroute.utilisateur.UtilisateurDataManager
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
@@ -28,7 +24,7 @@ class TrajetsPresenter(val view: TrajetsContract.View, private val dataManager: 
         }
     }
 
-    override fun ajouterTrajet(trajet: Trajets) {
+    override fun ajouterTrajet(trajet: ModelUniRoute.Trajets) {
         trajet.logTrajetInfo()
         GlobalScope.launch(Dispatchers.Main) {
             try {
@@ -43,7 +39,7 @@ class TrajetsPresenter(val view: TrajetsContract.View, private val dataManager: 
         }
     }
 
-    suspend fun chargerUtilisateur(id: Int): Utilisateur? {
+    suspend fun chargerUtilisateur(id: Int): ModelUniRoute.Utilisateur? {
         return try {
             withContext(Dispatchers.IO) {
                 utilisateurDataManager.getUtilisateurById(id)
@@ -53,7 +49,7 @@ class TrajetsPresenter(val view: TrajetsContract.View, private val dataManager: 
         }
     }
 
-    override fun onTrajetSelectionne(trajet: Trajets) {
+    override fun onTrajetSelectionne(trajet: ModelUniRoute.Trajets) {
         view.afficherTrajetSelectionne(trajet)
     }
 

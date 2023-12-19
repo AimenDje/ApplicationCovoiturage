@@ -1,10 +1,9 @@
 package com.donovanSergeAimenHatim.uniroute.sourceDeDonnées
 
-import com.donovanSergeAimenHatim.uniroute.ecrans.profil.ModèleProfile
-import java.sql.ResultSet
+import com.donovanSergeAimenHatim.uniroute.model.ModelUniRoute
 
 interface SourceDeDonnées {
-    fun obtenirProfils (): MutableList<ModèleProfile>?
+    fun obtenirProfils (): MutableList<ModelUniRoute.Profil>?
     fun modifierProfil(utilisateurÀModifier:String, nom:String, prenom:String, email:String, voiture:String, adresse:String){}
     suspend fun <T> obtenirDonnées(
         nomTable: String,

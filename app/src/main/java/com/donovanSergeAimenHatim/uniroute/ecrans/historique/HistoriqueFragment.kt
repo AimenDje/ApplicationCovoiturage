@@ -8,16 +8,13 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.animation.AnimationUtils
-import android.widget.Button
 import android.widget.LinearLayout
-import android.widget.ProgressBar
 import android.widget.TextView
 import android.widget.Toast
 import com.donovanSergeAimenHatim.uniroute.R
 import com.donovanSergeAimenHatim.uniroute.animation.anim
-import com.donovanSergeAimenHatim.uniroute.ecrans.carte.CarteFragment
 import com.donovanSergeAimenHatim.uniroute.ecrans.listTrajets.TrajetDataManager
-import com.donovanSergeAimenHatim.uniroute.ecrans.listTrajets.Trajets
+import com.donovanSergeAimenHatim.uniroute.model.ModelUniRoute
 import com.donovanSergeAimenHatim.uniroute.sourceDeDonnées.SourceKelconke
 import com.donovanSergeAimenHatim.uniroute.utilisateur.UtilisateurDataManager
 import kotlinx.coroutines.Dispatchers
@@ -79,7 +76,7 @@ class HistoriqueFragment : Fragment(), HistoriqueInterface.View {
     }
 
     @SuppressLint("MissingInflatedId")
-     override fun afficherHistorique(trajets: List<Trajets>){
+     override fun afficherHistorique(trajets: List<ModelUniRoute.Trajets>){
         val fadeIn = AnimationUtils.loadAnimation(context, R.anim.fade_in)
         val fadeOut = AnimationUtils.loadAnimation(context, R.anim.fade_out)
         val containerListe = view?.findViewById<LinearLayout>(R.id.liste_historique_trajets)

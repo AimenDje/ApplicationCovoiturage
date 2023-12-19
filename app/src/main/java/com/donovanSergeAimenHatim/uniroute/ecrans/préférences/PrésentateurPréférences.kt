@@ -1,7 +1,7 @@
 package com.donovanSergeAimenHatim.uniroute.ecrans.préférences
 
 import androidx.appcompat.app.AppCompatDelegate
-import com.donovanSergeAimenHatim.uniroute.ecrans.profil.ModèleProfile
+import com.donovanSergeAimenHatim.uniroute.model.ModelUniRoute
 import com.donovanSergeAimenHatim.uniroute.sourceDeDonnées.SourceKelconke
 import com.donovanSergeAimenHatim.uniroute.utilisateur.UtilisateurDataManager
 import kotlinx.coroutines.Dispatchers
@@ -9,7 +9,7 @@ import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 
 class PrésentateurPréférences(private val vue: PreferenceFragment) {
-    private val model = ModèlePréférences()
+    private val model = ModelUniRoute.Preferences("","","","","","",false,false)
     private lateinit var userDataManager: UtilisateurDataManager
     fun mettreAJourPréférence(utilisateurÀModifier:String,
                                       nouveauNom:String, nouveauPrénom:String, nouvelEmail:String,
@@ -57,7 +57,7 @@ class PrésentateurPréférences(private val vue: PreferenceFragment) {
 
 
     // Fonction suspendue pour charger un profil depuis une API
-    suspend fun chargerProfileDepuisAPI(userID: Int): ModèleProfile? {
+    suspend fun chargerProfileDepuisAPI(userID: Int): ModelUniRoute.Profil? {
         // Création d'une instance de SourceKelconke pour gérer les données
         val sourceKelconke = SourceKelconke()
         // Initialisation de userDataManager avec sourceKelconke
@@ -68,7 +68,7 @@ class PrésentateurPréférences(private val vue: PreferenceFragment) {
 
         // Construction de l'objet ModèleProfile à partir des données utilisateur
         var profil = utilisateur?.let {
-            ModèleProfile ("arnold", utilisateur.nom, utilisateur.prenom, utilisateur.email,
+            ModelUniRoute.Profil ("arnold", utilisateur.nom, utilisateur.prenom, utilisateur.email,
                 it.telephone, 12, utilisateur.note.toDouble(), listOf("ang", "esp"),
                 utilisateur.voiture, utilisateur.adresse)
         }

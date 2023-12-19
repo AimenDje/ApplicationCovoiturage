@@ -1,16 +1,17 @@
 package com.donovanSergeAimenHatim.uniroute.ecrans.listTrajets
 import android.util.Log
+import com.donovanSergeAimenHatim.uniroute.model.ModelUniRoute
 import com.donovanSergeAimenHatim.uniroute.sourceDeDonnées.SourceKelconke
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
     class TrajetDataManager(private val source: SourceKelconke) {
 
-        suspend fun getTrajets(nomTable: String, colonne: String = "*", condition: String = ""): List<Trajets> {
+        suspend fun getTrajets(nomTable: String, colonne: String = "*", condition: String = ""): List<ModelUniRoute.Trajets> {
             val trajetsJson = source.obtenirDonnées(nomTable, colonne, condition, ::transformJsonToTrajets)
             return trajetsJson ?: emptyList()
         }
 
-        suspend fun getTrajetById(id : Int): Trajets?{
+        suspend fun getTrajetById(id : Int): ModelUniRoute.Trajets?{
             val condition = "id=$id"
             val trajets = getTrajets("trajets","*",condition)
             return trajets.firstOrNull()
@@ -70,7 +71,7 @@ import com.google.gson.reflect.TypeToken
             return false
         }
 
-        suspend fun ajouterTrajet(trajet: Trajets): Boolean {
+        suspend fun ajouterTrajet(trajet: ModelUniRoute.Trajets): Boolean {
             val donnees = mapOf(
                 "id" to trajet.id.toString(),
                 "utilisateurID" to trajet.utilisateurID,
@@ -89,7 +90,7 @@ import com.google.gson.reflect.TypeToken
             return source.ajouterDonnee("trajets", donnees)
         }
 
-        fun transformJsonToTrajets(jsonString: String): List<Trajets> {
+        fun transformJsonToTrajets(jsonString: String): List<ModelUniRoute.Trajets> {
             Log.d("listeTrajet", "JSON String: $jsonString")
             val gson = Gson()
             val type = object : TypeToken<List<String>>() {}.type
@@ -97,7 +98,7 @@ import com.google.gson.reflect.TypeToken
 
             return trajetsString.map { trajetsString ->
                 val parts = trajetsString.split("|")
-                Trajets(
+                ModelUniRoute.Trajets(
                     id = parts[0].toInt(),
                     utilisateurID = parts[1].toInt(),
                     villeDepart = parts[2],

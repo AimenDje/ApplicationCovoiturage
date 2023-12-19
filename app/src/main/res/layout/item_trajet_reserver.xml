@@ -66,20 +66,22 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="PrÃ©nom Nom"
-                    android:textSize="16sp"
+                    android:textSize="14sp"
                     android:textStyle="bold" />
 
                 <TextView
                     android:id="@+id/textView_destination_trajet"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Ville depart -> Ville Destination" />
+                    android:text="Ville depart -> Ville Destination"
+                    android:textSize="11sp" />
 
                 <TextView
                     android:id="@+id/textView_date_trajet_reserver"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="05/11/2023 15h00" />
+                    android:text="05/11/2023 15h00"
+                    android:textSize="12sp" />
 
             </LinearLayout>
 

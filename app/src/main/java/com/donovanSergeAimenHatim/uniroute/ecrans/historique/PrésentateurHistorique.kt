@@ -2,10 +2,7 @@ package com.donovanSergeAimenHatim.uniroute.ecrans.historique
 
 import android.util.Log
 import com.donovanSergeAimenHatim.uniroute.ecrans.listTrajets.TrajetDataManager
-import com.donovanSergeAimenHatim.uniroute.ecrans.listTrajets.Trajets
-import com.donovanSergeAimenHatim.uniroute.ecrans.listTrajets.TrajetsContract
-import com.donovanSergeAimenHatim.uniroute.sourceDeDonnées.SourceKelconke
-import com.donovanSergeAimenHatim.uniroute.utilisateur.Utilisateur
+import com.donovanSergeAimenHatim.uniroute.model.ModelUniRoute
 import com.donovanSergeAimenHatim.uniroute.utilisateur.UtilisateurDataManager
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
@@ -27,7 +24,7 @@ class PrésentateurHistorique (val view : HistoriqueInterface.View, private val 
         }
     }
 
-    suspend fun chargerUtilisateur(id: Int): Utilisateur? {
+    suspend fun chargerUtilisateur(id: Int): ModelUniRoute.Utilisateur? {
         return try {
             withContext(Dispatchers.IO) {
                 utilisateurDataManager.getUtilisateurById(id)
