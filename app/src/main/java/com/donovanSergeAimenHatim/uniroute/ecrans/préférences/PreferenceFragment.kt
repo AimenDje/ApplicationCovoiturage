@@ -1,6 +1,10 @@
 package com.donovanSergeAimenHatim.uniroute.ecrans.préférences
 
+import android.database.Cursor
+import android.net.Uri
 import android.os.Bundle
+import android.provider.MediaStore
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -10,6 +14,8 @@ import android.widget.EditText
 import android.widget.LinearLayout
 import android.widget.RadioButton
 import android.widget.Toast
+import androidx.activity.result.ActivityResultLauncher
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.Fragment
 
 import com.donovanSergeAimenHatim.uniroute.R
@@ -19,6 +25,18 @@ import com.donovanSergeAimenHatim.uniroute.ecrans.profil.PrésentateurProfil
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
+import okhttp3.Call
+import okhttp3.Callback
+import okhttp3.MediaType
+import okhttp3.MediaType.Companion.toMediaTypeOrNull
+import okhttp3.MultipartBody
+import okhttp3.OkHttpClient
+import okhttp3.Request
+import okhttp3.RequestBody
+import okhttp3.RequestBody.Companion.asRequestBody
+import okhttp3.Response
+import java.io.File
+import java.io.IOException
 
 class PreferenceFragment : Fragment() {
 
@@ -33,12 +51,19 @@ class PreferenceFragment : Fragment() {
     private lateinit var présentateur: PrésentateurPréférences
     private lateinit var présentateurProfil : PrésentateurProfil
     private lateinit var loadingPanel: LinearLayout
+    private lateinit var boutonImageProfile: Button
     //private lateinit var utilisateurÀmodifier :String
 
-
+    private lateinit var imagePickerLauncher: ActivityResultLauncher<String>
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
+        }
+        imagePickerLauncher = registerForActivityResult(ActivityResultContracts.GetContent()) { uri: Uri? ->
+            uri?.let {
+                // Ici, au lieu d'afficher l'image, envoyez-la à votre API
+                uploadImageToServer(uri)
+            }
         }
     }
 
@@ -54,7 +79,7 @@ class PreferenceFragment : Fragment() {
         buttonEnregistrer = view.findViewById(R.id.buttonEnregistrer)
         présentateur = PrésentateurPréférences(this)
         présentateurProfil = PrésentateurProfil(ProfileFragment())
-
+        boutonImageProfile = view.findViewById<Button>(R.id.button_changeProfilePic)
         loadingPanel = view.findViewById(R.id.loadingPanel_trajetNonSelectionner)
 
         présentateur.chargerProfilUtilisateur(99)
@@ -109,7 +134,10 @@ class PreferenceFragment : Fragment() {
                     }
                 }
             }
-            }
+        }
+        boutonImageProfile.setOnClickListener {
+            imagePickerLauncher.launch("image/*")
+        }
     }
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -131,6 +159,56 @@ class PreferenceFragment : Fragment() {
             }
         }
     }
+
+    private fun uploadImageToServer(imageUri: Uri) {
+        val imagePath = getRealPathFromURI(imageUri)
+        val file = File(imagePath)
+
+        val requestBody = MultipartBody.Builder()
+            .setType(MultipartBody.FORM)
+            .addFormDataPart("image", file.name, file.asRequestBody("image/*".toMediaTypeOrNull()))
+            .build()
+
+        val request = Request.Builder()
+            .url("https://donovanbeulze.com/unirouteAPI/uploadImg.php") // Remplacez avec l'URL de votre API
+            .post(requestBody)
+            .build()
+
+        OkHttpClient().newCall(request).enqueue(object : Callback {
+            override fun onFailure(call: Call, e: IOException) {
+                afficherErreur(e)
+            }
+
+            override fun onResponse(call: Call, response: Response) {
+                try {
+                    if (response.isSuccessful) {
+                        val responseBody = response.body?.string()
+                        Log.d("UploadImage", "Réponse réussie: $responseBody")
+                    } else {
+                        Log.e("UploadImage", "Réponse non réussie: ${response.message}")
+                    }
+                } catch (e: IOException) {
+                    Log.e("UploadImage", "Erreur lors de la lecture de la réponse", e)
+                } finally {
+                    response.close()
+                }
+            }
+        })
+    }
+    private fun getRealPathFromURI(contentUri: Uri): String? {
+        val context = this.context ?: return null
+        var cursor: Cursor? = null
+        try {
+            val proj = arrayOf(MediaStore.Images.Media.DATA)
+            cursor = context.contentResolver.query(contentUri, proj, null, null, null)
+            val column_index = cursor?.getColumnIndexOrThrow(MediaStore.Images.Media.DATA)
+            cursor?.moveToFirst()
+            return cursor?.getString(column_index ?: 0) ?: ""
+        } finally {
+            cursor?.close()
+        }
+    }
+
 
     fun modifierUnUtilisateur(modification: Boolean){
         if(modification){

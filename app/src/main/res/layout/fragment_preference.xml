@@ -101,6 +101,12 @@
         </LinearLayout>
 
         <Button
+            android:id="@+id/button_changeProfilePic"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Changer image profile" />
+
+        <Button
             android:id="@+id/buttonEnregistrer"
             android:layout_width="150dp"
             android:layout_height="10dp"
