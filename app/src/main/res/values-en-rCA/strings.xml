@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">UniRoute</string>
+    <string name="reservations">Reservations</string>
+    <string name="chercheCoVoiturage">Find a carpool</string>
+    <string name="trouverTitle">Where do you want to go?</string>
+    <string name="label">"Number of passengers: "</string>
+    <string name="datePickerEditText">Date</string>
+</resources>
