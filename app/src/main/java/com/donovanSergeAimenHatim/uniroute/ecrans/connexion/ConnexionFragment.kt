@@ -31,8 +31,8 @@ class ConnexionFragment : Fragment(), Model.View {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        usernameEditText = view.findViewById(R.id.usernameEditText)
-        passwordEditText = view.findViewById(R.id.passwordEditText)
+        usernameEditText = view.findViewById(R.id.usernameconnexion)
+        passwordEditText = view.findViewById(R.id.motdepasseconnexion)
         loginButton = view.findViewById(R.id.loginButton)
         progressBar = view.findViewById(R.id.progressBar)
 
