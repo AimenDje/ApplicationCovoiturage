@@ -1,7 +1,13 @@
 package com.donovanSergeAimenHatim.uniroute.ecrans.historique
 
+import android.util.Log
 import com.donovanSergeAimenHatim.uniroute.ecrans.listTrajets.TrajetDataManager
+import com.donovanSergeAimenHatim.uniroute.ecrans.listTrajets.Trajets
 import com.donovanSergeAimenHatim.uniroute.sourceDeDonnées.SourceKelconke
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 class PrésentateurDétailsHistorique (val vue : DétailsHistoriqueFragment){
 
@@ -19,19 +25,23 @@ class PrésentateurDétailsHistorique (val vue : DétailsHistoriqueFragment){
     */
 
     private lateinit var trajetDataManager : TrajetDataManager
-    suspend fun ChargerDetailsHistorique(userID : Int): ModèleDétailsHistorique? {
-        val sourceKelconque = SourceKelconke()
-        trajetDataManager = TrajetDataManager(sourceKelconque)
-        val detailsHistorique : ModèleDétailsHistorique?
-        val trajet = trajetDataManager.getTrajetById(userID)
-        detailsHistorique = trajet?.let {
-            ModèleDétailsHistorique( "Détails du trajets", trajet.villeDepart,
-                trajet.date, trajet.villeDestination,
-                trajet.nbPassager, trajet.priseCharge,
-                trajet.prixTrajet, trajet.dureeTrajet, trajet.distanceTrajet, trajet.modelVehicule)
+    suspend fun ChargerDetailsHistorique(trajetId : Int): ModèleDétailsHistorique? {
+            val sourceKelconque = SourceKelconke()
+            trajetDataManager = TrajetDataManager(sourceKelconque)
+            val trajeth = withContext(Dispatchers.IO) {
+                trajetDataManager.getTrajetById(trajetId)
+            }
+        return if (trajeth != null) {
+            Log.d("historiqueTrajet", "NON NULL ${trajeth.villeDepart}")
+            ModèleDétailsHistorique(
+                "Détails du trajets", trajeth.villeDepart, trajeth.date, trajeth.villeDestination,
+                trajeth.nbPassager, trajeth.priseCharge, trajeth.prixTrajet, trajeth.dureeTrajet,
+                trajeth.distanceTrajet, trajeth.modelVehicule
+            )
+        } else {
+            Log.d("getTrajetById", "NULL")
+            null
         }
-        return detailsHistorique
-
     }
 
 

@@ -1,19 +1,28 @@
 
 package com.donovanSergeAimenHatim.uniroute.ecrans.historique
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.animation.AnimationUtils
 import android.widget.Button
 import android.widget.LinearLayout
+import android.widget.ProgressBar
 import android.widget.TextView
+import android.widget.Toast
 import com.donovanSergeAimenHatim.uniroute.R
+import com.donovanSergeAimenHatim.uniroute.animation.anim
+import com.donovanSergeAimenHatim.uniroute.ecrans.carte.CarteFragment
+import com.donovanSergeAimenHatim.uniroute.ecrans.listTrajets.TrajetDataManager
 import com.donovanSergeAimenHatim.uniroute.ecrans.listTrajets.Trajets
-
-
-
+import com.donovanSergeAimenHatim.uniroute.sourceDeDonnées.SourceKelconke
+import com.donovanSergeAimenHatim.uniroute.utilisateur.UtilisateurDataManager
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 
 
 // TODO: Rename parameter arguments, choose names that match
@@ -26,10 +35,15 @@ private const val ARG_PARAM2 = "param2"
  * Use the [HistoriqueFragment.newInstance] factory method to
  * create an instance of this fragment.
  */
-class HistoriqueFragment : Fragment() {
+class HistoriqueFragment : Fragment(), HistoriqueInterface.View {
     // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
+    private lateinit var presentateur: PrésentateurHistorique
+    private lateinit var userDataManager: UtilisateurDataManager
+    private lateinit var animation: anim
+    val critere = StringBuilder()
+    var loadingLogo: ProgressBar? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -37,6 +51,16 @@ class HistoriqueFragment : Fragment() {
             param1 = it.getString(ARG_PARAM1)
             param2 = it.getString(ARG_PARAM2)
         }
+        val sourceKelconke = SourceKelconke()
+        userDataManager = UtilisateurDataManager(sourceKelconke)
+        val dataManager = TrajetDataManager(sourceKelconke)
+        val userDataManager = UtilisateurDataManager(sourceKelconke)
+        presentateur = PrésentateurHistorique(this, dataManager, userDataManager)
+        try {
+            presentateur.chargerTrajets("utilisateurID=1")
+        } catch (e: Exception) { afficherErreur(e.message ?: "Erreur inconnue")
+        }
+        animation = anim()
     }
 
     override fun onCreateView(
@@ -47,26 +71,69 @@ class HistoriqueFragment : Fragment() {
         return inflater.inflate(R.layout.fragment_historique, container, false)
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?){
         super.onViewCreated(view, savedInstanceState)
-
-        // Stockage et affichage dynamique des données sur le fragment de la liste des trajets
-        var présentateur_historique = PrésentateurHistorique(this);
-
-        /*
-    override fun afficherHistorique(trajets: List<Trajet>){
-        val container = view?.findViewById<LinearLayout>(R.id.linear_layout_for_items)
-        val trajetViews = mutableListOf<View>()
-        container?.removeAllViews()
-        trajets.forEachIndexed { index, trajet ->
-            val trajetView =
-                LayoutInflater.from(context).inflate(R.layout.item_trajet, container, false)
-            trajetViews.add(trajetView)
-
-            container?.addView(trajetView)
-        }
-    }*/
+        //Stockage et affichage dinamyque des données sur le fragemnt de la liste des trajets
+        ///var présentateur_historique = PrésentateurHistorique(this)
+        loadingLogo = view.findViewById<ProgressBar>(R.id.loadingPanel_hisoriqueTrajets)
     }
+
+    @SuppressLint("MissingInflatedId")
+     override fun afficherHistorique(trajets: List<Trajets>){
+        val fadeIn = AnimationUtils.loadAnimation(context, R.anim.fade_in)
+        val fadeOut = AnimationUtils.loadAnimation(context, R.anim.fade_out)
+        val containerListe = view?.findViewById<LinearLayout>(R.id.liste_historique_trajets)
+        val titreHitorique = view?.findViewById<TextView>(R.id.titre_historique_trajets)
+        val trajetViews = mutableListOf<View>()
+        containerListe?.removeAllViews()
+        trajets.forEachIndexed { index, trajets ->
+            val trajetView =
+                LayoutInflater.from(context).inflate(R.layout.item_historique, containerListe, false)
+
+            trajetViews.add(trajetView)
+            trajetView.startAnimation(fadeIn)
+
+            val nomConducteur = trajetView.findViewById<TextView>(R.id.textView_nom_conducteur_trajet)
+            val villeDepartDestination = trajetView.findViewById<TextView>(R.id.textView_destination_trajet)
+            val dateTrajet = trajetView.findViewById<TextView>(R.id.textView_date_trajet)
+
+            GlobalScope.launch(Dispatchers.Main) {
+                val utilisateur = presentateur.chargerUtilisateur(trajets.utilisateurID)
+                if (utilisateur != null) {
+                    nomConducteur.text = "${utilisateur.nom} ${utilisateur.prenom}"
+                } else {
+                    afficherErreur("Erreur utilisateur non trouver")
+                }
+                loadingLogo?.visibility = View.GONE
+            }
+            titreHitorique?.text = "Historique de vos trajets"
+            villeDepartDestination.text = "${trajets.villeDepart} -> ${trajets.villeDestination}"
+            dateTrajet.text = "${trajets.date}"
+
+           trajetView.findViewById<LinearLayout>(R.id.linearLayout_item_historique).setOnClickListener {
+                trajetViews.forEach { view ->
+                    val bundle = Bundle().apply {
+                        putString("idTrajet", trajets.id.toString())
+                    }
+                    val detailHistorique = DétailsHistoriqueFragment().apply {
+                        arguments = bundle
+                    }
+                    activity?.supportFragmentManager?.beginTransaction()?.apply {
+                        replace(R.id.fragment_container, detailHistorique)
+                        addToBackStack(null)
+                        commit()
+                    }
+
+                }
+            }
+
+            containerListe?.addView(trajetView)
+        }
+    }
+    override fun afficherErreur(message: String) {
+        Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
+    }
+
 
     companion object {
         /**

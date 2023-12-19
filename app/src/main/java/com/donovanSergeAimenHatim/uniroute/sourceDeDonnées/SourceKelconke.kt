@@ -87,6 +87,7 @@ override suspend fun <T> obtenirDonnées(
 
                 if (response.status == HttpStatusCode.OK) {
                     val jsonString = response.readText()
+                    Log.d("obtenirDonnees", "$jsonString")
                     transform(jsonString)
                 } else {
                     null
