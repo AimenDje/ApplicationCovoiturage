@@ -1,7 +1,11 @@
 <resources>
-    <string name="app_name">UniRoute</string>
+    <string name="app_name" translatable="false">UniRoute</string>
     <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="hello_blank_fragment" translatable="false">Hello blank fragment</string>
     <string name="reservations">Réservations</string>
-    <string name="utilisateurID">99</string>
+    <string name="utilisateurID" translatable="false">99</string>
+    <string name="chercheCoVoiturage">Trouver un covoiturage</string>
+    <string name="trouverTitle">Où voulez vous allez ?</string>
+    <string name="label">"Nombre de passagers: "</string>
+    <string name="datePickerEditText">Date</string>
 </resources>
