@@ -30,7 +30,7 @@
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="20dp"
             android:layout_marginVertical="20dp"
-            android:text="Trajet réserver "
+            android:text="@string/trajetReserverTitle"
             android:textSize="24sp"
             android:textStyle="bold" />
 
@@ -48,7 +48,8 @@
             android:layout_marginVertical="20dp"
             android:lineSpacingExtra="8sp"
             android:textColor="@color/confirmationColorText"
-            android:textSize="14sp" />
+            android:textSize="14sp"
+            android:text="@string/trajetReserverText"/>
 
         <Button
             android:id="@+id/button_viewReservation"
@@ -56,7 +57,7 @@
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="70dp"
             android:backgroundTint="@color/ButtonColor"
-            android:text="Voir mes réservation" />
+            android:text="@string/trajetReserverBtn" />
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

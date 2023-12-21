@@ -29,7 +29,7 @@ class TrajetsPresenter(val view: TrajetsContract.View, private val dataManager: 
         GlobalScope.launch(Dispatchers.Main) {
             try {
                 if(dataManager.ajouterTrajet(trajet)){
-                    view.afficherErreur("Ajouter avec sucess")
+                    //view.afficherErreur("Ajouter avec sucess")
                 }else{
                     view.afficherErreur("Ajouter sans sucess")
                 }

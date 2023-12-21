@@ -1,8 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name" translatable="false">UniRoute</string>
-    <!-- TODO: Remove or change this placeholder text -->
     <string name="reservations_navBar">Réservations</string>
-    <string name="utilisateurID" translatable="false">4</string>
     <string name="chercheCoVoiturage">Trouver un covoiturage</string>
     <string name="trouverTitle">Où voulez-vous aller ?</string>
     <string name="trouverNbPassager">"Nombre de passagers: "</string>
@@ -30,7 +28,7 @@
     <string name="listTrajetAuto">Voiture:</string>
     <string name="listTrajetBtn">Participer</string>
     <string name="trajetReserverTitle">Trajet réservé</string>
-    <string name="trajetReserverText">Super ! Votre trajet a été réservé. En cas de modification de la part de #DRIVERNAME# vous serez notifié. Vous pouvez voir l’état de votre réservation en appuyant sur le bouton “Voir mes réservations”</string>
+    <string name="trajetReserverText">Super ! Votre trajet a été réservé. \\nEn cas de modification  de la part de #DRIVERNAME# vous serez notifié.\\nVous pouvez voir l’état de votre réservation en appuyant sur le bouton “Voir mes réservations”</string>
     <string name="trajetReserverBtn">Voir mes réservations</string>
     <string name="reservationTitle">Mes Réservations</string>
     <string name="reservationBtn">Annuler</string>

@@ -149,15 +149,15 @@ class listTrajets : Fragment(), TrajetsContract.View{
                     loadingPanelTrajetSelectionner.startAnimation(fadeOut)
                     loadingPanelTrajetSelectionner.visibility = View.GONE
                 } else {
-                    afficherErreur("Erreur utilisateur non trouver")
+                    afficherErreur(resources.getString(R.string.historiqueErreurUtilisateurTOAST))
                 }
             }
-            titreTrajet?.text = "Trajet disponible:"
-            priseCharge.text = "Prise en charge:\n${trajet.priseCharge}"
+            titreTrajet?.text = resources.getString(R.string.listTrajetTitle)
+            priseCharge.text = "${resources.getString(R.string.listTrajetPriseCharge)}\n${trajet.priseCharge}"
             dateNonSelectionner.setText("${trajet.date}")
             villeDepartDestinationView.text = "${trajet.villeDepart} -> ${trajet.villeDestination}"
             date.setText("${trajet.date}")
-            autoView.text = "Voiture: Avenir"
+            autoView.text = resources.getString(R.string.listTrajetAuto)
             val confirmationBtnLocal = trajetView.findViewById<Button>(R.id.BtnParticiper)
             confirmationBtnLocal.setOnClickListener {
                 afficherConfirmation(utilisateur!!.prenom)
@@ -205,7 +205,7 @@ class listTrajets : Fragment(), TrajetsContract.View{
             addToBackStack(null)
             commit()
         }
-        afficherErreur("Aucun trajet de disponible")
+        afficherErreur(resources.getString(R.string.listTrajetErrurAucunTrajet))
     }
 
     companion object {

@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/BlancRose"
-    tools:context=".péférences.PreferenceFragment">
+    tools:context=".ecrans.préférences.PreferenceFragment">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -27,7 +27,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:gravity="center"
-            android:text="Préférences"
+            android:text="@string/settingsTitle"
             android:textColor="#4559C6"
             android:textSize="24sp"
             android:textStyle="bold|italic" />
@@ -88,7 +88,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="Thème clair"
+                android:text="@string/settingsThemeLight"
                 android:textSize="16sp" />
 
             <RadioButton
@@ -96,7 +96,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="Thème sombre"
+                android:text="@string/settingsThemeSombre"
                 android:textSize="16sp" />
 
         </LinearLayout>
@@ -106,7 +106,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:backgroundTint="@color/ButtonColor"
-            android:text="Changer image profile" />
+            android:text="@string/settingsBtnImg" />
 
         <Button
             android:id="@+id/buttonEnregistrer"
@@ -115,7 +115,7 @@
             android:layout_weight="1"
             android:backgroundTint="@color/ButtonColor"
             android:gravity="center"
-            android:text="Enregistrer"
+            android:text="@string/settingsBtnSave"
             android:textColorLink="#3F51B5" />
 
     </LinearLayout>

@@ -122,7 +122,7 @@
                 android:layout_height="23dp"
                 android:layout_weight="4"
                 android:gravity="left"
-                android:text="Langues Parlées: "
+                android:text="@string/profileLanguage"
                 android:textSize="16sp" />
 
             <ImageView
@@ -173,7 +173,7 @@
                 android:layout_weight="1"
                 android:backgroundTint="@color/ButtonColor"
                 android:gravity="center_horizontal|center_vertical"
-                android:text="Préférences" />
+                android:text="@string/profileBtnSettings" />
 
             <Button
                 android:id="@+id/btnHistorique1"
@@ -183,7 +183,7 @@
                 android:layout_weight="1"
                 android:backgroundTint="@color/ButtonColor"
                 android:gravity="center_horizontal|center_vertical"
-                android:text="Historique" />
+                android:text="@string/profileBtnHistory" />
         </LinearLayout>
 
 

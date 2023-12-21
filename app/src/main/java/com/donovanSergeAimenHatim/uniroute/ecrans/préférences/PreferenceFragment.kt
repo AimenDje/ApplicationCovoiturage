@@ -112,7 +112,7 @@ class PreferenceFragment : Fragment() {
             ) {
 
                 // Afficher une alerte si les champs sont vides
-                Toast.makeText(requireContext(), "Vueillez remplir tous les champs", Toast.LENGTH_SHORT).show()
+                Toast.makeText(requireContext(), resources.getString(R.string.profileUpdateAlert), Toast.LENGTH_SHORT).show()
             } else {
                 val nouvellesDonnees = mapOf(
                     "nom" to nouveauPrénom.text.toString() ,
@@ -123,7 +123,7 @@ class PreferenceFragment : Fragment() {
                 GlobalScope.launch(Dispatchers.Main) {
                     try {
                         présentateur.modifierUtilisateurApi("${context?.getString(R.string.utilisateurID)}" , nouvellesDonnees)
-                        Toast.makeText(requireContext(), "Vos informations seront mises à jour", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(requireContext(), resources.getString(R.string.profileUpdate), Toast.LENGTH_SHORT).show()
                         présentateur.modifierTheme(themeClair.isChecked)
 
                     } catch (e: Exception) {
@@ -187,7 +187,7 @@ class PreferenceFragment : Fragment() {
                                 val nouvellesDonnees = mapOf(
                                 "image" to file.name)
                                 présentateur.modifierUtilisateurApi("${context?.getString(R.string.utilisateurID)}" , nouvellesDonnees)
-                                Toast.makeText(requireContext(), "Photo mise à jour", Toast.LENGTH_SHORT).show()
+                                Toast.makeText(requireContext(), resources.getString(R.string.profileImgUpdate), Toast.LENGTH_SHORT).show()
 
                             } catch (e: Exception) {
                                 // Affichage d'une erreur sur la vue en cas d'exception
@@ -224,7 +224,7 @@ class PreferenceFragment : Fragment() {
         if(modification){
         }else {
             // Affiche un message en cas d'erreur (si la modification ne s'effectue pas)
-            afficherMessage("Une erreur est survenue")
+            afficherMessage(resources.getString(R.string.erreurInconnue))
         }
     }
     fun afficherInformations(profil: ModelUniRoute.Profil?) {

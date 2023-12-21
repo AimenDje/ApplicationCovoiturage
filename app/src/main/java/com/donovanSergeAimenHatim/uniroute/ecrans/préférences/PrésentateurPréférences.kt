@@ -93,8 +93,4 @@ class PrésentateurPréférences(private val vue: PreferenceFragment) {
             }
         }
     }
-
-
-
-
-        }
+}

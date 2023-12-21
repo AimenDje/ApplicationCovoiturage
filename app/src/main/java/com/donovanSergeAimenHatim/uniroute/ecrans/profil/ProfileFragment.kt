@@ -176,9 +176,9 @@ class ProfileFragment : Fragment() {
             // Définit le numéro de téléphone dans l'interface utilisateur
             téléphone.setText(profil.téléphone)
             // Affiche le nombre de covoiturages
-            textCovoiturage.setText("Nombre de covoiturage: " + profil.nombre_covoiturage)
+            textCovoiturage.setText(resources.getString(R.string.profileNbCoVoiturage) + profil.nombre_covoiturage)
             // Affiche les notes moyennes
-            notes.setText("Notes en moyenne: " + profil.notes)
+            notes.setText(resources.getString(R.string.profileNbNote) + profil.notes)
             // Gère l'affichage des langues parlées
             var languesParlees: List<String> = profil.languesParlées
             // Première langue parlée
@@ -200,14 +200,14 @@ class ProfileFragment : Fragment() {
                 }
             }
             // Définit le type de voiture dans l'interface utilisateur
-            typeVoiture.setText("Type de voiture: " + profil.typeVoiture)
-            adresse.setText("Adresse: " + profil.adresse)
+            typeVoiture.setText(resources.getString(R.string.profileAuto) + profil.typeVoiture)
+            adresse.setText(resources.getString(R.string.profileAddress) + profil.adresse)
             loadingPanel.startAnimation(fadeOut)
             loadingPanel.visibility = View.GONE
 
         } else {
             // Affiche un message en cas d'erreur (si profil est null)
-            afficherMessage("Une erreur est survenue")
+            afficherMessage(resources.getString(R.string.erreurInconnue))
         }
     }
     fun afficherErreur(e: Exception) {

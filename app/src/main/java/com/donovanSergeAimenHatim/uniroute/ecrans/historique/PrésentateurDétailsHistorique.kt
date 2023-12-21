@@ -1,6 +1,7 @@
 package com.donovanSergeAimenHatim.uniroute.ecrans.historique
 
 import android.util.Log
+import com.donovanSergeAimenHatim.uniroute.R
 import com.donovanSergeAimenHatim.uniroute.ecrans.listTrajets.TrajetDataManager
 import com.donovanSergeAimenHatim.uniroute.model.ModelUniRoute
 import com.donovanSergeAimenHatim.uniroute.sourceDeDonnées.SourceKelconke
@@ -18,7 +19,7 @@ class PrésentateurDétailsHistorique (val vue : DétailsHistoriqueFragment){
         return if (trajeth != null) {
             Log.d("historiqueTrajet", "NON NULL ${trajeth.villeDepart}")
             ModelUniRoute.DetailsHistorique(
-                "Détails du trajets", trajeth.villeDepart, trajeth.date, trajeth.villeDestination,
+                vue.getString(R.string.detailHistoriqueObjectTitle), trajeth.villeDepart, trajeth.date, trajeth.villeDestination,
                 trajeth.nbPassager, trajeth.priseCharge, trajeth.prixTrajet, trajeth.dureeTrajet,
                 trajeth.distanceTrajet, trajeth.modelVehicule
             )

@@ -99,11 +99,11 @@ class HistoriqueFragment : Fragment(), HistoriqueInterface.View {
                 if (utilisateur != null) {
                     nomConducteur.text = "${utilisateur.nom} ${utilisateur.prenom}"
                 } else {
-                    afficherErreur("Erreur utilisateur non trouver")
+                    afficherErreur(resources.getString(R.string.historiqueErreurUtilisateurTOAST))
                 }
                 loadingLogo?.visibility = View.GONE
             }
-            titreHitorique?.text = "Historique de vos trajets"
+            titreHitorique?.text = resources.getString(R.string.historiqueTitle)
             villeDepartDestination.text = "${trajets.villeDepart} -> ${trajets.villeDestination}"
             dateTrajet.text = "${trajets.date}"
 

@@ -126,7 +126,7 @@ class TrajetReserverFragment : Fragment(), TrajetsContract.View {
                     loadingPanel_item.startAnimation(fadeOut)
                     loadingPanel_item.visibility = View.GONE
                 } else {
-                    afficherErreur("Erreur utilisateur non trouver")
+                    afficherErreur(resources.getString(R.string.historiqueErreurUtilisateurTOAST))
                 }
             }
             val boutonAnnuler = trajetView.findViewById<Button>(R.id.button_annulerReservation)
@@ -134,7 +134,7 @@ class TrajetReserverFragment : Fragment(), TrajetsContract.View {
                 presenter.annulerTrajet(trajetId, getString(R.string.utilisateurID).toInt())
                 (trajetView.parent as ViewGroup).removeView(trajetView)
             }
-            titreTrajet?.text = "Trajet disponible:"
+            titreTrajet?.text = resources.getString(R.string.listTrajetTitle)
             villeDepartDestinationView.text = "${trajet.villeDepart} -> ${trajet.villeDestination}"
             date.text = "${trajet.date.toString()}"
             container?.addView(trajetView)
@@ -157,7 +157,7 @@ class TrajetReserverFragment : Fragment(), TrajetsContract.View {
     }
 
     override fun aucunTrajetDisponible() {
-        Toast.makeText(context, "Aucune reservation", Toast.LENGTH_SHORT).show()
+        Toast.makeText(context, resources.getString(R.string.reservationErreurAucun), Toast.LENGTH_SHORT).show()
         loadingPanel?.startAnimation(fadeOut)
         loadingPanel?.visibility = View.GONE
     }

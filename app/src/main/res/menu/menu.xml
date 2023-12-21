@@ -3,13 +3,13 @@
     <item
         android:id="@+id/coVoiturage"
         android:icon="@drawable/covoiturage_icon"
-        android:title="CoVoiturage" />
+        android:title="@string/covoiturage_navBar" />
     <item
         android:id="@+id/reservation"
         android:icon="@drawable/messagerie_icon"
-        android:title="@string/reservations" />
+        android:title="@string/reservations_navBar" />
     <item
         android:id="@+id/profile"
         android:icon="@drawable/profile_icon"
-        android:title="Profile"/>
+        android:title="@string/profile_nav"/>
 </menu>

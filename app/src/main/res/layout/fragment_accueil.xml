@@ -57,7 +57,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:backgroundTint="@drawable/background_color_selector"
-                android:text="Proposer CoVoiturage"
+                android:text="@string/proposerBtn"
                 android:textSize="10dp"
                 app:icon="@drawable/icon_selector"
                 app:iconSize="15dp" />
@@ -88,7 +88,7 @@
                     android:layout_marginHorizontal="20dp"
                     android:layout_marginVertical="10dp"
                     android:background="@null"
-                    android:hint="Destination"
+                    android:hint="@string/trouverDestinationField"
                     app:boxBackgroundMode="none">
 
                     <com.google.android.material.textfield.TextInputEditText
@@ -107,7 +107,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="20dp"
                     android:layout_marginVertical="20dp"
-                    android:hint="Date"
+                    android:hint="@string/trouverDate"
                     app:endIconMode="custom">
 
                     <com.google.android.material.textfield.TextInputEditText
@@ -132,7 +132,7 @@
                         android:id="@+id/label"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/labelNbPassager"
+                        android:text="@string/trouverNbPassager"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
@@ -163,7 +163,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:text="Chercher CoVoiturage"
+                    android:text="@string/trouverBtn"
                     app:backgroundTint="#6750a4" />
             </LinearLayout>
 
@@ -185,7 +185,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="20dp"
                     android:layout_marginVertical="10dp"
-                    android:text="Où voulez vous allez ?"
+                    android:text="@string/proposerTitle"
                     android:textSize="25dp"
                     android:textStyle="bold" />
 
@@ -196,7 +196,7 @@
                     android:layout_marginHorizontal="20dp"
                     android:layout_marginVertical="10dp"
                     android:background="@null"
-                    android:hint="Depart"
+                    android:hint="@string/proposerDepartField"
                     app:boxBackgroundMode="none">
 
                     <com.google.android.material.textfield.TextInputEditText
@@ -222,7 +222,7 @@
                         android:layout_height="wrap_content"
                         android:clickable="true"
                         android:focusable="false"
-                        android:hint="Heure de depart"
+                        android:hint="@string/proposerHeureField"
                         android:inputType="none" />
 
                 </com.google.android.material.textfield.TextInputLayout>
@@ -234,7 +234,7 @@
                     android:layout_marginHorizontal="20dp"
                     android:layout_marginVertical="10dp"
                     android:background="@null"
-                    android:hint="Destination"
+                    android:hint="@string/proposerDestinationField"
                     app:boxBackgroundMode="none">
 
                     <com.google.android.material.textfield.TextInputEditText
@@ -253,7 +253,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="20dp"
                     android:layout_marginVertical="20dp"
-                    android:hint="Date"
+                    android:hint="@string/proposerDate"
                     app:endIconMode="custom">
 
                     <com.google.android.material.textfield.TextInputEditText
@@ -273,7 +273,7 @@
                     android:layout_marginHorizontal="20dp"
                     android:layout_marginVertical="10dp"
                     android:background="@null"
-                    android:hint="Prise en charge"
+                    android:hint="@string/proposerPriseCharge"
                     app:boxBackgroundMode="none">
 
                     <com.google.android.material.textfield.TextInputEditText
@@ -298,7 +298,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginEnd="8dp"
-                        android:text="Nombre de passager: "
+                        android:text="@string/proposerNbPassager"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
@@ -328,7 +328,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="20dp"
-                    android:hint="Auto">
+                    android:hint="@string/proposerAuto">
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/textFieldAutoProposer"
@@ -343,7 +343,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:text="Proposer un CoVoiturage"
+                    android:text="@string/proposerBtn"
                     app:backgroundTint="#6750a4" />
             </LinearLayout>
         </ScrollView>

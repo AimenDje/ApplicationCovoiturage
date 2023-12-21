@@ -55,9 +55,11 @@ class confirmationTrajetFragment : Fragment() {
         confirmationTrajetSection.startAnimation(fadeIn)
         confirmationTrajetSection.visibility = View.VISIBLE
         var detailText: TextView? = view.findViewById(R.id.textView_confirmation_detail)
-        detailText?.text = "Super ! Votre trajet a été réservé. \n" +
-                "En cas de modification  de la part de ${conducteur} vous serez notifié.\n" +
-                "Vous pouvez voir l’état de votre réservation en appuyant sur le bouton “Voir mes réservation”"
+        detailText?.text = conducteur?.let {
+            resources.getString(R.string.trajetReserverText).replace("#DRIVERNAME#",
+                it
+            )
+        }
         button_viewReservation.setOnClickListener{
             activity?.supportFragmentManager?.beginTransaction()?.apply {
                 replace(R.id.fragment_container, TrajetReserverFragment())

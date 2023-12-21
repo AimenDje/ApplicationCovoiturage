@@ -58,25 +58,24 @@ class DétailsHistoriqueFragment : Fragment(){
             historique = idTrajet?.let { présentateur_détails_historique.ChargerDetailsHistorique(it.toInt()) }
             if (historique != null) {
                 titre_vue.text = historique!!.titre
-                itinéraireTrajet.text = "Trajet : "
+                itinéraireTrajet.text = resources.getString(R.string.detailHistoriqueTrajet)
                 trajet.text = "${historique!!.villeDepart} -> ${historique!!.villeDestination}" + "\n"
-                lePrix.text = "Prix : "
+                lePrix.text = resources.getString(R.string.detailHistoriquePrix)
                 prix.text = historique!!.prixTrajet + " $"+ "\n"
-                laDurée.text = "Durée du trajet : "
+                laDurée.text = resources.getString(R.string.detailHistoriqueDuree)
                 durée.text = historique!!.dureeTrajet + "\n"
-                laDistance.text = "Distance du trajet : "
+                laDistance.text = resources.getString(R.string.detailHistoriqueDistance)
                 distance.text =  historique!!.distanceTrajet + " Km." + "\n"
-                leVehicule.text = "Model du vehicule : "
+                leVehicule.text = resources.getString(R.string.detailHistoriqueAuto)
                 véhicule.text = historique!!.modelVehicule + "\n"
-                laDate.text = "Date du trajet : "
+                laDate.text = resources.getString(R.string.detailHistoriqueDate)
                 date.text = historique!!.date
                 loadingLogo.visibility = View.GONE
             } else {
                 // Gérer le cas où historique est null, par exemple afficher un message d'erreur
-                Toast.makeText(context, "Erreur : les détails du trajet ne peuvent pas être chargés.", Toast.LENGTH_SHORT).show()
+                Toast.makeText(context, resources.getString(R.string.detailHistoriqueErreur), Toast.LENGTH_SHORT).show()
             }
         }
     }
-
 
 }

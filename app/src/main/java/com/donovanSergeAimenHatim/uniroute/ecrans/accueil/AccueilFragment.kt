@@ -77,12 +77,21 @@ class AccueilFragment : Fragment(), TrajetsContract.View{
             val auto = view.findViewById<com.google.android.material.textfield.TextInputEditText>(R.id.textFieldAutoProposer).text.toString()
             val nbPassagers = view.findViewById<com.google.android.material.slider.Slider>(R.id.nbPassagerProposer)?.value
             val priseCharge =view.findViewById<com.google.android.material.textfield.TextInputEditText>(R.id.textFieldPriseChargeProposer).text.toString()
-            val prixTrajet = "0$"
-            val dureeTrajet = "0h"
-            val distanceTrajet = "0km"
-            val utilisateurReserver = ""
-            var trajet = ModelUniRoute.Trajets(0,idUtilisateur,depart,"${date} ${heureDepart}",destination,nbPassagers!!.toInt(), priseCharge, prixTrajet, dureeTrajet, distanceTrajet, auto, utilisateurReserver)
-            presenter.ajouterTrajet(trajet)
+            if(!depart.isEmpty() && !destination.isEmpty() && !heureDepart.isEmpty() && !date.isEmpty() && !auto.isEmpty() && !priseCharge.isEmpty()){
+                val prixTrajet = "0$"
+                val dureeTrajet = "0h"
+                val distanceTrajet = "0km"
+                val utilisateurReserver = ""
+                var trajet = ModelUniRoute.Trajets(0,idUtilisateur,depart,"${date} ${heureDepart}",destination,nbPassagers!!.toInt(), priseCharge, prixTrajet, dureeTrajet, distanceTrajet, auto, utilisateurReserver)
+                presenter.ajouterTrajet(trajet)
+                activity?.supportFragmentManager?.beginTransaction()?.apply {
+                    replace(R.id.fragment_container, AccueilFragment())
+                    addToBackStack(null)
+                    commit()
+                }
+            }else{
+                afficherErreur(resources.getString(R.string.profileUpdateAlert))
+            }
         }
         val datePickerEditText = view.findViewById<TextInputEditText>(R.id.datePickerEditText)
         datePickerEditText.setOnClickListener {
@@ -183,26 +192,6 @@ class AccueilFragment : Fragment(), TrajetsContract.View{
             }
         }
 
-    }
-    fun afficherSuccesAjout() {
-        Toast.makeText(context, "Trajet ajouté avec succès", Toast.LENGTH_LONG).show()
-    }
-
-    fun afficherErreurAjout(message: String) {
-        Toast.makeText(context, message, Toast.LENGTH_LONG).show()
-    }
-
-    fun convertirDate(dateString: String): String {
-        val originalFormat = SimpleDateFormat("MMM d, yyyy hh:mm a", Locale.ENGLISH)
-        val targetFormat = SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.ENGLISH)
-
-        return try {
-            val date = originalFormat.parse(dateString)
-            targetFormat.format(date)
-        } catch (e: Exception) {
-            e.printStackTrace()
-            "Erreur de formatage"
-        }
     }
 
     companion object {
